@@ -1,0 +1,23 @@
+{
+	"name": "pfandtastisch_server",
+	"version": "1.0.0",
+	"description": "Server for pfandtastisch",
+	"main": "index.js",
+	"author": "Joshua Barua-Fowle",
+	"license": "MIT",
+	"private": true,
+	"type": "module",
+	"dependencies": {
+		"concurrently": "^8.2.0",
+		"cors": "^2.8.5",
+		"dotenv": "^16.3.1",
+		"express": "^4.18.2",
+		"mongoose": "^7.4.3"
+	},
+	"devDependencies": {
+		"nodemon": "^3.0.1"
+	},
+	"scripts": {
+		"start": "concurrently \"nodemon index.js\" \"cd ../client && yarn run dev\""
+	}
+}
