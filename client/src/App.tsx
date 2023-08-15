@@ -8,14 +8,15 @@ function App() {
 	const [count, setCount] = useState(0);
 	const baseURL = import.meta.env.VITE_SERVER_BASE as string;
 	const [users, setUsers] = useState<Users>([]);
-
+  console.log( baseURL );
+  
 	useEffect(() => {
 		const fetchAllUsers = async () => {
 			try {
 				const response = await fetch(`${baseURL}api/users/all`);
 				const result = (await response.json()) as Users;
 				setUsers(result);
-				console.log(result);
+				console.log(users);
 			} catch (error) {
 				console.log(error);
 			}

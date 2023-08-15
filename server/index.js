@@ -5,7 +5,7 @@ import userRouter from "./routes/userRoutes.js";
 import * as dotenv from "dotenv";
 dotenv.config();
 
-console.log("MONGO URI", process.env.MONGO_URI);
+// console.log("MONGO URI", process.env.MONGO_URI);
 
 const app = express();
 const port = process.env.PORT || 5000;
