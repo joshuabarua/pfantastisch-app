@@ -34,7 +34,7 @@ const findUserByEmail = async (req, res) => {
 	} else {
 		res.status(400).json({error: "valid mail must be included"});
 	}
-	// console.log(req.params);
+	console.log(req.params);
 };
 
 export {testRoute, findAllUsers, findUserByEmail};

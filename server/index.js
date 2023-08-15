@@ -34,9 +34,6 @@ const defineRoutes = () => {
 	app.use("*", (req, res) => res.status(404).json({error: "Endpoint not found."}));
 };
 
-app.use("/api/users", userRouter);
-app.use("*", (req, res) => res.status(404).json({error: "Endpoint not found"}));
-
 connectMiddlewares();
 defineRoutes();
 connectDatabase();
