@@ -6,3 +6,7 @@ export interface User {
 }
 
 export type Users = User[];
+
+export interface NotOk {
+	error: string;
+}

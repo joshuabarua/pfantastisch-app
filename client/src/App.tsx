@@ -3,11 +3,12 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import {Users} from "./@types";
+import UserCard from "./components/UserCard";
+import CreateUserForm from "./components/CreateUserForm";
 
 function App() {
 	const baseURL = import.meta.env.VITE_SERVER_BASE;
 	const [users, setUsers] = useState<Users>([]);
-	console.log(baseURL);
 
 	useEffect(() => {
 		const fetchAllUsers = async () => {
@@ -15,7 +16,6 @@ function App() {
 				const response = await fetch(`${baseURL}api/users/all`);
 				const result = (await response.json()) as Users;
 				setUsers(result);
-				console.log(users);
 			} catch (error) {
 				console.log(error);
 			}
@@ -23,7 +23,7 @@ function App() {
 
 		fetchAllUsers().catch((e) => console.log(e));
 	}, []);
-
+	console.log(users);
 	return (
 		<>
 			<div>
@@ -34,7 +34,19 @@ function App() {
 					<img src={reactLogo} className="logo react" alt="React logo" />
 				</a>
 			</div>
-			<h1>Vite + React</h1>
+			<h1>MERN</h1>
+
+			{users.length === 0 ? (
+				<p>No Users 😞</p>
+			) : (
+				<>
+					<h2>My current users are:</h2>
+					{users.map((u) => {
+						return <UserCard key={u._id} user={u} />;
+					})}
+				</>
+			)}
+			<CreateUserForm setUsers={setUsers} users={users} />
 		</>
 	);
 }
