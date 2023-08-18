@@ -5,14 +5,17 @@ import {
 	findUserByEmail,
 	createUser,
 	updateUser,
+	middleTest,
 } from "../controllers/userController.js";
+import {multerUpload} from "../middlewares/multer.js";
 
-const userRouter = express.Router();
+const appRouter = express.Router();
 
-userRouter.get("/test", testRoute);
-userRouter.get("/all", findAllUsers);
-userRouter.get("/email/:email", findUserByEmail);
-userRouter.post("/new", createUser);
-userRouter.put("/update", updateUser);
+appRouter.get("/test", middleTest, testRoute);
+appRouter.get("/all", findAllUsers);
 
-export default userRouter;
+appRouter.get("/email/:email", findUserByEmail);
+appRouter.post("/new", multerUpload.single("image"), createUser);
+appRouter.put("/update", updateUser);
+
+export default appRouter;

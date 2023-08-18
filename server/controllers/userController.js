@@ -5,6 +5,11 @@ const testRoute = (req, res) => {
 	res.send("testing route....");
 };
 
+const middleTest = (request, response, next) => {
+	console.log(request, response, "middleware is up");
+	next();
+};
+
 const findAllUsers = async (request, response) => {
 	try {
 		const users = await UserModel.find();
@@ -41,11 +46,19 @@ const findUserByEmail = async (req, res) => {
 		res.status(400).json({error: "valid mail must be included"});
 	}
 };
-
+//TODO: Figure out why images are not getting saved
 const createUser = async (req, res) => {
+	console.log(req.body, req.file);
 	if (!req.body.email || !req.body.password || !req.body.username)
 		return res.status(406).json({error: "Please fill out all fields"});
-	const newUser = new UserModel({...req.body});
+	const result = await imageUpload(req.file, "profile_pics");
+	console.log(result);
+	const newUser = new UserModel({
+		email: req.body.email,
+		password: req.body.password,
+		username: req.body.username,
+		image_url: result,
+	});
 	try {
 		const result = await newUser.save();
 		console.log(result);
@@ -69,4 +82,11 @@ const updateUser = async (req, res) => {
 	}
 };
 
-export {testRoute, findAllUsers, findUserByEmail, createUser, updateUser};
+export {
+	testRoute,
+	findAllUsers,
+	findUserByEmail,
+	createUser,
+	updateUser,
+	middleTest,
+};

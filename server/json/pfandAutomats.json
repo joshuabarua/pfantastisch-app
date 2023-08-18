@@ -1,0 +1,1514 @@
+{
+	"businesses": [
+		{
+			"id": "XrVV2Rsq0G_C6lh5XJqRVw",
+			"alias": "russische-lebensmittel-christina-berlin",
+			"name": "Russische Lebensmittel Christina",
+			"image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/J6K6wXrVpMeKirI1Pz_uxA/o.jpg",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/russische-lebensmittel-christina-berlin?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 1,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				}
+			],
+			"rating": 5.0,
+			"coordinates": {
+				"latitude": 52.45743,
+				"longitude": 13.51119
+			},
+			"transactions": [],
+			"location": {
+				"address1": "Brückenstr. 5",
+				"address2": "",
+				"address3": "",
+				"city": "Berlin",
+				"zip_code": "12439",
+				"country": "DE",
+				"state": "BE",
+				"display_address": ["Brückenstr. 5", "12439 Berlin", "Germany"]
+			},
+			"phone": "+493022681038",
+			"display_phone": "+49 30 22681038",
+			"distance": 9654.774992067321,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "XkhmosT-5HA1qg28b03aaw",
+			"alias": "edeka-busack-berlin",
+			"name": "EDEKA Busack",
+			"image_url": "",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/edeka-busack-berlin?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 1,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				}
+			],
+			"rating": 3.0,
+			"coordinates": {
+				"latitude": 52.5393199,
+				"longitude": 13.3001799
+			},
+			"transactions": [],
+			"price": "€€",
+			"location": {
+				"address1": "Heckerdamm 225 - 231",
+				"address2": null,
+				"address3": null,
+				"city": "Berlin",
+				"zip_code": "13627",
+				"country": "DE",
+				"state": "BE",
+				"display_address": ["Heckerdamm 225 - 231", "13627 Berlin", "Germany"]
+			},
+			"phone": "+493036700890",
+			"display_phone": "+49 30 36700890",
+			"distance": 7326.38699407725,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "wLJzCjCkunMQoRaOGpeRxg",
+			"alias": "aldi-berlin-120",
+			"name": "Aldi",
+			"image_url": "",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/aldi-berlin-120?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 1,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				},
+				{
+					"alias": "discountstore",
+					"title": "Discount Store"
+				}
+			],
+			"rating": 1.0,
+			"coordinates": {
+				"latitude": 52.4421899,
+				"longitude": 13.50596
+			},
+			"transactions": [],
+			"location": {
+				"address1": "Winckelmannstr. 38-42",
+				"address2": null,
+				"address3": null,
+				"city": "Berlin",
+				"zip_code": "12487",
+				"country": "DE",
+				"state": "BE",
+				"display_address": ["Winckelmannstr. 38-42", "12487 Berlin", "Germany"]
+			},
+			"phone": "",
+			"display_phone": "",
+			"distance": 10456.646182184415,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "vVi8DYeuDcDeaa5pXnPffw",
+			"alias": "penny-berlin-51",
+			"name": "Penny",
+			"image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/grpp2DeBewo46xmQrE0Dng/o.jpg",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/penny-berlin-51?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 1,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				},
+				{
+					"alias": "discountstore",
+					"title": "Discount Store"
+				}
+			],
+			"rating": 3.0,
+			"coordinates": {
+				"latitude": 52.43479,
+				"longitude": 13.36644
+			},
+			"transactions": [],
+			"price": "€€",
+			"location": {
+				"address1": "Kamenzer Damm 86",
+				"address2": null,
+				"address3": null,
+				"city": "Berlin",
+				"zip_code": "12249",
+				"country": "DE",
+				"state": "BE",
+				"display_address": ["Kamenzer Damm 86", "12249 Berlin", "Germany"]
+			},
+			"phone": "+4922120199959",
+			"display_phone": "+49 221 20199959",
+			"distance": 8361.596796135558,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "5QK43SGS227EUQ7_go1q_Q",
+			"alias": "netto-marken-discount-berlin-78",
+			"name": "Netto Marken-Discount",
+			"image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/dLpyq1DYXgScQZGY37g45Q/o.jpg",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/netto-marken-discount-berlin-78?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 1,
+			"categories": [
+				{
+					"alias": "discountstore",
+					"title": "Discount Store"
+				},
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				}
+			],
+			"rating": 2.0,
+			"coordinates": {
+				"latitude": 52.59279,
+				"longitude": 13.28594
+			},
+			"transactions": [],
+			"price": "€",
+			"location": {
+				"address1": "Buddestr. 36",
+				"address2": null,
+				"address3": null,
+				"city": "Berlin",
+				"zip_code": "13507",
+				"country": "DE",
+				"state": "BE",
+				"display_address": ["Buddestr. 36", "13507 Berlin", "Germany"]
+			},
+			"phone": "+498002000015",
+			"display_phone": "+49 800 2000015",
+			"distance": 12001.159298827526,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "opxhnRNMdf8aCAqM4jCynw",
+			"alias": "wajos-berlin-2",
+			"name": "Wajos",
+			"image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/d3m7LtazLWy-pw_w8RKAlQ/o.jpg",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/wajos-berlin-2?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 2,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				}
+			],
+			"rating": 3.5,
+			"coordinates": {
+				"latitude": 52.54329,
+				"longitude": 13.54351
+			},
+			"transactions": [],
+			"price": "€€€",
+			"location": {
+				"address1": "Marzahner Promenade 1 A",
+				"address2": "",
+				"address3": "",
+				"city": "Berlin",
+				"zip_code": "12679",
+				"country": "DE",
+				"state": "BE",
+				"display_address": ["Marzahner Promenade 1 A", "12679 Berlin", "Germany"]
+			},
+			"phone": "+49303093498505",
+			"display_phone": "+49 30 3093498505",
+			"distance": 10890.596002036673,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "GoQ6FxlJXT-dAinHEchzSg",
+			"alias": "edeka-schatz-berlin",
+			"name": "EDEKA Schatz",
+			"image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/EGHXPHyqkYZKr8U4cEFFBA/o.jpg",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/edeka-schatz-berlin?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 1,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				}
+			],
+			"rating": 1.0,
+			"coordinates": {
+				"latitude": 52.585841,
+				"longitude": 13.307702
+			},
+			"transactions": [],
+			"price": "€€€",
+			"location": {
+				"address1": "Miraustr. 62",
+				"address2": "",
+				"address3": "",
+				"city": "Berlin",
+				"zip_code": "13509",
+				"country": "DE",
+				"state": "BE",
+				"display_address": ["Miraustr. 62", "13509 Berlin", "Germany"]
+			},
+			"phone": "+493043004015",
+			"display_phone": "+49 30 43004015",
+			"distance": 10498.586349573872,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "GHepokqxEZJmcbdZ4JAO1Q",
+			"alias": "lidl-berlin-mitte-wedding",
+			"name": "LiDL",
+			"image_url": "",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/lidl-berlin-mitte-wedding?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 1,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				},
+				{
+					"alias": "discountstore",
+					"title": "Discount Store"
+				}
+			],
+			"rating": 3.0,
+			"coordinates": {
+				"latitude": 52.55203,
+				"longitude": 13.3497
+			},
+			"transactions": [],
+			"price": "€",
+			"location": {
+				"address1": "Müllerstr. 48 / 48 a",
+				"address2": null,
+				"address3": null,
+				"city": "Berlin-Mitte Wedding",
+				"zip_code": "13349",
+				"country": "DE",
+				"state": "BE",
+				"display_address": [
+					"Müllerstr. 48 / 48 a",
+					"13349 Berlin-Mitte Wedding",
+					"Germany"
+				]
+			},
+			"phone": "",
+			"display_phone": "",
+			"distance": 5826.937784599253,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "FDFkqhx3nNzahIUk4nN0cg",
+			"alias": "magazin-schiwaja-riba-berlin",
+			"name": "Magazin Schiwaja Riba",
+			"image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/HYNOJ7v8-PvvaFNUtwN8Sw/o.jpg",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/magazin-schiwaja-riba-berlin?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 1,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				}
+			],
+			"rating": 4.0,
+			"coordinates": {
+				"latitude": 52.50755,
+				"longitude": 13.30246
+			},
+			"transactions": [],
+			"price": "€€",
+			"location": {
+				"address1": "Kaiser Friedrich Str. 61",
+				"address2": "",
+				"address3": "",
+				"city": "Berlin",
+				"zip_code": "10627",
+				"country": "DE",
+				"state": "BE",
+				"display_address": [
+					"Kaiser Friedrich Str. 61",
+					"10627 Berlin",
+					"Germany"
+				]
+			},
+			"phone": "+493031014838",
+			"display_phone": "+49 30 31014838",
+			"distance": 6264.449538461526,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "wAhUMcxgBYcMCFQy9yvqZw",
+			"alias": "rewe-berlin-214",
+			"name": "REWE",
+			"image_url": "",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/rewe-berlin-214?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 1,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				}
+			],
+			"rating": 1.0,
+			"coordinates": {
+				"latitude": 52.5888,
+				"longitude": 13.33899
+			},
+			"transactions": [],
+			"location": {
+				"address1": "Roedernallee 118 A",
+				"address2": null,
+				"address3": null,
+				"city": "Berlin",
+				"zip_code": "13437",
+				"country": "DE",
+				"state": "BE",
+				"display_address": ["Roedernallee 118 A", "13437 Berlin", "Germany"]
+			},
+			"phone": "+493041191304",
+			"display_phone": "+49 30 41191304",
+			"distance": 9777.704887241227,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "l-92DWFwnEACV6KsG5mEwg",
+			"alias": "edeka-fromm-berlin-2",
+			"name": "EDEKA Fromm",
+			"image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/wI0142tLs6RICl7taR-Ydw/o.jpg",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/edeka-fromm-berlin-2?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 1,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				}
+			],
+			"rating": 2.0,
+			"coordinates": {
+				"latitude": 52.4176,
+				"longitude": 13.43686
+			},
+			"transactions": [],
+			"price": "€€",
+			"location": {
+				"address1": "Gerlinger Str. 4",
+				"address2": null,
+				"address3": null,
+				"city": "Berlin",
+				"zip_code": "12353",
+				"country": "DE",
+				"state": "BE",
+				"display_address": ["Gerlinger Str. 4", "12353 Berlin", "Germany"]
+			},
+			"phone": "+493070078610",
+			"display_phone": "+49 30 70078610",
+			"distance": 10403.377993184926,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "7_lOJviLv61PKhUrPPM0QQ",
+			"alias": "edeka-ulrich-berlin",
+			"name": "EDEKA Ulrich",
+			"image_url": "",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/edeka-ulrich-berlin?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 1,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				}
+			],
+			"rating": 2.0,
+			"coordinates": {
+				"latitude": 52.5755,
+				"longitude": 13.2837
+			},
+			"transactions": [],
+			"location": {
+				"address1": "Bernauer Str. 69 - 73",
+				"address2": null,
+				"address3": null,
+				"city": "Berlin",
+				"zip_code": "13507",
+				"country": "DE",
+				"state": "BE",
+				"display_address": ["Bernauer Str. 69 - 73", "13507 Berlin", "Germany"]
+			},
+			"phone": "+493043743980",
+			"display_phone": "+49 30 43743980",
+			"distance": 10648.987117038787,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "P2_FEzUfvv_UZpRjt2FzWg",
+			"alias": "rewe-berlin-140",
+			"name": "REWE",
+			"image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/rkzbIAAzsG2mfSS3QGEUkg/o.jpg",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/rewe-berlin-140?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 1,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				}
+			],
+			"rating": 2.0,
+			"coordinates": {
+				"latitude": 52.60519,
+				"longitude": 13.43319
+			},
+			"transactions": [],
+			"location": {
+				"address1": "Hauptstr. 65 - 70",
+				"address2": null,
+				"address3": null,
+				"city": "Berlin",
+				"zip_code": "13127",
+				"country": "DE",
+				"state": "BE",
+				"display_address": ["Hauptstr. 65 - 70", "13127 Berlin", "Germany"]
+			},
+			"phone": "+493040046755",
+			"display_phone": "+49 30 40046755",
+			"distance": 11059.501392814778,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "9o0RxGRTQwmpWaWGYvfsIw",
+			"alias": "rewe-berlin-22",
+			"name": "REWE",
+			"image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/fWrZKNsvBEwAeAHgU6-e5w/o.jpg",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/rewe-berlin-22?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 1,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				}
+			],
+			"rating": 3.0,
+			"coordinates": {
+				"latitude": 52.57517,
+				"longitude": 13.50985
+			},
+			"transactions": [],
+			"price": "€€",
+			"location": {
+				"address1": "Ernst-Barlach-Str. 19",
+				"address2": null,
+				"address3": null,
+				"city": "Berlin",
+				"zip_code": "13059",
+				"country": "DE",
+				"state": "BE",
+				"display_address": ["Ernst-Barlach-Str. 19", "13059 Berlin", "Germany"]
+			},
+			"phone": "+493034353391",
+			"display_phone": "+49 30 34353391",
+			"distance": 10767.607444908104,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "gcviwXEjQPjJj5_g3APASQ",
+			"alias": "rewe-berlin-189",
+			"name": "REWE",
+			"image_url": "",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/rewe-berlin-189?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 1,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				}
+			],
+			"rating": 1.0,
+			"coordinates": {
+				"latitude": 52.45068,
+				"longitude": 13.50843
+			},
+			"transactions": [],
+			"location": {
+				"address1": "Sterndamm 29 - 35",
+				"address2": "",
+				"address3": null,
+				"city": "Berlin",
+				"zip_code": "12487",
+				"country": "DE",
+				"state": "BE",
+				"display_address": ["Sterndamm 29 - 35", "12487 Berlin", "Germany"]
+			},
+			"phone": "+493063103682",
+			"display_phone": "+49 30 63103682",
+			"distance": 9985.454326888812,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "57zsflCe1tFU3-ZFL49UKw",
+			"alias": "nazar-3-supermarkt-berlin-2",
+			"name": "Nazar 3 Supermarkt",
+			"image_url": "",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/nazar-3-supermarkt-berlin-2?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 1,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				}
+			],
+			"rating": 1.0,
+			"coordinates": {
+				"latitude": 52.4996270892145,
+				"longitude": 13.3629616140851
+			},
+			"transactions": [],
+			"price": "€€",
+			"location": {
+				"address1": "Potsdamer Str. 111",
+				"address2": "",
+				"address3": "",
+				"city": "Berlin",
+				"zip_code": "10783",
+				"country": "DE",
+				"state": "BE",
+				"display_address": ["Potsdamer Str. 111", "10783 Berlin", "Germany"]
+			},
+			"phone": "",
+			"display_phone": "",
+			"distance": 2353.5880198760265,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "QZIX3Oh7CMBvusNIev24qA",
+			"alias": "fleischerei-erdmann-and-schwarze-berlin",
+			"name": "Fleischerei Erdmann & Schwarze",
+			"image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/xZk8W7dtYPOuvhwLVesadQ/o.jpg",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/fleischerei-erdmann-and-schwarze-berlin?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 7,
+			"categories": [
+				{
+					"alias": "meats",
+					"title": "Meat Shops"
+				},
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				}
+			],
+			"rating": 2.5,
+			"coordinates": {
+				"latitude": 52.515,
+				"longitude": 13.4644
+			},
+			"transactions": [],
+			"price": "€€€",
+			"location": {
+				"address1": "Frankfurter Allee 45",
+				"address2": null,
+				"address3": null,
+				"city": "Berlin",
+				"zip_code": "10247",
+				"country": "DE",
+				"state": "BE",
+				"display_address": ["Frankfurter Allee 45", "10247 Berlin", "Germany"]
+			},
+			"phone": "+49304266824",
+			"display_phone": "+49 30 4266824",
+			"distance": 4761.349667747492,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "KY1yty3ZIcBG2QCyM8Al0g",
+			"alias": "nah-und-gut-babbel-berlin",
+			"name": "Nah und Gut Babbel",
+			"image_url": "",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/nah-und-gut-babbel-berlin?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 1,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				}
+			],
+			"rating": 1.0,
+			"coordinates": {
+				"latitude": 52.5727,
+				"longitude": 13.3085
+			},
+			"transactions": [],
+			"location": {
+				"address1": "Quäkerstr. 2",
+				"address2": null,
+				"address3": null,
+				"city": "Berlin",
+				"zip_code": "13403",
+				"country": "DE",
+				"state": "BE",
+				"display_address": ["Quäkerstr. 2", "13403 Berlin", "Germany"]
+			},
+			"phone": "+49304123044",
+			"display_phone": "+49 30 4123044",
+			"distance": 9293.31474446018,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "WSUAxiMKmhiTQ7NeoRyLhw",
+			"alias": "rewe-berlin-93",
+			"name": "Rewe",
+			"image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/EQA2XLXz59C1-dFu1AAeOQ/o.jpg",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/rewe-berlin-93?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 3,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				}
+			],
+			"rating": 3.5,
+			"coordinates": {
+				"latitude": 52.61,
+				"longitude": 13.3361
+			},
+			"transactions": [],
+			"price": "€€",
+			"location": {
+				"address1": "Waldshuter Zeile",
+				"address2": null,
+				"address3": null,
+				"city": "Berlin",
+				"zip_code": "13469",
+				"country": "DE",
+				"state": "BE",
+				"display_address": ["Waldshuter Zeile", "13469 Berlin", "Germany"]
+			},
+			"phone": "",
+			"display_phone": "",
+			"distance": 12044.310595425797,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "VCK8ggQI3G-4PDo6Qgckag",
+			"alias": "el-fi-supermarkt-berlin",
+			"name": "El-fi Supermarkt",
+			"image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/9lpeC3b6-9ZxeLWpRmLm9w/o.jpg",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/el-fi-supermarkt-berlin?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 4,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				}
+			],
+			"rating": 2.0,
+			"coordinates": {
+				"latitude": 52.49534,
+				"longitude": 13.42031
+			},
+			"transactions": [],
+			"price": "€",
+			"location": {
+				"address1": "Kottbusser Damm 1",
+				"address2": "10967",
+				"address3": "",
+				"city": "Berlin",
+				"zip_code": "10967",
+				"country": "DE",
+				"state": "BE",
+				"display_address": [
+					"Kottbusser Damm 1",
+					"10967",
+					"10967 Berlin",
+					"Germany"
+				]
+			},
+			"phone": "+4930695797x0",
+			"display_phone": "+49 30 695797 ext. 0",
+			"distance": 2187.1152650386607,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "s5dmwaUbLX61OL2eFmBBdA",
+			"alias": "frischeparadies-berlin",
+			"name": "FrischeParadies",
+			"image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/RyWvKcFiqPSVFmymHgEuig/o.jpg",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/frischeparadies-berlin?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 51,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				},
+				{
+					"alias": "delicatessen",
+					"title": "Delicatessen"
+				}
+			],
+			"rating": 4.5,
+			"coordinates": {
+				"latitude": 52.52391,
+				"longitude": 13.464398
+			},
+			"transactions": [],
+			"price": "€€€",
+			"location": {
+				"address1": "Hermann-Blankenstein-Str. 48",
+				"address2": "",
+				"address3": null,
+				"city": "Berlin",
+				"zip_code": "10249",
+				"country": "DE",
+				"state": "BE",
+				"display_address": [
+					"Hermann-Blankenstein-Str. 48",
+					"10249 Berlin",
+					"Germany"
+				]
+			},
+			"phone": "+4930390815131",
+			"display_phone": "+49 30 390815131",
+			"distance": 5023.582825645281,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "G4j-nMIfH-Rt3YfWN81qxg",
+			"alias": "frische-paradies-berlin",
+			"name": "Frische Paradies",
+			"image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/-pPMBMjAjEcwS3V7L8A0QQ/o.jpg",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/frische-paradies-berlin?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 66,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				}
+			],
+			"rating": 4.5,
+			"coordinates": {
+				"latitude": 52.5219051,
+				"longitude": 13.3219837
+			},
+			"transactions": [],
+			"price": "€€€",
+			"location": {
+				"address1": "Morsestr. 2",
+				"address2": "",
+				"address3": null,
+				"city": "Berlin",
+				"zip_code": "10587",
+				"country": "DE",
+				"state": "BE",
+				"display_address": ["Morsestr. 2", "10587 Berlin", "Germany"]
+			},
+			"phone": "+493039081523",
+			"display_phone": "+49 30 39081523",
+			"distance": 5187.56417863944,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "V5DeS8kMEJ4X0SZK_46GSg",
+			"alias": "hit-markt-berlin",
+			"name": "HIT-Markt",
+			"image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/iqmGRB916HH0ETjur9gf3Q/o.jpg",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/hit-markt-berlin?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 64,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				}
+			],
+			"rating": 4.0,
+			"coordinates": {
+				"latitude": 52.5062984990959,
+				"longitude": 13.3315206899939
+			},
+			"transactions": [],
+			"price": "€€",
+			"location": {
+				"address1": "Kantstr. 7",
+				"address2": "",
+				"address3": null,
+				"city": "Berlin",
+				"zip_code": "10623",
+				"country": "DE",
+				"state": "BE",
+				"display_address": ["Kantstr. 7", "10623 Berlin", "Germany"]
+			},
+			"phone": "+493081850110",
+			"display_phone": "+49 30 81850110",
+			"distance": 4302.771830082883,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "wkZYYcy1E9U5MOf35v3I-g",
+			"alias": "veganz-berlin",
+			"name": "Veganz",
+			"image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/miloi-czB4-XPlNDIKRTqQ/o.jpg",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/veganz-berlin?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 65,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				}
+			],
+			"rating": 4.0,
+			"coordinates": {
+				"latitude": 52.55084,
+				"longitude": 13.40859
+			},
+			"transactions": [],
+			"price": "€€€",
+			"location": {
+				"address1": "Schivelbeinerstr. 34",
+				"address2": "",
+				"address3": "",
+				"city": "Berlin",
+				"zip_code": "10439",
+				"country": "DE",
+				"state": "BE",
+				"display_address": ["Schivelbeinerstr. 34", "10439 Berlin", "Germany"]
+			},
+			"phone": "+493044036048",
+			"display_phone": "+49 30 44036048",
+			"distance": 4874.442841808284,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "nnvQQj6YylKQ4_eegb4-jA",
+			"alias": "veganz-berlin-2",
+			"name": "Veganz",
+			"image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/dvcdWP5QKjtj7_V3_82UWg/o.jpg",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/veganz-berlin-2?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 34,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				}
+			],
+			"rating": 4.0,
+			"coordinates": {
+				"latitude": 52.5078618,
+				"longitude": 13.4501781
+			},
+			"transactions": [],
+			"price": "€€€",
+			"location": {
+				"address1": "Warschauer Str. 33",
+				"address2": "",
+				"address3": "",
+				"city": "Berlin",
+				"zip_code": "10243",
+				"country": "DE",
+				"state": "BE",
+				"display_address": ["Warschauer Str. 33", "10243 Berlin", "Germany"]
+			},
+			"phone": "+493029009435",
+			"display_phone": "+49 30 29009435",
+			"distance": 3731.105159052352,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "sBc_SZY1S4QXh4SBhjVt7A",
+			"alias": "korean-food-stories-berlin",
+			"name": "Korean Food Stories",
+			"image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/vTu6pXjH4RewZKOA4kUtWA/o.jpg",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/korean-food-stories-berlin?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 11,
+			"categories": [
+				{
+					"alias": "korean",
+					"title": "Korean"
+				},
+				{
+					"alias": "panasian",
+					"title": "Pan Asian"
+				},
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				}
+			],
+			"rating": 4.0,
+			"coordinates": {
+				"latitude": 52.53515,
+				"longitude": 13.42143
+			},
+			"transactions": [],
+			"price": "€",
+			"location": {
+				"address1": "Prenzlauer Allee 217",
+				"address2": "",
+				"address3": "",
+				"city": "Berlin",
+				"zip_code": "10405",
+				"country": "DE",
+				"state": "BE",
+				"display_address": ["Prenzlauer Allee 217", "10405 Berlin", "Germany"]
+			},
+			"phone": "+493054630766",
+			"display_phone": "+49 30 54630766",
+			"distance": 3522.9224352223405,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "JVYy-uy66NyQ5eBKzoTVXQ",
+			"alias": "kraut-and-rüben-naturkost-berlin",
+			"name": "Kraut & Rüben Naturkost",
+			"image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/WVKHg3SXlSck2gXvZYDv4w/o.jpg",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/kraut-and-r%C3%BCben-naturkost-berlin?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 10,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				},
+				{
+					"alias": "organic_stores",
+					"title": "Organic Stores"
+				}
+			],
+			"rating": 4.5,
+			"coordinates": {
+				"latitude": 52.500651,
+				"longitude": 13.423149
+			},
+			"transactions": [],
+			"price": "€€",
+			"location": {
+				"address1": "Oranienstr. 15",
+				"address2": null,
+				"address3": null,
+				"city": "Berlin",
+				"zip_code": "10999",
+				"country": "DE",
+				"state": "BE",
+				"display_address": ["Oranienstr. 15", "10999 Berlin", "Germany"]
+			},
+			"phone": "+49306141075",
+			"display_phone": "+49 30 6141075",
+			"distance": 2060.6668678792275,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "oNr6-8GPx0BdTsTO4rDLFA",
+			"alias": "edeka-bahnhof-südkreuz-berlin-2",
+			"name": "EDEKA Bahnhof Südkreuz",
+			"image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/lhm5et0_zfs3uNB58XTkMQ/o.jpg",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/edeka-bahnhof-s%C3%BCdkreuz-berlin-2?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 28,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				}
+			],
+			"rating": 4.0,
+			"coordinates": {
+				"latitude": 52.47614,
+				"longitude": 13.36318
+			},
+			"transactions": [],
+			"price": "€€",
+			"location": {
+				"address1": "Hildegard-Knef-Platz 1",
+				"address2": "",
+				"address3": "",
+				"city": "Berlin",
+				"zip_code": "10829",
+				"country": "DE",
+				"state": "BE",
+				"display_address": ["Hildegard-Knef-Platz 1", "10829 Berlin", "Germany"]
+			},
+			"phone": "+493078712600",
+			"display_phone": "+49 30 78712600",
+			"distance": 4051.4334076397713,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "diDH_U6NYW7P8wnq-yf3CA",
+			"alias": "edeka-berliner-straße-berlin",
+			"name": "EDEKA Berliner Straße",
+			"image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/h4zU-M4iPB_0vW4zpSyF2g/o.jpg",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/edeka-berliner-stra%C3%9Fe-berlin?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 35,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				}
+			],
+			"rating": 4.5,
+			"coordinates": {
+				"latitude": 52.486857,
+				"longitude": 13.325561
+			},
+			"transactions": [],
+			"price": "€€",
+			"location": {
+				"address1": "Berliner Str. 24 - 25",
+				"address2": "",
+				"address3": "",
+				"city": "Berlin",
+				"zip_code": "10715",
+				"country": "DE",
+				"state": "BE",
+				"display_address": ["Berliner Str. 24 - 25", "10715 Berlin", "Germany"]
+			},
+			"phone": "+493086391920",
+			"display_phone": "+49 30 86391920",
+			"distance": 5248.044203144756,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "JmY4yOwH_8pxTmtGQ_l2Gg",
+			"alias": "pikilia-berlin",
+			"name": "Pikilia",
+			"image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/2db8INgPrQEBRtXJIXPA4w/o.jpg",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/pikilia-berlin?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 12,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				},
+				{
+					"alias": "gourmet",
+					"title": "Specialty Food"
+				}
+			],
+			"rating": 4.5,
+			"coordinates": {
+				"latitude": 52.4907653,
+				"longitude": 13.3534098
+			},
+			"transactions": [],
+			"price": "€€",
+			"location": {
+				"address1": "Goltzstr. 5",
+				"address2": "",
+				"address3": "",
+				"city": "Berlin",
+				"zip_code": "10781",
+				"country": "DE",
+				"state": "BE",
+				"display_address": ["Goltzstr. 5", "10781 Berlin", "Germany"]
+			},
+			"phone": "+493043200424",
+			"display_phone": "+49 30 43200424",
+			"distance": 3394.927712816804,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "yeLbxjO6a3ygewggcNFksQ",
+			"alias": "edeka-center-berlin-moabit-berlin",
+			"name": "EDEKA Center Berlin Moabit",
+			"image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/5fS68-IjkRwZaLDntBDkOA/o.jpg",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/edeka-center-berlin-moabit-berlin?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 25,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				}
+			],
+			"rating": 4.0,
+			"coordinates": {
+				"latitude": 52.5318799194882,
+				"longitude": 13.3439288500567
+			},
+			"transactions": [],
+			"price": "€€",
+			"location": {
+				"address1": "Stephanstr. 37 - 43",
+				"address2": "",
+				"address3": null,
+				"city": "Berlin",
+				"zip_code": "10559",
+				"country": "DE",
+				"state": "BE",
+				"display_address": ["Stephanstr. 37 - 43", "10559 Berlin", "Germany"]
+			},
+			"phone": "+493099286850",
+			"display_phone": "+49 30 99286850",
+			"distance": 4375.23911067683,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "VVKvSU1C9k2loDX1VxblCw",
+			"alias": "super-ibérico-berlin-2",
+			"name": "Super Ibérico",
+			"image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/vaAKqczIL9ol_B9m3QJxcw/o.jpg",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/super-ib%C3%A9rico-berlin-2?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 3,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				}
+			],
+			"rating": 4.5,
+			"coordinates": {
+				"latitude": 52.5051334,
+				"longitude": 13.3940077
+			},
+			"transactions": [],
+			"price": "€€",
+			"location": {
+				"address1": "Markgrafenstr. 68",
+				"address2": "",
+				"address3": null,
+				"city": "Berlin",
+				"zip_code": "10969",
+				"country": "DE",
+				"state": "BE",
+				"display_address": ["Markgrafenstr. 68", "10969 Berlin", "Germany"]
+			},
+			"phone": "+493035123931",
+			"display_phone": "+49 30 35123931",
+			"distance": 302.95106230468326,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "bEoW47yxFaHdIB0AVxQw0A",
+			"alias": "atti-asia-markt-berlin",
+			"name": "Atti Asia Markt",
+			"image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/XogPWTJTzjSXrASGaUgBWA/o.jpg",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/atti-asia-markt-berlin?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 9,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				},
+				{
+					"alias": "delicatessen",
+					"title": "Delicatessen"
+				},
+				{
+					"alias": "farmersmarket",
+					"title": "Farmers Market"
+				}
+			],
+			"rating": 5.0,
+			"coordinates": {
+				"latitude": 52.5455284,
+				"longitude": 13.3582001
+			},
+			"transactions": [],
+			"price": "€€",
+			"location": {
+				"address1": "Luxemburger Str. 31",
+				"address2": null,
+				"address3": "",
+				"city": "Berlin",
+				"zip_code": "13353",
+				"country": "DE",
+				"state": "BE",
+				"display_address": ["Luxemburger Str. 31", "13353 Berlin", "Germany"]
+			},
+			"phone": "+493046605622",
+			"display_phone": "+49 30 46605622",
+			"distance": 4876.691519316146,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "T6zbD9PqDxKyQHZZJ-J8TQ",
+			"alias": "edeka-moch-berlin",
+			"name": "EDEKA Moch",
+			"image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/7qWDrznqMx3_Gozmw6QgZQ/o.jpg",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/edeka-moch-berlin?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 17,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				}
+			],
+			"rating": 4.0,
+			"coordinates": {
+				"latitude": 52.519885,
+				"longitude": 13.415303
+			},
+			"transactions": [],
+			"price": "€€",
+			"location": {
+				"address1": "Grunerstr. 20",
+				"address2": "",
+				"address3": null,
+				"city": "Berlin",
+				"zip_code": "10179",
+				"country": "DE",
+				"state": "BE",
+				"display_address": ["Grunerstr. 20", "10179 Berlin", "Germany"]
+			},
+			"phone": "+493024045625",
+			"display_phone": "+49 30 24045625",
+			"distance": 1920.7618300182298,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "kIdtIozhnGvx8vlchUU85Q",
+			"alias": "concierge-online-liefer-supermarkt-berlin",
+			"name": "concierge online Liefer-Supermarkt",
+			"image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/NQ1e55FYU-GkGNyehE4tYg/o.jpg",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/concierge-online-liefer-supermarkt-berlin?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 11,
+			"categories": [
+				{
+					"alias": "beverage_stores",
+					"title": "Beverage Store"
+				},
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				}
+			],
+			"rating": 4.5,
+			"coordinates": {
+				"latitude": 52.54049,
+				"longitude": 13.35577
+			},
+			"transactions": [],
+			"price": "€€",
+			"location": {
+				"address1": "Kiautschoustr. 14",
+				"address2": "",
+				"address3": "",
+				"city": "Berlin",
+				"zip_code": "13353",
+				"country": "DE",
+				"state": "BE",
+				"display_address": ["Kiautschoustr. 14", "13353 Berlin", "Germany"]
+			},
+			"phone": "+493047595650",
+			"display_phone": "+49 30 47595650",
+			"distance": 4498.315779908768,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "CrNWDvhctQLNE9zMbuHi8A",
+			"alias": "hit-ullrich-berlin",
+			"name": "HIT Ullrich",
+			"image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/CytyfIS16BgJhuQpBZYS9Q/o.jpg",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/hit-ullrich-berlin?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 12,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				}
+			],
+			"rating": 3.5,
+			"coordinates": {
+				"latitude": 52.5117407986871,
+				"longitude": 13.3838404180031
+			},
+			"transactions": [],
+			"price": "€€",
+			"location": {
+				"address1": "Mohrenstr. 69",
+				"address2": null,
+				"address3": null,
+				"city": "Berlin",
+				"zip_code": "10117",
+				"country": "DE",
+				"state": "BE",
+				"display_address": ["Mohrenstr. 69", "10117 Berlin", "Germany"]
+			},
+			"phone": "+493022668022",
+			"display_phone": "+49 30 22668022",
+			"distance": 876.9533557270906,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "k9T3MCCPYIhCEvtwgeXJbw",
+			"alias": "köpenicker-weinladen-max-hoch-berlin",
+			"name": "Köpenicker Weinladen Max Hoch",
+			"image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/Cmh5RR-dm9JzUZWoHUshqQ/o.jpg",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/k%C3%B6penicker-weinladen-max-hoch-berlin?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 8,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				},
+				{
+					"alias": "wine_bars",
+					"title": "Wine Bars"
+				}
+			],
+			"rating": 5.0,
+			"coordinates": {
+				"latitude": 52.50273,
+				"longitude": 13.43929
+			},
+			"transactions": [],
+			"price": "€€",
+			"location": {
+				"address1": "Köpenicker Str. 8",
+				"address2": null,
+				"address3": null,
+				"city": "Berlin",
+				"zip_code": "10997",
+				"country": "DE",
+				"state": "BE",
+				"display_address": ["Köpenicker Str. 8", "10997 Berlin", "Germany"]
+			},
+			"phone": "+49306119009",
+			"display_phone": "+49 30 6119009",
+			"distance": 3046.6356954064863,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "M8E4biqsbtL_nQn7P7J6rQ",
+			"alias": "kaufland-berlin-33",
+			"name": "Kaufland",
+			"image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/pUi_AD5-b7Cn9pXWWCZMdQ/o.jpg",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/kaufland-berlin-33?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 16,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				}
+			],
+			"rating": 4.0,
+			"coordinates": {
+				"latitude": 52.468062,
+				"longitude": 13.37708
+			},
+			"transactions": [],
+			"price": "€€",
+			"location": {
+				"address1": "Schöneberger Str. 7",
+				"address2": null,
+				"address3": null,
+				"city": "Berlin",
+				"zip_code": "12103",
+				"country": "DE",
+				"state": "BE",
+				"display_address": ["Schöneberger Str. 7", "12103 Berlin", "Germany"]
+			},
+			"phone": "+4930710961x0",
+			"display_phone": "+49 30 710961 ext. 0",
+			"distance": 4581.298870204838,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "VPyEjFRe9mi2Ww6LF0IlZQ",
+			"alias": "veganz-berlin-5",
+			"name": "Veganz",
+			"image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/wfi8FIzyOmjiI-PnQbD3xw/o.jpg",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/veganz-berlin-5?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 5,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				}
+			],
+			"rating": 4.0,
+			"coordinates": {
+				"latitude": 52.4894,
+				"longitude": 13.39458
+			},
+			"transactions": [],
+			"price": "€€",
+			"location": {
+				"address1": "Marheinekeplatz 15",
+				"address2": "",
+				"address3": "",
+				"city": "Berlin",
+				"zip_code": "10961",
+				"country": "DE",
+				"state": "BE",
+				"display_address": ["Marheinekeplatz 15", "10961 Berlin", "Germany"]
+			},
+			"phone": "+493029363780",
+			"display_phone": "+49 30 29363780",
+			"distance": 2059.9978487816525,
+			"has_pfand_automats": false
+		},
+		{
+			"id": "iIAmrN-5QIv_9LBMtTm1cw",
+			"alias": "kaufland-berlin-25",
+			"name": "Kaufland",
+			"image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/T6z6FGA9TceuJtYgPtJEBw/o.jpg",
+			"is_closed": false,
+			"url": "https://www.yelp.com/biz/kaufland-berlin-25?adjust_creative=hgHPW6qItZ28H0BkPOalLw&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=hgHPW6qItZ28H0BkPOalLw",
+			"review_count": 13,
+			"categories": [
+				{
+					"alias": "grocery",
+					"title": "Grocery"
+				}
+			],
+			"rating": 4.0,
+			"coordinates": {
+				"latitude": 52.5234,
+				"longitude": 13.4644
+			},
+			"transactions": [],
+			"price": "€",
+			"location": {
+				"address1": "Hermann-Blankenstein-Str. 38",
+				"address2": "",
+				"address3": null,
+				"city": "Berlin",
+				"zip_code": "10249",
+				"country": "DE",
+				"state": "BE",
+				"display_address": [
+					"Hermann-Blankenstein-Str. 38",
+					"10249 Berlin",
+					"Germany"
+				]
+			},
+			"phone": "+4930467947380",
+			"display_phone": "+49 30 467947380",
+			"distance": 5003.772741371194,
+			"has_pfand_automats": false
+		}
+	]
+}
