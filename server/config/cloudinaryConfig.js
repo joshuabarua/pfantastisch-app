@@ -1,6 +1,6 @@
-import {v2 as cloudinary} from "cloudinary";
+import {v2 as cloudinary} from 'cloudinary';
 
-const cloudinaryConfig = () => {
+const configureCloudinary = () => {
 	cloudinary.config({
 		cloud_name: process.env.CLOUD_NAME,
 		api_key: process.env.CLOUDINARY_API_KEY,
@@ -8,4 +8,4 @@ const cloudinaryConfig = () => {
 	});
 };
 
-export default cloudinaryConfig;
+export default configureCloudinary;

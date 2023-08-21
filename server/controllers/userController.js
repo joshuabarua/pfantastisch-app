@@ -1,5 +1,7 @@
 import {UserModel} from '../models/userModel.js';
+import {encryptPassword, verifyPassword} from '../utils/bcrypt.js';
 import imageUpload from '../utils/imageManagement.js';
+import {generateToken} from '../utils/jwt.js';
 
 const testRoute = (req, res) => {
 	console.log(req);
@@ -47,15 +49,19 @@ const findUserByEmail = async (req, res) => {
 		res.status(400).json({error: 'valid mail must be included'});
 	}
 };
+
+//TODO: Find why adding user image not working
+
 const createUser = async (req, res) => {
 	const {email, password, username} = req.body;
 	console.log(req.body, req.file);
 	if (!email || !password || !username)
 		return res.status(406).json({error: 'Please fill out all fields'});
 	const result = await imageUpload(req.file, 'profile_pics');
+	const hashedPassword = await encryptPassword(password);
 	const newUser = new UserModel({
 		email,
-		password,
+		password: hashedPassword,
 		username,
 		image_url: result,
 	});
@@ -78,6 +84,7 @@ const createUser = async (req, res) => {
 	}
 };
 
+//TODO: Find why update user image not working
 const updateUser = async (req, res) => {
 	try {
 		if (req.file) {
@@ -90,17 +97,66 @@ const updateUser = async (req, res) => {
 				}
 			);
 			res.status(200).json(result);
-			console.log(result);
+			console.log(error);
 		} else {
 			const result = await UserModel.findByIdAndUpdate(req.body._id, req.body, {
 				new: true,
 			});
 			res.status(200).json(result);
-			console.log(result);
 		}
 	} catch (e) {
 		res.status(500).json({error: 'Something went wrong...'});
 	}
+};
+
+const updatePassword = async (req, res) => {
+	const {password: stringPassword, _id} = req.body;
+	try {
+		const hashedPassword = await encryptPassword(stringPassword);
+		console.log(stringPassword, _id, hashedPassword);
+		const result = await UserModel.findByIdAndUpdate(
+			_id,
+			{password: hashedPassword},
+			{new: true}
+		);
+		res.status(200).json({message: 'password updated!'});
+	} catch (error) {
+		res.status(500).json({error: 'Something went wrong...'});
+	}
+};
+
+const login = async (req, res) => {
+	const {email, password} = req.body;
+	try {
+		const existingUser = await UserModel.findOne({email});
+		// console.log(req.body, existingUser);
+		if (!existingUser) {
+			return res.status(404).json({error: 'No user with that email.'});
+		}
+		console.log('existing user? >>:', existingUser ? true : false);
+
+		const verified = await verifyPassword(password, existingUser.password);
+		console.log('verified password? >>:', verified ? true : false);
+		if (!verified) {
+			return res.status(401).json({error: "Password doesn't match."});
+		}
+
+		const token = generateToken(existingUser);
+		const forFront = {
+			email: existingUser.email,
+			username: existingUser.username,
+			_id: existingUser._id,
+			createdAt: existingUser.createdAt,
+			image_url: existingUser.image_url,
+		};
+		res.status(200).json({verified, token, user: forFront});
+	} catch (error) {
+		res.status(500).json({error: 'Something went wrong...'});
+	}
+};
+
+const getMe = async (req, res) => {
+	res.send('connected');
 };
 
 export {
@@ -110,4 +166,7 @@ export {
 	createUser,
 	updateUser,
 	middleTest,
+	updatePassword,
+	login,
+	getMe,
 };
