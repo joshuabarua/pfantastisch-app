@@ -16,4 +16,5 @@ export const imageUpload = async (file, folder) => {
 		return undefined;
 	}
 };
- 
+
+export default imageUpload;

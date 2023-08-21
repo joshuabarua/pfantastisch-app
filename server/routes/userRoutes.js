@@ -15,7 +15,7 @@ appRouter.get("/test", middleTest, testRoute);
 appRouter.get("/all", findAllUsers);
 
 appRouter.get("/email/:email", findUserByEmail);
-appRouter.post("/new", multerUpload.single("image"), createUser);
+appRouter.post("/new", multerUpload.single("image_url"), createUser);
 appRouter.put("/update", updateUser);
 
 export default appRouter;

@@ -4,8 +4,8 @@ const userSchema = new mongoose.Schema(
 	{
 		email: {type: String, required: true, unique: true},
 		username: String,
-		password: {type: String, required: true},
 		// comments: [{type: ObjectId, ref: "Comment"}],
+		password: {type: String, required: true},
 		image_url: {
 			type: String,
 			required: true,
