@@ -1,11 +1,18 @@
 import {useEffect, useState} from 'react';
-import './App.css';
-import {Users} from './@types';
-import UserCard from './components/UserCard';
-import CreateUserForm from './components/CreateUserForm';
-import Login from './pages/Login';
+import {Users} from '../@types';
+import UserCard from '../components/UserCard';
+import CreateUserForm from '../components/CreateUserForm';
 
-function App() {
+const usersContainerStyles: React.CSSProperties = {
+	height: '100vh',
+	width: '100vw',
+	display: 'flex',
+	justifyContent: 'center',
+	alignItems: 'center',
+	flexDirection: 'column',
+};
+
+function AllUsers() {
 	const baseURL = import.meta.env.VITE_SERVER_BASE;
 	const [users, setUsers] = useState<Users>([]);
 
@@ -24,8 +31,7 @@ function App() {
 	}, []);
 	console.log(users);
 	return (
-		<>
-			<div></div>
+		<div style={usersContainerStyles}>
 			<h1>MERN</h1>
 
 			{users.length === 0 ? (
@@ -39,9 +45,8 @@ function App() {
 				</>
 			)}
 			<CreateUserForm setUsers={setUsers} users={users} />
-			<Login />
-		</>
+		</div>
 	);
 }
 
-export default App;
+export default AllUsers;
