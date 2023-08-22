@@ -3,21 +3,32 @@ import {encryptPassword, verifyPassword} from '../utils/bcrypt.js';
 import imageUpload from '../utils/imageManagement.js';
 import {generateToken} from '../utils/jwt.js';
 
-const testRoute = (req, res) => {
-	console.log(req);
-	res.send('testing route....');
-};
+// const testRoute = (req, res) => {
+// 	console.log(req);
+// 	res.send('testing route....');
+// };
 
-const middleTest = (request, response, next) => {
-	console.log(request, response, 'middleware is up');
-	next();
-};
+// const middleTest = (request, response, next) => {
+// 	console.log(request, response, 'middleware is up');
+// 	next();
+// };
 
 const findAllUsers = async (request, response) => {
+	const users = await UserModel.find();
+
 	try {
-		const users = await UserModel.find();
 		if (users) {
-			response.status(200).json(users);
+			const forFront = [];
+			users.forEach((user) =>
+				forFront.push({
+					email: user.email,
+					username: user.username,
+					createdAt: user.createdAt,
+					_id: user._id,
+					image_url: user.image_url,
+				})
+			);
+			response.status(200).json(forFront);
 		} else {
 			response.status(404).json({error: 'nothing in collection'});
 		}
@@ -49,8 +60,6 @@ const findUserByEmail = async (req, res) => {
 		res.status(400).json({error: 'valid mail must be included'});
 	}
 };
-
-//TODO: Find why adding user image not working
 
 const createUser = async (req, res) => {
 	const {email, password, username} = req.body;
@@ -84,7 +93,6 @@ const createUser = async (req, res) => {
 	}
 };
 
-//TODO: Find why update user image not working
 const updateUser = async (req, res) => {
 	try {
 		if (req.file) {
@@ -159,14 +167,18 @@ const getMe = async (req, res) => {
 	res.send('connected');
 };
 
+const logout = () => {
+	localStorage.removeItem('token');
+	setUser(null);
+};
+
 export {
-	testRoute,
 	findAllUsers,
 	findUserByEmail,
 	createUser,
 	updateUser,
-	middleTest,
 	updatePassword,
 	login,
 	getMe,
+	logout,
 };

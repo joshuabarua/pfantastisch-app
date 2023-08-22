@@ -1,11 +1,9 @@
 import express from 'express';
 import {
-	testRoute,
 	findAllUsers,
 	findUserByEmail,
 	createUser,
 	updateUser,
-	middleTest,
 	login,
 	getMe,
 	updatePassword,
@@ -15,7 +13,7 @@ import jwtAuth from '../middlewares/jwtAuth.js';
 
 const appRouter = express.Router();
 
-appRouter.get('/test', middleTest, testRoute);
+// appRouter.get('/test', middleTest, testRoute);
 appRouter.get('/all', findAllUsers);
 appRouter.get('/email/:email', findUserByEmail);
 appRouter.get('/me', jwtAuth, getMe);

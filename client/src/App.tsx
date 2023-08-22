@@ -1,10 +1,11 @@
-import {useEffect, useState} from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
-import {Users} from "./@types";
-import UserCard from "./components/UserCard";
-import CreateUserForm from "./components/CreateUserForm";
+import {useEffect, useState} from 'react';
+import reactLogo from './assets/react.svg';
+import viteLogo from '/vite.svg';
+import './App.css';
+import {Users} from './@types';
+import UserCard from './components/UserCard';
+import CreateUserForm from './components/CreateUserForm';
+import Login from './pages/Login';
 
 function App() {
 	const baseURL = import.meta.env.VITE_SERVER_BASE;
@@ -27,11 +28,11 @@ function App() {
 	return (
 		<>
 			<div>
-				<a href="https://vitejs.dev" target="_blank">
-					<img src={viteLogo} className="logo" alt="Vite logo" />
+				<a href='https://vitejs.dev' target='_blank'>
+					<img src={viteLogo} className='logo' alt='Vite logo' />
 				</a>
-				<a href="https://react.dev" target="_blank">
-					<img src={reactLogo} className="logo react" alt="React logo" />
+				<a href='https://react.dev' target='_blank'>
+					<img src={reactLogo} className='logo react' alt='React logo' />
 				</a>
 			</div>
 			<h1>MERN</h1>
@@ -47,6 +48,7 @@ function App() {
 				</>
 			)}
 			<CreateUserForm setUsers={setUsers} users={users} />
+			<Login />
 		</>
 	);
 }
