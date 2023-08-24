@@ -34,6 +34,19 @@ body {
 h1 {
 	font-size: 3.2em;
 	line-height: 1.1;
+	color: #000;
+}
+p {
+	color: #000;
+}
+
+label {
+	color: #1a1a1a;
+	text-align: left;
+}
+
+input {
+	border-radius: 25px;
 }
 
 button {
@@ -53,6 +66,19 @@ button:hover {
 button:focus,
 button:focus-visible {
 	outline: 4px auto -webkit-focus-ring-color;
+}
+
+.centeredDiv {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.formStyles {
+	display: 'flex';
+	justify-content: 'center';
+	align-items: 'center';
+	flex-direction: 'column';
 }
 
 @media (prefers-color-scheme: light) {

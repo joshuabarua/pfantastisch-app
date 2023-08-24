@@ -29,7 +29,7 @@ function AllUsers() {
 
 		fetchAllUsers().catch((e) => console.log(e));
 	}, []);
-	console.log(users);
+
 	return (
 		<div style={usersContainerStyles}>
 			<h1>MERN</h1>

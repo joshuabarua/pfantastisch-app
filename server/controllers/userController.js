@@ -66,16 +66,18 @@ const createUser = async (req, res) => {
 	console.log(req.body, req.file);
 	if (!email || !password || !username)
 		return res.status(406).json({error: 'Please fill out all fields'});
-	const result = await imageUpload(req.file, 'profile_pics');
+	const imageResult = await imageUpload(req.file, 'profile_pics');
 	const hashedPassword = await encryptPassword(password);
 	const newUser = new UserModel({
 		email,
 		password: hashedPassword,
 		username,
-		image_url: result,
+		image_url: imageResult,
 	});
 	try {
 		const result = await newUser.save();
+		const token = generateToken(newUser);
+
 		const forFront = {
 			email: result.email,
 			username: result.username,
@@ -83,8 +85,8 @@ const createUser = async (req, res) => {
 			createdAt: result.createdAt,
 			image_url: result.image_url,
 		};
-		res.status(200).json(result);
-		console.log(result);
+		res.status(200).json({result, token, user: forFront});
+		console.log({result, token, user: forFront});
 	} catch (e) {
 		console.log(e);
 		e.code === 11000
@@ -137,18 +139,13 @@ const login = async (req, res) => {
 	const {email, password} = req.body;
 	try {
 		const existingUser = await UserModel.findOne({email});
-		// console.log(req.body, existingUser);
 		if (!existingUser) {
 			return res.status(404).json({error: 'No user with that email.'});
 		}
-		console.log('existing user? >>:', existingUser ? true : false);
-
 		const verified = await verifyPassword(password, existingUser.password);
-		console.log('verified password? >>:', verified ? true : false);
 		if (!verified) {
 			return res.status(401).json({error: "Password doesn't match."});
 		}
-
 		const token = generateToken(existingUser);
 		const forFront = {
 			email: existingUser.email,

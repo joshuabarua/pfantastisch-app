@@ -1,4 +1,4 @@
-import {createContext, useState, ReactNode, useEffect} from 'react';
+import {createContext, useState, ReactNode} from 'react';
 import {NotOk, User} from '../@types';
 
 interface DefaultValue {
@@ -62,31 +62,31 @@ export const AuthContextProvider = ({children}: {children: ReactNode}) => {
 		localStorage.removeItem('token');
 	};
 
-	const getActiveUser = async () => {
-		const token = localStorage.getItem('token');
-		if (token) {
-			try {
-				const myHeaders = new Headers();
-				myHeaders.append('Authorization', `Bearer ${token}`);
-				const requestOptions = {
-					method: 'GET',
-					headers: myHeaders,
-				};
-				const response = await fetch(`${baseURL}api/users/me`, requestOptions);
-				const result = (await response.json()) as User;
-				setUser(result);
-				console.log('active user', result);
-			} catch (error) {
-				console.log(error);
-			}
-		} else {
-			setUser(null);
-		}
-	};
+	// const getActiveUser = async () => {
+	// 	const token = localStorage.getItem('token');
+	// 	if (token) {
+	// 		try {
+	// 			const myHeaders = new Headers();
+	// 			myHeaders.append('Authorization', `Bearer ${token}`);
+	// 			const requestOptions = {
+	// 				method: 'GET',
+	// 				headers: myHeaders,
+	// 			};
+	// 			const response = await fetch(`${baseURL}api/users/me`, requestOptions);
+	// 			const result = (await response.json()) as User;
+	// 			setUser(result);
+	// 			console.log('active user', result);
+	// 		} catch (error) {
+	// 			console.log(error);
+	// 		}
+	// 	} else {
+	// 		setUser(null);
+	// 	}
+	// };
 
-	useEffect(() => {
-		getActiveUser().catch((e) => console.log(e));
-	}, []);
+	// useEffect(() => {
+	// 	getActiveUser().catch((e) => console.log(e));
+	// }, []);
 
 	return (
 		<AuthContext.Provider value={{user, login, logout}}>

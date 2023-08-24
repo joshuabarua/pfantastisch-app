@@ -8,6 +8,7 @@ import {AuthContextProvider} from './context/AuthContext.tsx';
 import NavWrapper from './components/NavWrapper.tsx';
 import Homepage from './pages/Homepage.tsx';
 import Error404 from './pages/Error404.tsx';
+import Signup from './pages/signup.tsx';
 // import CreateUserForm from './components/CreateUserForm.tsx';
 
 const router = createBrowserRouter([
@@ -18,6 +19,7 @@ const router = createBrowserRouter([
 			</AuthContextProvider>
 		),
 		// putting context at outermost layer of router means it still wraps every route, but is also inside the router and can then use react router dom hooks like useNavigate
+
 		children: [
 			{
 				element: (
@@ -38,10 +40,10 @@ const router = createBrowserRouter([
 						path: '/login',
 						element: <Login />,
 					},
-					// {
-					// 	path: '/newUser',
-					// 	element: <CreateUserForm setUsers={setUsers} users={users} />,
-					// },
+					{
+						path: '/newUser',
+						element: <Signup />,
+					},
 				],
 			},
 			{
