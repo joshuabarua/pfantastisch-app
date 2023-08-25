@@ -1,4 +1,4 @@
-import {createContext, useState, ReactNode} from 'react';
+import {createContext, useState, ReactNode, useEffect} from 'react';
 import {NotOk, User} from '../@types';
 
 interface DefaultValue {
@@ -28,7 +28,6 @@ export const AuthContext = createContext<DefaultValue>(initialValue);
 export const AuthContextProvider = ({children}: {children: ReactNode}) => {
 	const baseURL = import.meta.env.VITE_SERVER_BASE as string;
 	const [user, setUser] = useState<null | User>(null);
-
 	const login = async (email: string, password: string) => {
 		const myHeaders = new Headers();
 		myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
@@ -44,7 +43,7 @@ export const AuthContextProvider = ({children}: {children: ReactNode}) => {
 			const response = await fetch(`${baseURL}api/users/login`, requestOptions);
 			if (!response.ok) {
 				const result = (await response.json()) as NotOk;
-				alert(result.error);
+				console.log(result.error);
 			} else {
 				const result = (await response.json()) as LoginResult;
 				console.log(result);
@@ -62,31 +61,34 @@ export const AuthContextProvider = ({children}: {children: ReactNode}) => {
 		localStorage.removeItem('token');
 	};
 
-	// const getActiveUser = async () => {
-	// 	const token = localStorage.getItem('token');
-	// 	if (token) {
-	// 		try {
-	// 			const myHeaders = new Headers();
-	// 			myHeaders.append('Authorization', `Bearer ${token}`);
-	// 			const requestOptions = {
-	// 				method: 'GET',
-	// 				headers: myHeaders,
-	// 			};
-	// 			const response = await fetch(`${baseURL}api/users/me`, requestOptions);
-	// 			const result = (await response.json()) as User;
-	// 			setUser(result);
-	// 			console.log('active user', result);
-	// 		} catch (error) {
-	// 			console.log(error);
-	// 		}
-	// 	} else {
-	// 		setUser(null);
-	// 	}
-	// };
+	//TODO: Find out why this is broken?
 
-	// useEffect(() => {
-	// 	getActiveUser().catch((e) => console.log(e));
-	// }, []);
+	const getActiveUser = async () => {
+		const token = localStorage.getItem('token');
+		console.log(token);
+		if (token && token) {
+			try {
+				const myHeaders = new Headers();
+				myHeaders.append('Authorization', `Bearer ${token}`);
+				const requestOptions = {
+					method: 'GET',
+					headers: myHeaders,
+				};
+				const response = await fetch(`${baseURL}api/users/me`, requestOptions);
+				const result = (await response.json()) as User;
+				setUser(result);
+				console.log('active user', result);
+			} catch (error) {
+				console.log(error);
+			}
+		} else {
+			setUser(null);
+		}
+	};
+
+	useEffect(() => {
+		getActiveUser().catch((e) => console.log(e));
+	}, []);
 
 	return (
 		<AuthContext.Provider value={{user, login, logout}}>

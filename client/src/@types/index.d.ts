@@ -3,6 +3,7 @@ export interface User {
 	email: string;
 	password: string;
 	username: string;
+	image_url: string;
 }
 
 export type Users = User[];

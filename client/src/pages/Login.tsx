@@ -1,6 +1,7 @@
-import {FormEvent, useState} from 'react';
+import {FormEvent, useContext, useEffect, useState} from 'react';
 import {NavLink} from 'react-router-dom';
 import {NotOk} from '../@types';
+import {AuthContext} from '../context/AuthContext';
 
 interface LoginResult {
 	verified: boolean;
@@ -15,6 +16,7 @@ const formStyles: React.CSSProperties = {
 };
 
 const Login = () => {
+	const {user} = useContext(AuthContext);
 	const baseURL = import.meta.env.VITE_SERVER_BASE as string;
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -58,6 +60,7 @@ const Login = () => {
 		console.log({email, password});
 		loginUser().catch((e) => console.log(e));
 	};
+	useEffect(() => {}, [user]);
 	return (
 		<div className='centeredDiv' style={{flexDirection: 'column', width: '100vw'}}>
 			<div
