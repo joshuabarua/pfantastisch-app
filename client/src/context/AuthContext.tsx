@@ -1,5 +1,6 @@
 import {createContext, useState, ReactNode, useEffect} from 'react';
 import {NotOk, User} from '../@types';
+import {toast} from 'react-toastify';
 
 interface DefaultValue {
 	user: null | User;
@@ -59,14 +60,12 @@ export const AuthContextProvider = ({children}: {children: ReactNode}) => {
 	const logout = () => {
 		setUser(null);
 		localStorage.removeItem('token');
+		toast.success('Logging out... Cya!');
 	};
-
-	//TODO: Find out why this is broken?
 
 	const getActiveUser = async () => {
 		const token = localStorage.getItem('token');
-		console.log(token);
-		if (token && token) {
+		if (token) {
 			try {
 				const myHeaders = new Headers();
 				myHeaders.append('Authorization', `Bearer ${token}`);
@@ -77,7 +76,6 @@ export const AuthContextProvider = ({children}: {children: ReactNode}) => {
 				const response = await fetch(`${baseURL}api/users/me`, requestOptions);
 				const result = (await response.json()) as User;
 				setUser(result);
-				console.log('active user', result);
 			} catch (error) {
 				console.log(error);
 			}

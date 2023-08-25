@@ -51,7 +51,18 @@ function Nav() {
 					Sign Up
 				</NavLink>
 			</div>
-			<p>{user ? <button onClick={logout}>Logout</button> : 'Please Login...'}</p>
+			<p>
+				{user ? (
+					<button
+						onClick={() => {
+							logout();
+						}}>
+						Logout
+					</button>
+				) : (
+					'Please Login...'
+				)}
+			</p>
 		</nav>
 	);
 }

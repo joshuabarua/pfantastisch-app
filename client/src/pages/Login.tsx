@@ -1,7 +1,7 @@
-import {FormEvent, useContext, useEffect, useState} from 'react';
-import {NavLink} from 'react-router-dom';
+import {FormEvent, useState} from 'react';
+import {NavLink, useNavigate} from 'react-router-dom';
 import {NotOk} from '../@types';
-import {AuthContext} from '../context/AuthContext';
+import {toast} from 'react-toastify';
 
 interface LoginResult {
 	verified: boolean;
@@ -16,10 +16,10 @@ const formStyles: React.CSSProperties = {
 };
 
 const Login = () => {
-	const {user} = useContext(AuthContext);
 	const baseURL = import.meta.env.VITE_SERVER_BASE as string;
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const redirect = useNavigate();
 
 	const loginUser = async () => {
 		// formData didnt work but headers did
@@ -43,71 +43,75 @@ const Login = () => {
 				const result = await response.json();
 				const {token} = result as LoginResult;
 				localStorage.setItem('token', token);
-				console.log('user verified and token saved');
+				toast.success('Login Successful');
+				setTimeout(() => redirect('/'), 2000);
 			} else {
 				const result = (await response.json()) as NotOk;
-				alert(result.error);
+				toast.error(`Something went wrong - ${result.error}`);
 			}
 		} catch (e) {
 			console.log(e);
 			const {message} = e as Error;
-			alert(message);
+			toast.error(`Something went wrong - ${message}`);
 		}
 	};
 
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		console.log({email, password});
 		loginUser().catch((e) => console.log(e));
 	};
-	useEffect(() => {}, [user]);
+
 	return (
-		<div className='centeredDiv' style={{flexDirection: 'column', width: '100vw'}}>
+		<>
 			<div
 				className='centeredDiv'
-				style={{
-					flexDirection: 'column',
-					backgroundColor: 'white',
-					width: '40vw',
-					maxWidth: '550px',
-					height: '70vh',
-					minHeight: '500px',
-					borderRadius: '25px',
-					boxShadow: '0 0 20px #dbd6d6',
-				}}>
-				<h1>Login</h1>
-				<form
-					onSubmit={handleSubmit}
+				style={{flexDirection: 'column', width: '100vw'}}>
+				<div
 					className='centeredDiv'
 					style={{
 						flexDirection: 'column',
-						gap: 25,
+						backgroundColor: 'white',
+						width: '40vw',
+						maxWidth: '550px',
+						height: '70vh',
+						minHeight: '500px',
+						borderRadius: '25px',
+						boxShadow: '0 0 20px #dbd6d6',
 					}}>
-					<div style={formStyles}>
-						<label htmlFor='email'>Email</label>
-						<input
-							value={email}
-							name='email'
-							onChange={(e) => setEmail(e.target.value)}
-						/>
-					</div>
-					<div style={formStyles}>
-						<label htmlFor='password'>Password</label>
-						<input
-							type='password'
-							name='password'
-							value={password}
-							onChange={(e) => setPassword(e.target.value)}
-						/>
-					</div>
-					<button type='submit'>Login</button>
-				</form>
+					<h1>Login</h1>
+					<form
+						onSubmit={handleSubmit}
+						className='centeredDiv'
+						style={{
+							flexDirection: 'column',
+							gap: 25,
+						}}>
+						<div style={formStyles}>
+							<label htmlFor='email'>Email</label>
+							<input
+								value={email}
+								name='email'
+								onChange={(e) => setEmail(e.target.value)}
+							/>
+						</div>
+						<div style={formStyles}>
+							<label htmlFor='password'>Password</label>
+							<input
+								type='password'
+								name='password'
+								value={password}
+								onChange={(e) => setPassword(e.target.value)}
+							/>
+						</div>
+						<button type='submit'>Login</button>
+					</form>
 
-				<p>
-					Not a user? <NavLink to='/newUser'>Sign Up</NavLink>
-				</p>
+					<p>
+						Not a user? <NavLink to='/newUser'>Sign Up</NavLink>
+					</p>
+				</div>
 			</div>
-		</div>
+		</>
 	);
 };
 

@@ -1,7 +1,11 @@
 import {FormEvent, useState} from 'react';
-import {NavLink} from 'react-router-dom';
-import {NotOk, User, Users} from '../@types';
-import Toastify from 'toastify-js';
+import {NavLink, useNavigate} from 'react-router-dom';
+import {NotOk, Users} from '../@types';
+import {toast} from 'react-toastify';
+
+interface SignupResult {
+	token: string;
+}
 
 const formStyles: React.CSSProperties = {
 	display: 'flex',
@@ -12,6 +16,7 @@ const formStyles: React.CSSProperties = {
 const Signup = () => {
 	const baseURL = import.meta.env.VITE_SERVER_BASE;
 	const [users, setUsers] = useState<Users>([]);
+	const redirect = useNavigate();
 
 	const [email, setEmail] = useState('');
 	const [username, setUsername] = useState('');
@@ -33,28 +38,26 @@ const Signup = () => {
 		try {
 			const response = await fetch(`${baseURL}api/users/new`, requestOptions);
 			if (response.ok) {
-				const result = (await response.json()) as User;
-				setUsers([...users, result]);
-				Toastify({
-					text: 'user created, please login...',
-					duration: 3000,
-				}).showToast();
+				const result = await response.json();
+				const {token} = result as SignupResult;
+				localStorage.setItem('token', token);
+				toast.success('Signup Successful, logging in...');
+				setTimeout(() => redirect('/'), 2000);
 
-				console.log('user created and token saved');
+				setUsers([...users, result]);
 			} else {
 				const result = (await response.json()) as NotOk;
-				alert(result.error);
+				toast.error(`Something went wrong - ${result.error}`);
 			}
 		} catch (e) {
 			console.log(e);
 			const {message} = e as Error;
-			alert(message);
+			toast.error(`Something went wrong - ${message}`);
 		}
 	};
 
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		console.log({email, username, password});
 		createUser().catch((e) => console.log(e));
 	};
 
