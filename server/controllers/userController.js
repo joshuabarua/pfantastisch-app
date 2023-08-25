@@ -162,8 +162,6 @@ const login = async (req, res) => {
 
 const getMe = async (req, res) => {
 	res.status(200).json(req.user); // full user, including private data
-
-	res.send('connected');
 };
 
 const logout = () => {
