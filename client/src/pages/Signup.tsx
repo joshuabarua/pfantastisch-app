@@ -1,11 +1,7 @@
-import {FormEvent, useState} from 'react';
-import {NavLink, useNavigate} from 'react-router-dom';
-import {NotOk, Users} from '../@types';
-import {toast} from 'react-toastify';
-
-interface SignupResult {
-	token: string;
-}
+import {FormEvent, useContext, useState} from 'react';
+import {NavLink} from 'react-router-dom';
+// import {Users} from '../@types';
+import {AuthContext} from '../context/AuthContext';
 
 const formStyles: React.CSSProperties = {
 	display: 'flex',
@@ -14,51 +10,19 @@ const formStyles: React.CSSProperties = {
 	flexDirection: 'column',
 };
 const Signup = () => {
-	const baseURL = import.meta.env.VITE_SERVER_BASE;
-	const [users, setUsers] = useState<Users>([]);
-	const redirect = useNavigate();
+	const {signup} = useContext(AuthContext);
+	// const [users, setUsers] = useState<Users>([]);
 
 	const [email, setEmail] = useState('');
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [profilePicFile, setProfilePicFile] = useState<File | null>(null);
 
-	const createUser = async () => {
-		const formData = new FormData();
-		formData.append('username', username);
-		formData.append('email', email);
-		formData.append('password', password);
-		if (profilePicFile) {
-			formData.append('image_url', profilePicFile);
-		}
-		const requestOptions = {
-			method: 'POST',
-			body: formData,
-		};
-		try {
-			const response = await fetch(`${baseURL}api/users/new`, requestOptions);
-			if (response.ok) {
-				const result = await response.json();
-				const {token} = result as SignupResult;
-				localStorage.setItem('token', token);
-				toast.success('Signup Successful, logging in...');
-				setTimeout(() => redirect('/'), 2000);
-
-				setUsers([...users, result]);
-			} else {
-				const result = (await response.json()) as NotOk;
-				toast.error(`Something went wrong - ${result.error}`);
-			}
-		} catch (e) {
-			console.log(e);
-			const {message} = e as Error;
-			toast.error(`Something went wrong - ${message}`);
-		}
-	};
-
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		createUser().catch((e) => console.log(e));
+		signup(email, username, password, profilePicFile).catch((e: Error) =>
+			console.log(e)
+		);
 	};
 
 	return (

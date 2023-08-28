@@ -1,12 +1,7 @@
-import {FormEvent, useState} from 'react';
-import {NavLink, useNavigate} from 'react-router-dom';
-import {NotOk} from '../@types';
-import {toast} from 'react-toastify';
+import {FormEvent, useContext, useState} from 'react';
+import {NavLink} from 'react-router-dom';
 
-interface LoginResult {
-	verified: boolean;
-	token: string;
-}
+import {AuthContext} from '../context/AuthContext';
 
 const formStyles: React.CSSProperties = {
 	display: 'flex',
@@ -16,49 +11,13 @@ const formStyles: React.CSSProperties = {
 };
 
 const Login = () => {
-	const baseURL = import.meta.env.VITE_SERVER_BASE as string;
+	const {login} = useContext(AuthContext);
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const redirect = useNavigate();
-
-	const loginUser = async () => {
-		// formData didnt work but headers did
-		// const formData = new FormData();
-		// formData.append('email', email);
-		// formData.append('password', password);
-		const urlencoded = new URLSearchParams();
-
-		const myHeaders = new Headers();
-		urlencoded.append('email', email);
-		urlencoded.append('password', password);
-		myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
-		const requestOptions = {
-			method: 'POST',
-			headers: myHeaders,
-			body: urlencoded,
-		};
-		try {
-			const response = await fetch(`${baseURL}api/users/login`, requestOptions);
-			if (response.ok) {
-				const result = await response.json();
-				const {token} = result as LoginResult;
-				localStorage.setItem('token', token);
-				toast.success('Login Successful');
-				setTimeout(() => redirect('/'), 2000);
-			} else {
-				const result = (await response.json()) as NotOk;
-				toast.error(`Something went wrong - ${result.error}`);
-			}
-		} catch (e) {
-			console.log(e);
-			const {message} = e as Error;
-			toast.error(`Something went wrong - ${message}`);
-		}
-	};
 
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		loginUser().catch((e) => console.log(e));
+		login(email, password).catch((e) => console.log(e));
 	};
 
 	return (

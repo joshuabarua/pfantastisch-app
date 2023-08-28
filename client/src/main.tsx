@@ -8,7 +8,7 @@ import {AuthContextProvider} from './context/AuthContext.tsx';
 import NavWrapper from './components/NavWrapper.tsx';
 import Homepage from './pages/Homepage.tsx';
 import Error404 from './pages/Error404.tsx';
-import Signup from './pages/signup.tsx';
+import Signup from './pages/Signup.tsx';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

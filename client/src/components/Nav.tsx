@@ -31,6 +31,13 @@ function Nav() {
 
 	return (
 		<nav style={navContainerStyles}>
+			<p>
+				{user ? (
+					<img src={`${user.image_url}`} className='navProfilePic' />
+				) : (
+					<></>
+				)}
+			</p>
 			<div style={linksContainerStyles}>
 				<NavLink to='/' style={({isActive}) => (isActive ? activeLink : {})}>
 					Homepage

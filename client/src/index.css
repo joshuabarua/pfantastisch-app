@@ -99,6 +99,13 @@ button:focus-visible {
 	flex-direction: 'column';
 }
 
+.navProfilePic {
+	width: 80px;
+	height: 80px;
+	border-radius: 500px;
+	object-fit: cover;
+}
+
 /* @media (prefers-color-scheme: light) {
 	:root {
 		color: #213547;
