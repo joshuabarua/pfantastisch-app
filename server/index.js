@@ -2,6 +2,8 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import userRouter from './routes/userRoutes.js';
+import businessRouter from './routes/businessRoutes.js';
+
 import * as dotenv from 'dotenv';
 import configurePassport from './config/passportConfig.js';
 import configureCloudinary from './config/cloudinaryConfig.js';
@@ -35,6 +37,7 @@ const connectDatabase = async () => {
 
 const defineRoutes = () => {
 	app.use('/api/users', userRouter);
+	app.use('/api/businesses', businessRouter);
 	app.use('*', (req, res) => res.status(404).json({error: 'Endpoint not found.'}));
 };
 

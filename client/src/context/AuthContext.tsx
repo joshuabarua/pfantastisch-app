@@ -86,11 +86,12 @@ export const AuthContextProvider = ({children}: {children: ReactNode}) => {
 	};
 
 	const login = async (email: string, password: string) => {
-		const myHeaders = new Headers();
-		myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
-		const urlencoded = new URLSearchParams();
-		urlencoded.append('email', email);
-		urlencoded.append('password', password);
+		const myHeaders = new Headers({
+			'Content-Type': 'application/x-www-form-urlencoded',
+		});
+
+		const urlencoded = new URLSearchParams({email: email, password: password});
+
 		const requestOptions = {
 			method: 'POST',
 			headers: myHeaders,
@@ -125,8 +126,7 @@ export const AuthContextProvider = ({children}: {children: ReactNode}) => {
 		const token = localStorage.getItem('token');
 		if (token) {
 			try {
-				const myHeaders = new Headers();
-				myHeaders.append('Authorization', `Bearer ${token}`);
+				const myHeaders = new Headers({Authorization: `Bearer ${token}`});
 				const requestOptions = {
 					method: 'GET',
 					headers: myHeaders,
