@@ -31,31 +31,22 @@ function Nav() {
 
 	return (
 		<nav style={navContainerStyles}>
-			<p>
-				{user ? (
-					<img src={`${user.image_url}`} className='navProfilePic' />
-				) : (
-					<></>
-				)}
-			</p>
+			<p>{user ? <img src={`${user.image_url}`} className='navProfilePic' /> : <></>}</p>
 			<div style={linksContainerStyles}>
 				<NavLink to='/' style={({isActive}) => (isActive ? activeLink : {})}>
 					Homepage
 				</NavLink>
-				<NavLink
-					to='/users'
-					style={({isActive}) => (isActive ? activeLink : {})}>
+				<NavLink to='/users' style={({isActive}) => (isActive ? activeLink : {})}>
 					Users
 				</NavLink>
-				<NavLink
-					to='/login'
-					style={({isActive}) => (isActive ? activeLink : {})}>
+				<NavLink to='/users' style={({isActive}) => (isActive ? activeLink : {})}>
+					Users
+				</NavLink>
+				<NavLink to='/login' style={({isActive}) => (isActive ? activeLink : {})}>
 					Login
 				</NavLink>
-				<NavLink
-					to='/newUser'
-					style={({isActive}) => (isActive ? activeLink : {})}>
-					Sign Up
+				<NavLink to='/map' style={({isActive}) => (isActive ? activeLink : {})}>
+					Find nearest pfand machine...
 				</NavLink>
 			</div>
 			<p>

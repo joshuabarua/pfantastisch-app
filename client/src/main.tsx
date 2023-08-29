@@ -7,6 +7,7 @@ import Login from './pages/Login.tsx';
 import {AuthContextProvider} from './context/AuthContext.tsx';
 import NavWrapper from './components/NavWrapper.tsx';
 import Homepage from './pages/Homepage.tsx';
+import Map from './pages/Map.tsx';
 import Error404 from './pages/Error404.tsx';
 import Signup from './pages/Signup.tsx';
 import {ToastContainer} from 'react-toastify';
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
 					{
 						path: '/',
 						element: <Homepage />,
+					},
+					{
+						path: '/map',
+						element: <Map />,
 					},
 					{
 						path: '/users',
