@@ -1,4 +1,12 @@
-import {UserModel} from '../models/userModel.js';
+import {supermarketModel} from '../models/supermarketModel.js';
+
+/*
+TODO: 
+- store all GROCERY store data in the database, including stores that might not have pfand machines,this can be checked against later if they do or not when a user adds a new pfand machine. If there is one already existing, update the pfand available field to (true) so it can bbbe used on the map. 
+- Only display pfand machines that I know have machines (eg. rewe, edeka, lidle, kaufland, penny, aldi, netto, veganz, biocompany AKA have boolean value that says it does have one)
+- Users need points, and only those with 5 drops off can register new machines (limited to 1), with every level they gain the ability to register a new machine. THOUGH, if it doesn not already exist in the db, thia needs to be checked manually)
+*/
+
 
 // TODO: Make a function to post this JSON data to the supermarkets collection rather than doing over mongodb
 
@@ -22,4 +30,34 @@ const findBusinesses = async (req, res) => {
 	}
 };
 
-export {findBusinesses};
+const findAllSupermarkets = async (request, response) => {
+	const supermarkets = await supermarketModel.find();
+	try {
+		if (supermarkets) {
+			const forFront = [];
+			supermarkets.forEach((supermarket) =>
+				forFront.push({
+					id: supermarket.id,
+					alias: supermarket.alias,
+					name: supermarket.name,
+					image_url: supermarket.image_url,
+					review_count: supermarket.review_count,
+					rating: supermarket.rating,
+					longtitude: supermarket.coordinates.longtitude,
+					latitude: supermarket.coordinates.latitude,
+					display_address: supermarket.display_address,
+					phone: supermarket.phone,
+					distance: supermarket.distance,
+					pfandtastic: supermarket.pfandtastic,
+				})
+			);
+			response.status(200).json(forFront);
+		} else {
+			response.status(404).json({error: 'nothing in collection'});
+		}
+	} catch (e) {
+		response.status(500).json({error: 'Something went wrong...'});
+	}
+};
+
+export {findBusinesses, findAllSupermarkets};
