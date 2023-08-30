@@ -22,8 +22,8 @@ const LeafletMap = (props: Props) => {
 				attribution={
 					'<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 				}
-				minZoom={0}
-				maxZoom={22}
+				minZoom={12}
+				maxZoom={18}
 			/>
 			{userLocation && (
 				<Marker position={[userLocation.latitude, userLocation.longitude]}>
@@ -34,7 +34,16 @@ const LeafletMap = (props: Props) => {
 			{supermarkets ? (
 				supermarkets.map((supermarket, index) => (
 					<Marker key={index} position={[supermarket.coordinates.latitude, supermarket.coordinates.longitude]} icon={customIcon}>
-						<Popup>{supermarket.name}</Popup>
+						<Popup>
+							<div className='centeredDiv' style={{flexDirection: 'column', gap: 5}}>
+								<h3>{supermarket.name}</h3>
+								<img src={supermarket.image_url} style={{width: '120px', height: '120px', borderRadius: '25px'}} />
+								<span>Rating: {supermarket.rating}</span>
+								<span>Reviews: {supermarket.review_count}</span>
+								<span>Phone: {supermarket.phone}</span>
+								<span>{supermarket.distance}</span>
+							</div>
+						</Popup>
 					</Marker>
 				))
 			) : (

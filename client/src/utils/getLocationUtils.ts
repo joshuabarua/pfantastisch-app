@@ -9,7 +9,6 @@ export const getUserLocation = (onSuccess: (coords: UserCoords) => void, onError
 	if ('geolocation' in navigator) {
 		navigator.geolocation.getCurrentPosition(
 			(position) => {
-				toast.success(`User Coordinates Received`);
 				onSuccess({
 					latitude: position.coords.latitude,
 					longitude: position.coords.longitude,
