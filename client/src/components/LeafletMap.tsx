@@ -1,6 +1,7 @@
 import {MapContainer, TileLayer, Marker, Popup} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css'; // Import Leaflet's CSS
 import {Supermarket} from '../@types';
+import {Icon} from 'leaflet';
 
 interface Props {
 	userLocation: {latitude: number; longitude: number};
@@ -10,6 +11,10 @@ interface Props {
 const LeafletMap = (props: Props) => {
 	const {userLocation, supermarkets} = props;
 
+	const customIcon = new Icon({
+		iconUrl: '/src/assets/icons/plastic-bottle.png',
+		iconSize: [42, 42],
+	});
 	return (
 		<MapContainer center={[userLocation.latitude, userLocation.longitude]} zoom={13} style={{width: '70vw', height: '70vh', minWidth: '300px'}}>
 			<TileLayer
@@ -28,7 +33,7 @@ const LeafletMap = (props: Props) => {
 
 			{supermarkets ? (
 				supermarkets.map((supermarket, index) => (
-					<Marker key={index} position={[supermarket.coordinates.latitude, supermarket.coordinates.longitude]}>
+					<Marker key={index} position={[supermarket.coordinates.latitude, supermarket.coordinates.longitude]} icon={customIcon}>
 						<Popup>{supermarket.name}</Popup>
 					</Marker>
 				))
