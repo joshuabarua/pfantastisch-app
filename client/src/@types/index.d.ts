@@ -12,24 +12,6 @@ export interface NotOk {
 	error: string;
 }
 
-export interface Businesses {
-	id: string;
-	alias: string;
-	name: string;
-	image_url: string;
-	is_closed: boolean;
-	url: string;
-	review_count: number;
-	categories?: CategoriesEntity[] | null;
-	rating: number;
-	coordinates: Coordinates;
-	transactions?: null[] | null;
-	price: string;
-	location: Location;
-	phone: string;
-	display_phone: string;
-	distance: number;
-}
 export interface CategoriesEntity {
 	alias: string;
 	title: string;
@@ -57,10 +39,10 @@ export interface Supermarket {
 	review_count: number;
 	rating: number;
 	latitude: number;
-	longtitude: number;
+	longitude: number;
 	coordinates: {
 		latitude: number;
-		longtitude: number;
+		longitude: number;
 	};
 	phone: string;
 	distance: number;
@@ -72,5 +54,3 @@ export interface Pfandtastic {
 	isOperational: boolean;
 	machine_img_url: string[];
 }
-
-export type Supermarkets = Supermarket[];

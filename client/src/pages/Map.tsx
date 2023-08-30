@@ -1,42 +1,51 @@
 import {useEffect, useState} from 'react';
 import 'leaflet/dist/leaflet.css';
-import {toast} from 'react-toastify';
 import LeafletMap from '../components/LeafletMap';
+import {getUserLocation} from '../utils/getLocationUtils';
+import {NotOk, Supermarket} from '../@types';
+import {toast} from 'react-toastify';
 
 const Map = () => {
-	const [userCoords, setUserCoords] = useState<{latitude: number; longtitude: number}>({latitude: 52.52, longtitude: 13.405});
-
-	const getUserLocation = () => {
-		if ('geolocation' in navigator) {
-			navigator.geolocation.getCurrentPosition(
-				(position) => {
-					setUserCoords({latitude: position.coords.latitude, longtitude: position.coords.longitude});
-					toast.success(`< User Coordinates Received > 
-                    Lat: ${position.coords.latitude.toFixed(3)} ||
-                    Long: ${position.coords.longitude.toFixed(3)} 
-                    `);
-				},
-				(e) => {
-					toast.error(`Error getting user location:, ${e}`);
-				}
-			);
-		} else {
-			toast.error(`Geolocation is not available`);
-			// Handle the case where geolocation is not supported
-		}
-	};
-
-	// You can now use `globalUserLatitude` and `globalUserLongitude` elsewhere in your map.tsx file.
-
+	const [userCoords, setUserCoords] = useState<{latitude: number; longitude: number}>({latitude: 52.52, longitude: 13.405});
+	const [supermarkets, setSupermarkets] = useState<Supermarket[]>([]);
+//TODO: Modify the fetchFunct to use a utility function instead and callback to set data in map, prevent userLocation from being displayed more than once, save the location in localStorge?
 	useEffect(() => {
-		getUserLocation();
+		const fetchSupermarketData = async () => {
+			const baseURL = import.meta.env.VITE_SERVER_BASE as string;
+			try {
+				const response = await fetch(`${baseURL}api/businesses/all?`);
+				if (!response.ok) {
+					const result = (await response.json()) as NotOk;
+					toast.error(`Something went wrong - ${result}`);
+					throw new Error(`Request failed with status: ${response.status}`);
+				}
+
+				const result = await response.json();
+				setSupermarkets((prevSupermarkets) => [...prevSupermarkets, ...result.businesses]);
+				return result.businesses;
+			} catch (error) {
+				console.error('Error:', error);
+				return [];
+			}
+		};
+
+		getUserLocation(
+			(coords) => {
+				setUserCoords({latitude: coords.latitude, longitude: coords.longitude});
+			},
+			(error: GeolocationPositionError) => {
+				console.log(error);
+			}
+		);
+
+		fetchSupermarketData();
 	}, []);
 
 	return (
 		<div className='centeredDiv' style={{flexDirection: 'column', width: '100%'}}>
 			<h1> Map</h1>
-			<LeafletMap userLocation={userCoords} />
-			<p>{`${userCoords.latitude.toFixed(3)} ${userCoords.longtitude.toFixed(3)} `}</p>
+			<LeafletMap userLocation={userCoords} supermarkets={supermarkets} />
+			<p>{`${userCoords.latitude.toFixed(3)} ${userCoords.longitude.toFixed(3)} `}</p>
 		</div>
 	);
 };

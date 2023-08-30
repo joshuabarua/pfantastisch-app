@@ -17,7 +17,6 @@ const router = createBrowserRouter([
 	{
 		element: (
 			<AuthContextProvider>
-				<ToastContainer style={{}} />
 				<Outlet />
 			</AuthContextProvider>
 		),
@@ -27,6 +26,7 @@ const router = createBrowserRouter([
 			{
 				element: (
 					<NavWrapper>
+						<ToastContainer style={{}} />
 						<Outlet />
 					</NavWrapper>
 				),

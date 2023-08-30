@@ -6,7 +6,7 @@ function Nav() {
 	const {user, logout} = useContext(AuthContext);
 	const navContainerStyles: React.CSSProperties = {
 		height: '100vh',
-		width: '100px',
+		width: '150px',
 		border: 'solid 1px black',
 		position: 'sticky',
 		display: 'flex',
@@ -39,14 +39,11 @@ function Nav() {
 				<NavLink to='/users' style={({isActive}) => (isActive ? activeLink : {})}>
 					Users
 				</NavLink>
-				<NavLink to='/users' style={({isActive}) => (isActive ? activeLink : {})}>
-					Users
+				<NavLink to='/map' style={({isActive}) => (isActive ? activeLink : {})}>
+					Pfand Finder
 				</NavLink>
 				<NavLink to='/login' style={({isActive}) => (isActive ? activeLink : {})}>
 					Login
-				</NavLink>
-				<NavLink to='/map' style={({isActive}) => (isActive ? activeLink : {})}>
-					Find nearest pfand machine...
 				</NavLink>
 			</div>
 			<p>

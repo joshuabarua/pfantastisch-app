@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {Businesses, NotOk} from '../@types';
+import { NotOk, Supermarket} from '../@types';
 import {toast} from 'react-toastify';
 import * as supermarkets from '../json/pfandAutomats.json';
 
@@ -9,10 +9,11 @@ Needs to be called inside of a useEffect, might need to have an offset state in 
 const useFetchSupermarketData = async () => {
 	const baseURL = import.meta.env.VITE_SERVER_BASE as string;
 	const [offset, setOffset] = useState(0);
-	const [supermarkets, setSupermarkets] = useState<Businesses[]>([]);
+	const [supermarkets, setSupermarkets] = useState<Supermarket[]>([]);
 
 	try {
-		const response = await fetch(`${baseURL}api/businesses/all?offset=${offset}`);
+		// const response = await fetch(`${baseURL}api/businesses/all?offset=${offset}`);
+		const response = await fetch(`${baseURL}api/businesses/all`);
 		if (!response.ok) {
 			const result = (await response.json()) as NotOk;
 			toast.error(`Something went wrong - ${result}`);
@@ -21,10 +22,7 @@ const useFetchSupermarketData = async () => {
 
 		const result = await response.json();
 		console.log(result);
-		setSupermarkets((prevSupermarkets) => [
-			...prevSupermarkets,
-			result.businesses,
-		]);
+		setSupermarkets((prevSupermarkets) => [...prevSupermarkets, result.businesses]);
 		console.log(supermarkets);
 
 		// Automatically increment offset until 650
