@@ -48,3 +48,29 @@ export interface Location {
 	state: string;
 	display_address?: string[] | null;
 }
+
+export interface Supermarket {
+	id: string;
+	alias: string;
+	name: string;
+	image_url: string;
+	review_count: number;
+	rating: number;
+	latitude: number;
+	longtitude: number;
+	coordinates: {
+		latitude: number;
+		longtitude: number;
+	};
+	phone: string;
+	distance: number;
+	pfandtastic: Pfandtastic;
+}
+
+export interface Pfandtastic {
+	has_pfand_automat: boolean;
+	isOperational: boolean;
+	machine_img_url: string[];
+}
+
+export type Supermarkets = Supermarket[];

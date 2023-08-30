@@ -1,17 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
+import 'leaflet/dist/leaflet.css';
 import {toast} from 'react-toastify';
+import LeafletMap from '../components/LeafletMap';
 
 const Map = () => {
-	const [userCoords, setUserCoords] = useState<{latitude: number | null; longitude: number | null}>({
-		latitude: null,
-		longitude: null,
-	});
+	const [userCoords, setUserCoords] = useState<{latitude: number; longtitude: number}>({latitude: 52.52, longtitude: 13.405});
 
 	const getUserLocation = () => {
 		if ('geolocation' in navigator) {
 			navigator.geolocation.getCurrentPosition(
 				(position) => {
-					setUserCoords(position.coords);
+					setUserCoords({latitude: position.coords.latitude, longtitude: position.coords.longitude});
 					toast.success(`< User Coordinates Received > 
                     Lat: ${position.coords.latitude.toFixed(3)} ||
                     Long: ${position.coords.longitude.toFixed(3)} 
@@ -34,10 +33,11 @@ const Map = () => {
 	}, []);
 
 	return (
-		<>
+		<div className='centeredDiv' style={{flexDirection: 'column', width: '100%'}}>
 			<h1> Map</h1>
-			<p>{`${userCoords.latitude} ${userCoords.longitude}`}</p>
-		</>
+			<LeafletMap userLocation={userCoords} />
+			<p>{`${userCoords.latitude.toFixed(3)} ${userCoords.longtitude.toFixed(3)} `}</p>
+		</div>
 	);
 };
 
