@@ -9,6 +9,8 @@ TODO:
 
 // TODO: Make a function to post this JSON data to the supermarkets collection rather than doing over mongodb
 
+const validSupermarkets = ['REWE', 'EDEKA', 'LIDL', 'KAUFLAND', 'ALDI', 'PENNY', 'NETTO'];
+
 const findBusinesses = async (req, res) => {
 	try {
 		const offset = req.query.offset || 0;
@@ -27,17 +29,12 @@ const findBusinesses = async (req, res) => {
 };
 
 const findSupermarketByAlias = async (req, res) => {
-	const validSupermarkets = ['REWE', 'EDEKA', 'LIDL', 'KAUFLAND', 'ALDI', 'PENNY', 'NETTO'];
-
 	try {
 		const matchingSupermarkets = await supermarketModel.find({alias: {$in: validSupermarkets.map((alias) => new RegExp(alias, 'i'))}});
 
 		if (matchingSupermarkets.length > 0) {
 			const forFront = matchingSupermarkets.map((supermarket) => ({
-				alias: supermarket.alias,
-				name: supermarket.name,
 				_id: supermarket._id,
-				createdAt: supermarket.createdAt,
 			}));
 			res.status(200).json(forFront);
 		} else {
@@ -48,6 +45,69 @@ const findSupermarketByAlias = async (req, res) => {
 	}
 };
 
+const findSupermarketByHasPfandAutomatValue = async (req, res) => {
+	try {
+		const matchingSupermarkets = await supermarketModel.find({
+			'pfandtastic.has_pfand_automat': true,
+		});
+
+		if (matchingSupermarkets.length > 0) {
+			const forFront = matchingSupermarkets.map((supermarket) => ({
+				_id: supermarket._id,
+				alias: supermarket.alias,
+				name: supermarket.name,
+				image_url: supermarket.image_url,
+				review_count: supermarket.review_count,
+				rating: supermarket.rating,
+				longtitude: supermarket.coordinates.longtitude,
+				latitude: supermarket.coordinates.latitude,
+				coordinates: supermarket.coordinates,
+				display_address: supermarket.display_address,
+				phone: supermarket.phone,
+				distance: supermarket.distance,
+				pfandtastic: supermarket.pfandtastic,
+			}));
+			res.status(200).json(forFront);
+		} else {
+			res.status(404).json({error: 'No matching supermarkets found'});
+		}
+	} catch (e) {
+		res.status(500).json({error: 'Something went wrong'});
+	}
+};
+
+const updateSupermarketsHasPfandVal = async (req, res) => {
+	try {
+		const idsToUpdate = req.body.map((item) => item._id);
+
+		const supermarkets = await supermarketModel.find({_id: {$in: idsToUpdate}});
+
+		if (!supermarkets.length) {
+			return res.status(404).json({error: 'No matching supermarkets found'});
+		}
+
+		const updatedSupermarkets = await Promise.all(
+			supermarkets.map(async (supermarket) => {
+				const updatedSupermarket = await supermarketModel.findByIdAndUpdate(
+					supermarket._id,
+					{
+						pfandtastic: {
+							has_pfand_automat: true,
+							isOperational: true,
+						},
+					},
+					{new: true}
+				);
+				return updatedSupermarket;
+			})
+		);
+
+		res.status(200).json(updatedSupermarkets);
+	} catch (e) {
+		res.status(500).json({error: 'Something went wrong...'});
+	}
+};
+
 const findAllSupermarkets = async (request, response) => {
 	const supermarkets = await supermarketModel.find();
 	try {
@@ -55,6 +115,7 @@ const findAllSupermarkets = async (request, response) => {
 			const forFront = [];
 			supermarkets.forEach((supermarket) =>
 				forFront.push({
+					_id: supermarket._id,
 					id: supermarket.id,
 					alias: supermarket.alias,
 					name: supermarket.name,
@@ -79,4 +140,4 @@ const findAllSupermarkets = async (request, response) => {
 	}
 };
 
-export {findBusinesses, findAllSupermarkets, findSupermarketByAlias};
+export {findBusinesses, findAllSupermarkets, findSupermarketByAlias, updateSupermarketsHasPfandVal, findSupermarketByHasPfandAutomatValue};

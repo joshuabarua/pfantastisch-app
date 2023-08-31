@@ -8,12 +8,12 @@ import {toast} from 'react-toastify';
 const Map = () => {
 	const [userCoords, setUserCoords] = useState<{latitude: number; longitude: number}>({latitude: 52.52, longitude: 13.405});
 	const [supermarkets, setSupermarkets] = useState<Supermarket[]>([]);
-//TODO: Modify the fetchFunct to use a utility function instead and callback to set data in map, prevent userLocation from being displayed more than once, save the location in localStorge?
+	//TODO: Modify the fetchFunct to use a utility function instead and callback to set data in map, prevent userLocation from being displayed more than once, save the location in localStorge?
 	useEffect(() => {
 		const fetchSupermarketData = async () => {
 			const baseURL = import.meta.env.VITE_SERVER_BASE as string;
 			try {
-				const response = await fetch(`${baseURL}api/businesses/all?`);
+				const response = await fetch(`${baseURL}api/businesses/supermarketsWithPfandAutomat`);
 				if (!response.ok) {
 					const result = (await response.json()) as NotOk;
 					toast.error(`Something went wrong - ${result}`);
@@ -21,8 +21,8 @@ const Map = () => {
 				}
 
 				const result = await response.json();
-				setSupermarkets((prevSupermarkets) => [...prevSupermarkets, ...result.businesses]);
-				return result.businesses;
+				setSupermarkets((prevSupermarkets) => [...prevSupermarkets, ...result]);
+				return result;
 			} catch (error) {
 				console.error('Error:', error);
 				return [];
