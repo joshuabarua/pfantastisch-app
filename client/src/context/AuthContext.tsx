@@ -7,12 +7,7 @@ interface DefaultValue {
 	user: null | User;
 	login: (email: string, password: string) => Promise<void>;
 
-	signup: (
-		email: string,
-		password: string,
-		username: string,
-		profilePicFile: File | null
-	) => Promise<void>;
+	signup: (email: string, password: string, username: string, profilePicFile: File | null) => Promise<void>;
 
 	logout: () => void;
 }
@@ -49,12 +44,7 @@ export const AuthContextProvider = ({children}: {children: ReactNode}) => {
 	// const [users, setUsers] = useState<null | User[]>(null);
 	const redirect = useNavigate();
 
-	const signup = async (
-		email: string,
-		password: string,
-		username: string,
-		profilePicFile: File | null
-	) => {
+	const signup = async (email: string, password: string, username: string, profilePicFile: File | null) => {
 		const formData = new FormData();
 		formData.append('username', username);
 		formData.append('email', email);
@@ -135,9 +125,7 @@ export const AuthContextProvider = ({children}: {children: ReactNode}) => {
 				const result = (await response.json()) as User;
 				setUser(result);
 			} catch (error) {
-				toast.error(
-					`Something went wrong, could not get Active User - ${error as Error}`
-				);
+				toast.error(`Something went wrong, could not get Active User - ${error as Error}`);
 			}
 		} else {
 			setUser(null);
@@ -146,11 +134,8 @@ export const AuthContextProvider = ({children}: {children: ReactNode}) => {
 
 	useEffect(() => {
 		getActiveUser().catch((e) => console.log(e));
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	return (
-		<AuthContext.Provider value={{user, signup, login, logout}}>
-			{children}
-		</AuthContext.Provider>
-	);
+	return <AuthContext.Provider value={{user, signup, login, logout}}>{children}</AuthContext.Provider>;
 };

@@ -7,26 +7,44 @@ TODO:
 - Users need points, and only those with 5 drops off can register new machines (limited to 1), with every level they gain the ability to register a new machine. THOUGH, if it doesn not already exist in the db, thia needs to be checked manually)
 */
 
-
 // TODO: Make a function to post this JSON data to the supermarkets collection rather than doing over mongodb
 
 const findBusinesses = async (req, res) => {
 	try {
 		const offset = req.query.offset || 0;
-		const response = await fetch(
-			`https://api.yelp.com/v3/businesses/search?offset=${offset}&limit=50&location=berlin&categories=grocery`,
-			{
-				method: 'GET',
-				headers: {
-					Authorization: `Bearer ${process.env.YELP_API_TOKEN}`,
-					'Content-Type': 'application/x-www-form-urlencoded',
-				},
-			}
-		);
+		const response = await fetch(`https://api.yelp.com/v3/businesses/search?offset=${offset}&limit=50&location=berlin&categories=grocery`, {
+			method: 'GET',
+			headers: {
+				Authorization: `Bearer ${process.env.YELP_API_TOKEN}`,
+				'Content-Type': 'application/x-www-form-urlencoded',
+			},
+		});
 		const result = await response.json();
 		res.json(result);
 	} catch (error) {
 		res.status(500).json({error: 'An error occurred'});
+	}
+};
+
+const findSupermarketByAlias = async (req, res) => {
+	const validSupermarkets = ['REWE', 'EDEKA', 'LIDL', 'KAUFLAND', 'ALDI', 'PENNY', 'NETTO'];
+
+	try {
+		const matchingSupermarkets = await supermarketModel.find({alias: {$in: validSupermarkets.map((alias) => new RegExp(alias, 'i'))}});
+
+		if (matchingSupermarkets.length > 0) {
+			const forFront = matchingSupermarkets.map((supermarket) => ({
+				alias: supermarket.alias,
+				name: supermarket.name,
+				_id: supermarket._id,
+				createdAt: supermarket.createdAt,
+			}));
+			res.status(200).json(forFront);
+		} else {
+			res.status(404).json({error: 'No matching supermarkets found'});
+		}
+	} catch (e) {
+		res.status(500).json({error: 'Something went wrong'});
 	}
 };
 
@@ -45,6 +63,7 @@ const findAllSupermarkets = async (request, response) => {
 					rating: supermarket.rating,
 					longtitude: supermarket.coordinates.longtitude,
 					latitude: supermarket.coordinates.latitude,
+					coordinates: supermarket.coordinates,
 					display_address: supermarket.display_address,
 					phone: supermarket.phone,
 					distance: supermarket.distance,
@@ -60,4 +79,4 @@ const findAllSupermarkets = async (request, response) => {
 	}
 };
 
-export {findBusinesses, findAllSupermarkets};
+export {findBusinesses, findAllSupermarkets, findSupermarketByAlias};

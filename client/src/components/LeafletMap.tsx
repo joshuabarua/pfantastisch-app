@@ -25,7 +25,8 @@ const LeafletMap = (props: Props) => {
 				minZoom={12}
 				maxZoom={18}
 			/>
-			{userLocation && (
+
+			{ userLocation && (
 				<Marker position={[userLocation.latitude, userLocation.longitude]}>
 					<Popup>Your Location</Popup>
 				</Marker>
