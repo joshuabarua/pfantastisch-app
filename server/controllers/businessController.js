@@ -46,11 +46,25 @@ const findSupermarketByAlias = async (req, res) => {
 };
 
 const findSupermarketByHasPfandAutomatValue = async (req, res) => {
+	const longitude = req.query.longitude;
+	const latitude = req.query.latitude;
+	console.log('long', longitude, 'lat', latitude);
 	try {
-		const matchingSupermarkets = await supermarketModel.find({
-			'pfandtastic.has_pfand_automat': true,
-		});
+		const matchingSupermarkets = await supermarketModel
+			.find({
+				'pfandtastic.has_pfand_automat': true,
+				loc: {
+					$near: {
+						$geometry: {type: 'Point', coordinates: [longitude, latitude]},
+						$minDistance: 1000,
+						$maxDistance: 3000,
+					},
+				},
+			})
+			.limit(20);
 
+		console.log('Matching supermarkets:', matchingSupermarkets);
+		console.log(matchingSupermarkets);
 		if (matchingSupermarkets.length > 0) {
 			const forFront = matchingSupermarkets.map((supermarket) => ({
 				_id: supermarket._id,
@@ -59,7 +73,7 @@ const findSupermarketByHasPfandAutomatValue = async (req, res) => {
 				image_url: supermarket.image_url,
 				review_count: supermarket.review_count,
 				rating: supermarket.rating,
-				longtitude: supermarket.coordinates.longtitude,
+				longitude: supermarket.coordinates.longitude,
 				latitude: supermarket.coordinates.latitude,
 				coordinates: supermarket.coordinates,
 				display_address: supermarket.display_address,
@@ -122,7 +136,7 @@ const findAllSupermarkets = async (request, response) => {
 					image_url: supermarket.image_url,
 					review_count: supermarket.review_count,
 					rating: supermarket.rating,
-					longtitude: supermarket.coordinates.longtitude,
+					longitude: supermarket.coordinates.longitude,
 					latitude: supermarket.coordinates.latitude,
 					coordinates: supermarket.coordinates,
 					display_address: supermarket.display_address,
@@ -140,4 +154,35 @@ const findAllSupermarkets = async (request, response) => {
 	}
 };
 
-export {findBusinesses, findAllSupermarkets, findSupermarketByAlias, updateSupermarketsHasPfandVal, findSupermarketByHasPfandAutomatValue};
+/* Need to add geoJSON fields in order to correctly use leaflets $near methods for finding lcoations near user */
+async function updateSupermarketsWithGeoJSON() {
+	try {
+		const supermarkets = await supermarketModel.find();
+
+		if (!supermarkets.length) {
+			console.log('No supermarkets found in the collection.');
+			return;
+		}
+
+		const bulkOps = supermarkets.map((supermarket) => ({
+			updateOne: {
+				filter: {_id: supermarket._id},
+				update: {
+					$set: {
+						loc: {
+							type: 'Point',
+							coordinates: [supermarket.coordinates.longitude, supermarket.coordinates.latitude],
+						},
+					},
+				},
+			},
+		}));
+
+		await supermarketModel.bulkWrite(bulkOps);
+		console.log(`${supermarkets.length} documents updated with GeoJSON loc field.`);
+	} catch (error) {
+		console.error('Error updating documents:', error);
+	}
+}
+
+export {findBusinesses, findAllSupermarkets, findSupermarketByAlias, updateSupermarketsHasPfandVal, findSupermarketByHasPfandAutomatValue, updateSupermarketsWithGeoJSON};

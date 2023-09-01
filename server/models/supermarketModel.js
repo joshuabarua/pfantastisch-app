@@ -11,7 +11,7 @@ const supermarketSchema = new mongoose.Schema(
 		review_count: Number,
 		categories: [{alias: String, title: String}],
 		rating: Number,
-		coordinates: {latitude: Number, longtitude: Number},
+		coordinates: {latitude: Number, longitude: Number},
 		transactions: [],
 		price: String,
 		location: {
@@ -31,6 +31,15 @@ const supermarketSchema = new mongoose.Schema(
 			has_pfand_automat: Boolean,
 			isOperational: Boolean,
 			machine_img_url: [String],
+		},
+		loc: {
+			type: {
+				type: String,
+				enum: ['Point'],
+			},
+			coordinates: {
+				type: [Number],
+			},
 		},
 	},
 	{timestamps: true}

@@ -5,6 +5,7 @@ import {
 	findSupermarketByAlias,
 	updateSupermarketsHasPfandVal,
 	findSupermarketByHasPfandAutomatValue,
+	updateSupermarketsWithGeoJSON,
 } from '../controllers/businessController.js';
 
 const businessRouter = express.Router();
@@ -15,4 +16,6 @@ businessRouter.get('/supermarketsByName/', findSupermarketByAlias);
 businessRouter.get('/supermarketsWithPfandAutomat', findSupermarketByHasPfandAutomatValue);
 
 businessRouter.put('/updateSupermarketsWithTruthy/', updateSupermarketsHasPfandVal);
+businessRouter.put('/updateSupermarketsWithGeoJSON/', updateSupermarketsWithGeoJSON);
+
 export default businessRouter;

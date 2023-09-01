@@ -5,47 +5,62 @@ import {getUserLocation} from '../utils/getLocationUtils';
 import {NotOk, Supermarket} from '../@types';
 import {toast} from 'react-toastify';
 
+interface Coordinates {
+	latitude: number;
+	longitude: number;
+}
+
 const Map = () => {
-	const [userCoords, setUserCoords] = useState<{latitude: number; longitude: number}>({latitude: 52.52, longitude: 13.405});
+	const [userCoords, setUserCoords] = useState<{latitude: number; longitude: number}>({
+		latitude: 52.52,
+		longitude: 13.405,
+	});
 	const [supermarkets, setSupermarkets] = useState<Supermarket[]>([]);
-	//TODO: Modify the fetchFunct to use a utility function instead and callback to set data in map, prevent userLocation from being displayed more than once, save the location in localStorge?
+	const [loading, setLoading] = useState<boolean>(true); // Add loading state
+
 	useEffect(() => {
-		const fetchSupermarketData = async () => {
+		const fetchSupermarketData = async (coords: Coordinates) => {
 			const baseURL = import.meta.env.VITE_SERVER_BASE as string;
+			const {longitude, latitude} = coords;
 			try {
-				const response = await fetch(`${baseURL}api/businesses/supermarketsWithPfandAutomat`);
+				const response = await fetch(`${baseURL}api/businesses/supermarketsWithPfandAutomat?longitude=${longitude}&latitude=${latitude}`);
 				if (!response.ok) {
 					const result = (await response.json()) as NotOk;
-					toast.error(`Something went wrong - ${result}`);
+					toast.error(`Something went wrong - ${result}, ${response.status}`);
 					throw new Error(`Request failed with status: ${response.status}`);
 				}
-
 				const result = await response.json();
-				setSupermarkets((prevSupermarkets) => [...prevSupermarkets, ...result]);
-				return result;
+				setSupermarkets(result);
+				setLoading(false); // Data loading completed
 			} catch (error) {
-				console.error('Error:', error);
-				return [];
+				console.error(error);
+				setLoading(false); // Data loading completed with error
 			}
 		};
 
 		getUserLocation(
 			(coords) => {
 				setUserCoords({latitude: coords.latitude, longitude: coords.longitude});
+				fetchSupermarketData(coords);
 			},
 			(error: GeolocationPositionError) => {
 				console.log(error);
+				setLoading(false); // Data loading completed with error
 			}
 		);
-
-		fetchSupermarketData();
 	}, []);
 
 	return (
 		<div className='centeredDiv' style={{flexDirection: 'column', width: '100%'}}>
 			<h1> Map</h1>
-			<LeafletMap userLocation={userCoords} supermarkets={supermarkets} />
-			<p>{`${userCoords.latitude.toFixed(3)} ${userCoords.longitude.toFixed(3)} `}</p>
+			{loading ? (
+				<p>Loading...</p> // Display loading indicator
+			) : (
+				<>
+					<LeafletMap userLocation={userCoords} supermarkets={supermarkets} />
+					<p>{`${userCoords.latitude.toFixed(3)} ${userCoords.longitude.toFixed(3)} `}</p>
+				</>
+			)}
 		</div>
 	);
 };
