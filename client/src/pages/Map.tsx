@@ -26,7 +26,8 @@ const Map = () => {
 				const response = await fetch(`${baseURL}api/businesses/supermarketsWithPfandAutomat?longitude=${longitude}&latitude=${latitude}`);
 				if (!response.ok) {
 					const result = (await response.json()) as NotOk;
-					toast.error(`Something went wrong - ${result}, ${response.status}`);
+					toast.error(`Something went wrong - ${result.error}, ${response.status}`);
+					console.log(result.error, response.status);
 					throw new Error(`Request failed with status: ${response.status}`);
 				}
 				const result = await response.json();

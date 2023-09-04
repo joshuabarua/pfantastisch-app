@@ -107,6 +107,23 @@ button:focus-visible {
 	background-color: whitesmoke;
 }
 
+#outlined-basic {
+	background-color: rgb(58, 59, 57, 0.3);
+	padding-bottom: 5px;
+}
+
+.container-autocomplete {
+	position: absolute;
+	width: 21%;
+	height: min-content;
+	/* background-color: black; */
+	z-index: 450;
+	display: flex;
+	flex-direction: column;
+	left: 6%;
+	top: 2%;
+}
+
 /* @media (prefers-color-scheme: light) {
 	:root {
 		color: #213547;

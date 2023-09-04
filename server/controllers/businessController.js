@@ -50,21 +50,19 @@ const findSupermarketByHasPfandAutomatValue = async (req, res) => {
 	const latitude = req.query.latitude;
 	console.log('long', longitude, 'lat', latitude);
 	try {
-		const matchingSupermarkets = await supermarketModel
-			.find({
-				'pfandtastic.has_pfand_automat': true,
-				loc: {
-					$near: {
-						$geometry: {type: 'Point', coordinates: [longitude, latitude]},
-						$minDistance: 1000,
-						$maxDistance: 3000,
-					},
+		const matchingSupermarkets = await supermarketModel.find({
+			'pfandtastic.has_pfand_automat': true,
+			loc: {
+				$near: {
+					$geometry: {type: 'Point', coordinates: [longitude, latitude]},
+					$minDistance: 1,
+					$maxDistance: 900,
 				},
-			})
-			.limit(20);
+			},
+		});
 
-		console.log('Matching supermarkets:', matchingSupermarkets);
-		console.log(matchingSupermarkets);
+		// console.log('Matching supermarkets:', matchingSupermarkets);
+		// console.log(matchingSupermarkets);
 		if (matchingSupermarkets.length > 0) {
 			const forFront = matchingSupermarkets.map((supermarket) => ({
 				_id: supermarket._id,
@@ -76,7 +74,8 @@ const findSupermarketByHasPfandAutomatValue = async (req, res) => {
 				longitude: supermarket.coordinates.longitude,
 				latitude: supermarket.coordinates.latitude,
 				coordinates: supermarket.coordinates,
-				display_address: supermarket.display_address,
+				display_address: supermarket.location.display_address,
+				location: supermarket.location,
 				phone: supermarket.phone,
 				distance: supermarket.distance,
 				pfandtastic: supermarket.pfandtastic,

@@ -8,6 +8,11 @@ export interface User {
 
 export type Users = User[];
 
+export interface LatLongLocation {
+	latitude: number;
+	longitude: number;
+}
+
 export interface NotOk {
 	error: string;
 }
@@ -40,10 +45,9 @@ export interface Supermarket {
 	rating: number;
 	latitude: number;
 	longitude: number;
-	coordinates: {
-		latitude: number;
-		longitude: number;
-	};
+	coordinates: Coordinates;
+	display_address: string[];
+	location: Location;
 	phone: string;
 	distance: number;
 	pfandtastic: Pfandtastic;
@@ -54,3 +58,18 @@ export interface Pfandtastic {
 	isOperational: boolean;
 	machine_img_url: string[];
 }
+
+export interface City {
+	city: string;
+	city_ascii: string;
+	lat: string;
+	lng: string;
+	country: string;
+	iso2: string;
+	iso3: string;
+	admin_name: string;
+	population: string;
+	id: string;
+}
+
+export type Cities = City[];
