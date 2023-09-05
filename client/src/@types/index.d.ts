@@ -37,6 +37,7 @@ export interface Location {
 }
 
 export interface Supermarket {
+	_id: string;
 	id: string;
 	alias: string;
 	name: string;

@@ -45,6 +45,40 @@ const findSupermarketByAlias = async (req, res) => {
 	}
 };
 
+const findSupermarketById = async (req, res) => {
+	const {_id} = req.params;
+	if (_id) {
+		try {
+			const foundSupermarket = await supermarketModel.findOne({_id: _id});
+			if (foundSupermarket) {
+				const forFront = {
+					_id: foundSupermarket._id,
+					alias: foundSupermarket.alias,
+					name: foundSupermarket.name,
+					image_url: foundSupermarket.image_url,
+					review_count: foundSupermarket.review_count,
+					rating: foundSupermarket.rating,
+					longitude: foundSupermarket.coordinates.longitude,
+					latitude: foundSupermarket.coordinates.latitude,
+					coordinates: foundSupermarket.coordinates,
+					display_address: foundSupermarket.location.display_address,
+					location: foundSupermarket.location,
+					phone: foundSupermarket.phone,
+					distance: foundSupermarket.distance,
+					pfandtastic: foundSupermarket.pfandtastic,
+				};
+				res.status(200).json(forFront);
+			} else {
+				res.status(404).json({error: 'No supermarket found'});
+			}
+		} catch (e) {
+			res.status(500).json({error: 'Something went wrong'});
+		}
+	} else {
+		res.status(400).json({error: 'valid ID must be included'});
+	}
+};
+
 const findSupermarketByHasPfandAutomatValue = async (req, res) => {
 	const longitude = req.query.longitude;
 	const latitude = req.query.latitude;
@@ -184,4 +218,12 @@ async function updateSupermarketsWithGeoJSON() {
 	}
 }
 
-export {findBusinesses, findAllSupermarkets, findSupermarketByAlias, updateSupermarketsHasPfandVal, findSupermarketByHasPfandAutomatValue, updateSupermarketsWithGeoJSON};
+export {
+	findBusinesses,
+	findAllSupermarkets,
+	findSupermarketByAlias,
+	findSupermarketById,
+	updateSupermarketsHasPfandVal,
+	findSupermarketByHasPfandAutomatValue,
+	updateSupermarketsWithGeoJSON,
+};

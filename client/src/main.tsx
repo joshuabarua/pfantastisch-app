@@ -12,6 +12,7 @@ import Error404 from './pages/Error404.tsx';
 import Signup from './pages/Signup.tsx';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import PfandMachine from './pages/PfandMachine.tsx';
 
 const router = createBrowserRouter([
 	{
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
 					{
 						path: '/map',
 						element: <Map />,
+					},
+					{
+						path: '/map/pfandautomat/:id',
+						element: <PfandMachine />,
 					},
 					{
 						path: '/users',

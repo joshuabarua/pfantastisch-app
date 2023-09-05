@@ -3,8 +3,7 @@ import 'leaflet/dist/leaflet.css'; // Import Leaflet's CSS
 import {Supermarket, LatLongLocation} from '../@types';
 import {Icon} from 'leaflet';
 import Button from '@mui/material/Button/Button';
-import {slide as Menu} from 'react-burger-menu';
-import {useState} from 'react';
+import {NavLink} from 'react-router-dom';
 
 const maps = {base: 'https://tile.jawg.io/jawg-sunny/{z}/{x}/{y}{r}.png?'};
 const customIcon = new Icon({
@@ -20,14 +19,7 @@ interface Props {
 //TODO: Try to send user to google maps if they select get directions. Need to make a sidebar - Create sidebar for app
 const LeafletMap = (props: Props) => {
 	const {userLocation, supermarkets} = props;
-	const [isOpen, setIsOpen] = useState(false);
 
-	const handleOnOpen = () => {
-		if (!isOpen) {
-			setIsOpen(true);
-			console.log(isOpen);
-		} else return;
-	};
 	return (
 		<div className='leaflet-container'>
 			<div className='container-autocomplete'></div>
@@ -64,8 +56,8 @@ const LeafletMap = (props: Props) => {
 									<span style={supermarket.pfandtastic.isOperational ? {color: '#a5d6a7'} : {color: '#e57373'}}>
 										{supermarket.pfandtastic.isOperational ? 'Pfand Machine Operational' : 'Pfand Machine Not Operational'}
 									</span>
-									<Button variant='contained' color={'primary'} onClick={handleOnOpen}>
-										Pfand-Automat Details
+									<Button variant='contained' color={'primary'}>
+										<NavLink to={`/map/pfandautomat/${supermarket._id}`}>PFAND PAGE </NavLink>
 									</Button>
 								</div>
 							</Popup>
@@ -75,20 +67,6 @@ const LeafletMap = (props: Props) => {
 					<></>
 				)}
 			</MapContainer>
-			<Menu right onOpen={handleOnOpen}>
-				<a id='home' className='menu-item' href='/'>
-					Home
-				</a>
-				<a id='about' className='menu-item' href='/about'>
-					About
-				</a>
-				<a id='contact' className='menu-item' href='/contact'>
-					Contact
-				</a>
-				<a onClick={(e) => e.preventDefault()} className='menu-item--small' href=''>
-					Settings
-				</a>
-			</Menu>
 		</div>
 	);
 };
