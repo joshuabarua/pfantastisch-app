@@ -1,4 +1,4 @@
-import {supermarketModel} from '../models/supermarketModel.js';
+import {supermarketMaddodel} from '../models/supermarketModel.js';
 
 /*
 TODO: 
@@ -6,8 +6,6 @@ TODO:
 - Only display pfand machines that I know have machines (eg. rewe, edeka, lidle, kaufland, penny, aldi, netto, veganz, biocompany AKA have boolean value that says it does have one)
 - Users need points, and only those with 5 drops off can register new machines (limited to 1), with every level they gain the ability to register a new machine. THOUGH, if it doesn not already exist in the db, thia needs to be checked manually)
 */
-
-// TODO: Make a function to post this JSON data to the supermarkets collection rather than doing over mongodb
 
 const validSupermarkets = ['REWE', 'EDEKA', 'LIDL', 'KAUFLAND', 'ALDI', 'PENNY', 'NETTO'];
 
@@ -96,8 +94,6 @@ const findSupermarketByHasPfandAutomatValue = async (req, res) => {
 			},
 		});
 
-		// console.log('Matching supermarkets:', matchingSupermarkets);
-		// console.log(matchingSupermarkets);
 		if (matchingSupermarkets.length > 0) {
 			const forFront = matchingSupermarkets.map((supermarket) => ({
 				_id: supermarket._id,
