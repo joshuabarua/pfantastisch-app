@@ -81,7 +81,6 @@ export interface Comment {
 	comment: string;
 	likes: string[];
 	posted_by: UserPostingComment;
-	date: string;
 }
 
 export interface UserPostingComment {

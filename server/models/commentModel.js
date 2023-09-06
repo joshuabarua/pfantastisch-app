@@ -5,9 +5,9 @@ const {Schema} = mongoose;
 const commentSchema = new Schema(
 	{
 		comment: String,
-		likes: [String],
-		posted_by: [{type: Schema.Types.ObjectId, ref: 'user'}],
-		date: String,
+		likes: [{type: Schema.Types.ObjectId, ref: 'user'}],
+		posted_by: {type: Schema.Types.ObjectId, ref: 'user'},
+		supermarket: {type: Schema.Types.ObjectId, ref: 'supermarket'},
 	},
 	{timestamps: true}
 );

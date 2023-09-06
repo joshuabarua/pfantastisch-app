@@ -13,7 +13,7 @@ import jwtAuth from '../middlewares/jwtAuth.js';
 
 const businessRouter = express.Router();
 
-businessRouter.post('/add-comment/:id', jwtAuth, addComment);
+businessRouter.post('/add-comment/:_id', jwtAuth, addComment);
 
 businessRouter.get('/all', findBusinesses);
 businessRouter.get('/findAll', findAllSupermarkets);

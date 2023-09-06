@@ -50,7 +50,7 @@ const findSupermarketById = async (req, res) => {
 	console.log(id);
 	if (id) {
 		try {
-			const foundSupermarket = await supermarketModel.findOne({_id: id});
+			const foundSupermarket = await supermarketModel.findOne({_id: id}).populate('comments');
 			if (foundSupermarket) {
 				const forFront = {
 					_id: foundSupermarket._id,

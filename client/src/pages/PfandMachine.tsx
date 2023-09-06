@@ -10,7 +10,7 @@ export default function PfandMachine() {
 	const baseURL = import.meta.env.VITE_SERVER_BASE as string;
 	const {user} = useContext(AuthContext);
 	const {_id} = useParams();
-	const {pfandMachine, comments, setComments, loading} = usePfandMachineFetch(_id!); //check this line?
+	const {pfandMachine, comments, setComments, loading} = usePfandMachineFetch(_id!);
 	const [commentText, setCommentText] = useState('');
 	const handleSubmitComment = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -35,7 +35,6 @@ export default function PfandMachine() {
 					...comments,
 					{
 						comment: newComment.comment,
-						date: newComment.date,
 						_id: newComment._id,
 						likes: newComment.likes,
 						posted_by: {
@@ -104,10 +103,10 @@ export default function PfandMachine() {
 						{pfandMachine.phone && <span>Phone: {pfandMachine.phone}</span>}
 					</div>
 					{user ? (
-						<div className='centeredDiv' style={{flexDirection: 'column'}}>
-							<form onSubmit={handleSubmitComment}>
-								<label>Leave a comment: </label>
-								<input type='textarea' value={commentText} onChange={(e) => setCommentText(e.target.value)} />
+						<div style={{flexDirection: 'row'}}>
+							<form style={{display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}} onSubmit={handleSubmitComment}>
+								<label htmlFor='commentArea'>Leave a comment: </label>
+								<input type='textarea' value={commentText} id='commentArea' onChange={(e) => setCommentText(e.target.value)} />
 								<Button type='submit'>Post comment</Button>
 							</form>
 						</div>

@@ -1,3 +1,4 @@
+import {commentModel} from '../models/commentModel.js';
 import {supermarketModel} from '../models/supermarketModel.js';
 import mongoose from 'mongoose';
 
@@ -8,11 +9,12 @@ const addComment = async (req, res) => {
 		return res.status(406).json({error: 'Invalid ID'});
 	}
 	try {
-		const toSubmit = {...req.body, posted_by: req.user._id};
+		const toSubmit = {...req.body, posted_by: req.user._id, supermarket: pfandMachineId};
+		const createdComment = await commentModel.create(toSubmit);
 		const pfandMachine = await supermarketModel.findOneAndUpdate(
 			{_id: pfandMachineId},
 			{
-				$push: {comments: toSubmit},
+				$push: {comments: createdComment._id},
 			},
 			{new: true}
 		);
