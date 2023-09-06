@@ -5,6 +5,7 @@ import usePfandMachineFetch from '../hooks/usePfandMachineFetch';
 import {AuthContext} from '../context/AuthContext';
 import Button from '@mui/material/Button/Button';
 import getToken from '../utils/getToken';
+import CommentCard from '../components/CommentCard';
 
 export default function PfandMachine() {
 	const baseURL = import.meta.env.VITE_SERVER_BASE as string;
@@ -35,6 +36,7 @@ export default function PfandMachine() {
 					...comments,
 					{
 						comment: newComment.comment,
+						createdAt: newComment.createdAt,
 						_id: newComment._id,
 						likes: newComment.likes,
 						posted_by: {
@@ -78,29 +80,38 @@ export default function PfandMachine() {
 			{loading || !pfandMachine ? (
 				<p>Loading...</p>
 			) : (
-				<div className='centeredDiv' style={{flexDirection: 'column', width: '100vw', gap: 20}}>
-					<div className='centeredDiv' style={{display: 'flex', flexDirection: 'row', width: '100vw', gap: 10}}>
-						<img src={!pfandMachine.image_url ? '/src/assets/icons/commerce.png' : pfandMachine.image_url} style={{width: '60px', height: '60px', borderRadius: '10%'}}></img>
+				<div className='centeredDiv' style={{flexDirection: 'column', width: '50vw', gap: 20}}>
+					<div className='centeredDiv' style={{display: 'flex', flexDirection: 'row', width: '50vw', gap: 10}}>
+						<img
+							src={!pfandMachine.image_url ? '/src/assets/icons/commerce.png' : pfandMachine.image_url}
+							style={{width: '100px', height: '100px', borderRadius: '10%'}}></img>
 						<h3> {pfandMachine.name}</h3>
 					</div>
-					<div className='centeredDiv' style={{flexDirection: 'column'}}>
+					<div className='centeredDiv' style={{flexDirection: 'column', gap: 20}}>
 						{pfandMachine.pfandtastic.isOperational ? (
 							<span className='blink' style={{color: '#81c784'}}>
-								{' '}
 								• Pfandautomat Online{' '}
 							</span>
 						) : (
 							<span className='blink' style={{color: '#e57373'}}>
-								{' '}
 								• Maintainence Needed{' '}
 							</span>
 						)}
-						<img
-							src={!pfandMachine.pfandtastic.machine_img_url[0] ? '/src/assets/imgs/bottle-automat.png' : pfandMachine.pfandtastic.machine_img_url[0]}
-							style={{width: '200px', height: '200px', borderRadius: '50%'}}></img>
 						<span>{renderStars(pfandMachine.rating)}</span>
 						<span> {`${pfandMachine.location.address1}, ${pfandMachine.location.city}, ${pfandMachine.location.zip_code}, ${pfandMachine.location.country}`}</span>
 						{pfandMachine.phone && <span>Phone: {pfandMachine.phone}</span>}
+						<img
+							src={!pfandMachine.pfandtastic.machine_img_url[0] ? '/src/assets/imgs/bottle-automat.png' : pfandMachine.pfandtastic.machine_img_url[0]}
+							style={{width: '200px', height: '200px', borderRadius: '50%'}}
+						/>
+					</div>
+					<div style={{width: '50%', gap: 20}}>
+						<h3>Comments:</h3>
+						{comments.length === 0 && <p style={{textAlign: 'center'}}>No comments yet :( </p>}
+						{comments.length > 0 &&
+							comments.map((comment) => {
+								return <CommentCard key={comment._id} comment={comment} comments={comments} setComments={setComments} pfandmachine={pfandMachine} />;
+							})}
 					</div>
 					{user ? (
 						<div style={{flexDirection: 'row'}}>

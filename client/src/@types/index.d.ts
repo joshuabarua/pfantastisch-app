@@ -79,6 +79,7 @@ export type Cities = City[];
 
 export interface Comment {
 	_id: string;
+	createdAt: string;
 	comment: string;
 	likes: string[];
 	posted_by: UserPostingComment;
