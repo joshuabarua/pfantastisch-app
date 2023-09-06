@@ -79,9 +79,6 @@ export default function PfandMachine() {
 				<p>Loading...</p>
 			) : (
 				<div className='centeredDiv' style={{flexDirection: 'column', width: '100vw', gap: 20}}>
-					<img
-						src={!pfandMachine.pfandtastic.machine_img_url[0] ? '/src/assets/imgs/bottle-automat.png' : pfandMachine.pfandtastic.machine_img_url[0]}
-						style={{width: '200px', height: '200px', borderRadius: '50%'}}></img>
 					<div className='centeredDiv' style={{display: 'flex', flexDirection: 'row', width: '100vw', gap: 10}}>
 						<img src={!pfandMachine.image_url ? '/src/assets/icons/commerce.png' : pfandMachine.image_url} style={{width: '60px', height: '60px', borderRadius: '10%'}}></img>
 						<h3> {pfandMachine.name}</h3>
@@ -98,6 +95,9 @@ export default function PfandMachine() {
 								• Maintainence Needed{' '}
 							</span>
 						)}
+						<img
+							src={!pfandMachine.pfandtastic.machine_img_url[0] ? '/src/assets/imgs/bottle-automat.png' : pfandMachine.pfandtastic.machine_img_url[0]}
+							style={{width: '200px', height: '200px', borderRadius: '50%'}}></img>
 						<span>{renderStars(pfandMachine.rating)}</span>
 						<span> {`${pfandMachine.location.address1}, ${pfandMachine.location.city}, ${pfandMachine.location.zip_code}, ${pfandMachine.location.country}`}</span>
 						{pfandMachine.phone && <span>Phone: {pfandMachine.phone}</span>}

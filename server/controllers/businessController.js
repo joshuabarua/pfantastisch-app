@@ -1,4 +1,4 @@
-import {supermarketMaddodel} from '../models/supermarketModel.js';
+import {supermarketModel} from '../models/supermarketModel.js';
 
 /*
 TODO: 

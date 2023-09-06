@@ -13,6 +13,7 @@ import Signup from './pages/Signup.tsx';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PfandMachine from './pages/PfandMachine.tsx';
+import Profile from './pages/Profile.tsx';
 
 const router = createBrowserRouter([
 	{
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
 					{
 						path: '/',
 						element: <Homepage />,
+					},
+					{
+						path: '/myprofile',
+						element: <Profile />,
 					},
 					{
 						path: '/map',

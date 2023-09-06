@@ -1,6 +1,11 @@
 import {useContext} from 'react';
 import {NavLink} from 'react-router-dom';
 import {AuthContext} from '../context/AuthContext';
+import HomeIcon from '@mui/icons-material/Home'; // Import Material-UI's Home icon
+import MapIcon from '@mui/icons-material/Map'; // Import Material-UI's Map icon
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import IconButton from '@mui/material/IconButton/IconButton';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 function Nav() {
 	const {user, logout} = useContext(AuthContext);
@@ -34,17 +39,30 @@ function Nav() {
 			<p>{user ? <img src={`${user.image_url}`} className='navProfilePic' /> : <></>}</p>
 			<div style={linksContainerStyles}>
 				<NavLink to='/' style={({isActive}) => (isActive ? activeLink : {})}>
-					Homepage
+					<IconButton color='inherit'>
+						<HomeIcon />
+					</IconButton>
 				</NavLink>
-				<NavLink to='/users' style={({isActive}) => (isActive ? activeLink : {})}>
-					Users
-				</NavLink>
+
 				<NavLink to='/map' style={({isActive}) => (isActive ? activeLink : {})}>
-					Pfand Finder
+					<IconButton color='inherit'>
+						<MapIcon />
+					</IconButton>
 				</NavLink>
-				<NavLink to='/login' style={({isActive}) => (isActive ? activeLink : {})}>
-					Login
+				<NavLink to='/myprofile' style={({isActive}) => (isActive ? activeLink : {})}>
+					<IconButton color='inherit'>
+						<SettingsIcon />
+					</IconButton>
 				</NavLink>
+				{user ? (
+					<></>
+				) : (
+					<NavLink to='/login' style={({isActive}) => (isActive ? activeLink : {})}>
+						<IconButton color='inherit'>
+							<ExitToAppIcon />
+						</IconButton>
+					</NavLink>
+				)}
 			</div>
 			<p>
 				{user ? (

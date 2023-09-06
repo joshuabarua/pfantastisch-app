@@ -6,6 +6,7 @@ import getToken from '../utils/getToken';
 
 interface DefaultValue {
 	user: null | User;
+	setUser: React.Dispatch<React.SetStateAction<User | null>>;
 	login: (email: string, password: string) => Promise<void>;
 
 	signup: (email: string, password: string, username: string, profilePicFile: File | null) => Promise<void>;
@@ -26,6 +27,9 @@ interface LoginResult {
 
 const initialValue: DefaultValue = {
 	user: null,
+	setUser: () => {
+		throw new Error('context not implemented.');
+	},
 	login: () => {
 		throw new Error('context not implemented.');
 	},
@@ -42,7 +46,6 @@ export const AuthContext = createContext<DefaultValue>(initialValue);
 export const AuthContextProvider = ({children}: {children: ReactNode}) => {
 	const baseURL = import.meta.env.VITE_SERVER_BASE as string;
 	const [user, setUser] = useState<null | User>(null);
-	// const [users, setUsers] = useState<null | User[]>(null);
 	const redirect = useNavigate();
 
 	const signup = async (email: string, password: string, username: string, profilePicFile: File | null) => {
@@ -138,5 +141,5 @@ export const AuthContextProvider = ({children}: {children: ReactNode}) => {
 		getActiveUser().catch((e) => console.log(e));
 	}, []);
 
-	return <AuthContext.Provider value={{user, signup, login, logout}}>{children}</AuthContext.Provider>;
+	return <AuthContext.Provider value={{user, setUser, signup, login, logout}}>{children}</AuthContext.Provider>;
 };

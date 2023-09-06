@@ -27,7 +27,7 @@ function usePfandMachineFetch(id: string) {
 	};
 
 	useEffect(() => {
-		if (id) getPfandMachineData();
+		getPfandMachineData();
 	}, [id]);
 	return {pfandMachine, comments, setComments, loading, setLoading};
 }

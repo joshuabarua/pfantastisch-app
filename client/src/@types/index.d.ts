@@ -4,6 +4,7 @@ export interface User {
 	password: string;
 	username: string;
 	image_url: string;
+	createdAt: string;
 }
 
 export type Users = User[];
