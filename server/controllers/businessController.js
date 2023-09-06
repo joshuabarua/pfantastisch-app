@@ -46,10 +46,11 @@ const findSupermarketByAlias = async (req, res) => {
 };
 
 const findSupermarketById = async (req, res) => {
-	const {_id} = req.params;
-	if (_id) {
+	const {id} = req.params;
+	console.log(id);
+	if (id) {
 		try {
-			const foundSupermarket = await supermarketModel.findOne({_id: _id});
+			const foundSupermarket = await supermarketModel.findOne({_id: id});
 			if (foundSupermarket) {
 				const forFront = {
 					_id: foundSupermarket._id,
@@ -66,7 +67,7 @@ const findSupermarketById = async (req, res) => {
 					phone: foundSupermarket.phone,
 					distance: foundSupermarket.distance,
 					pfandtastic: foundSupermarket.pfandtastic,
-					comments: supermarket.comments,
+					comments: foundSupermarket.comments,
 				};
 				res.status(200).json(forFront);
 			} else {
@@ -83,7 +84,6 @@ const findSupermarketById = async (req, res) => {
 const findSupermarketByHasPfandAutomatValue = async (req, res) => {
 	const longitude = req.query.longitude;
 	const latitude = req.query.latitude;
-	console.log('long', longitude, 'lat', latitude);
 	try {
 		const matchingSupermarkets = await supermarketModel.find({
 			'pfandtastic.has_pfand_automat': true,

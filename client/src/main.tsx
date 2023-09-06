@@ -41,7 +41,7 @@ const router = createBrowserRouter([
 						element: <Map />,
 					},
 					{
-						path: '/map/pfandautomat/:id',
+						path: '/map/pfandautomat/:_id',
 						element: <PfandMachine />,
 					},
 					{

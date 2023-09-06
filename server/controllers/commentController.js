@@ -1,7 +1,9 @@
 import {supermarketModel} from '../models/supermarketModel.js';
+import mongoose from 'mongoose';
 
 const addComment = async (req, res) => {
 	const pfandMachineId = req.params._id;
+	console.log(req.params, req.body, req.user);
 	if (!mongoose.Types.ObjectId.isValid(pfandMachineId)) {
 		return res.status(406).json({error: 'Invalid ID'});
 	}

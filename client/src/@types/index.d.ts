@@ -52,6 +52,7 @@ export interface Supermarket {
 	phone: string;
 	distance: number;
 	pfandtastic: Pfandtastic;
+	comments: Comments;
 }
 
 export interface Pfandtastic {

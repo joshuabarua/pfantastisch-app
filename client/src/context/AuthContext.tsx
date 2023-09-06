@@ -115,7 +115,6 @@ export const AuthContextProvider = ({children}: {children: ReactNode}) => {
 
 	const getActiveUser = async () => {
 		const token = getToken();
-		console.log(token);
 		if (token) {
 			try {
 				const myHeaders = new Headers({Authorization: `Bearer ${token}`});

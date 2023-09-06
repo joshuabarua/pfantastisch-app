@@ -4,10 +4,9 @@ import {Comments, NotOk, Supermarket} from '../@types';
 
 function usePfandMachineFetch(id: string) {
 	const [loading, setLoading] = useState(true);
-	const [pfandMachine, setPfandMachine] = useState<Supermarket | null>(null);
-	const [comments, setComments] = useState([] as Comments);
+	const [pfandMachine, setPfandMachine] = useState<Supermarket>();
+	const [comments, setComments] = useState<Comments>([]);
 
-	//TODO: Internal Server Error
 	const getPfandMachineData = async () => {
 		const baseURL = import.meta.env.VITE_SERVER_BASE as string;
 		try {
@@ -15,21 +14,20 @@ function usePfandMachineFetch(id: string) {
 			if (!response.ok) {
 				const result = (await response.json()) as NotOk;
 				toast.error(`getPfandError - ${result.error}, code: ${response.status}`);
-				console.log(result.error, response.status);
 				throw new Error(`Request failed with status: ${response.status}`);
 			}
 			const result = await response.json();
 			setPfandMachine(result);
 			setComments(result.comments);
-			setLoading(false); // Data loading completed
+			setLoading(false);
 		} catch (error) {
 			console.error(error);
-			setLoading(false); // Data loading completed with error
+			setLoading(false);
 		}
 	};
 
 	useEffect(() => {
-		getPfandMachineData();
+		if (id) getPfandMachineData();
 	}, [id]);
 	return {pfandMachine, comments, setComments, loading, setLoading};
 }

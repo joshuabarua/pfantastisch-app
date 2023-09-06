@@ -9,15 +9,13 @@ import getToken from '../utils/getToken';
 export default function PfandMachine() {
 	const baseURL = import.meta.env.VITE_SERVER_BASE as string;
 	const {user} = useContext(AuthContext);
-	const {id} = useParams();
+	const {_id} = useParams();
+	const {pfandMachine, comments, setComments, loading} = usePfandMachineFetch(_id!); //check this line?
 	const [commentText, setCommentText] = useState('');
-
-	const {pfandMachine, comments, setComments, loading} = usePfandMachineFetch(id as string);
-
-	const handleSubmitComment = async (e: {preventDefault: () => void}) => {
+	const handleSubmitComment = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		const token = getToken();
-		if (token) {
+		if (token && user && _id) {
 			try {
 				const myHeaders = new Headers();
 				myHeaders.append('Authorization', 'Bearer ' + token);
@@ -28,9 +26,11 @@ export default function PfandMachine() {
 					headers: myHeaders,
 					body: body,
 				};
-				const response = await fetch(baseURL + `api/businesses/add-comment/${pfandMachine?._id}`, reqOptions);
+
+				const response = await fetch(baseURL + `api/businesses/add-comment/` + _id, reqOptions);
 				const result = await response.json();
 				const newComment = result.comments[result.comments.length - 1];
+
 				setComments([
 					...comments,
 					{
@@ -39,17 +39,17 @@ export default function PfandMachine() {
 						_id: newComment._id,
 						likes: newComment.likes,
 						posted_by: {
-							username: user!.username,
-							_id: user!._id,
-							image_url: user!.image_url,
+							username: user.username,
+							_id: user._id,
+							image_url: user.image_url,
 						},
 					},
 				]);
+
 				toast.success('Comment Posted', result);
 				setCommentText('');
 			} catch (error) {
 				toast.error('error!');
-
 				console.log(error);
 			}
 		}
