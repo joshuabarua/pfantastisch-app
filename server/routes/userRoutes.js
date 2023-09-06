@@ -1,13 +1,5 @@
 import express from 'express';
-import {
-	findAllUsers,
-	findUserByEmail,
-	createUser,
-	updateUser,
-	login,
-	getMe,
-	updatePassword,
-} from '../controllers/userController.js';
+import {findAllUsers, findUserByEmail, createUser, updateUser, login, getMe, updatePassword, updateUserFields} from '../controllers/userController.js';
 import multerUpload from '../middlewares/multer.js';
 import jwtAuth from '../middlewares/jwtAuth.js';
 
@@ -23,5 +15,8 @@ userRouter.post('/login', login);
 
 userRouter.put('/updateUser', multerUpload.single('image_url'), updateUser);
 userRouter.put('/updatePassword', updatePassword);
+
+//Add  any new fields i need to the collection in bulk
+userRouter.post('/addFieldsToUsers', updateUserFields);
 
 export default userRouter;

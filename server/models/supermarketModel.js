@@ -41,12 +41,13 @@ const supermarketSchema = new mongoose.Schema(
 				type: [Number],
 			},
 		},
+		comments: [{type: mongoose.Schema.Types.ObjectId, ref: 'comment'}],
 	},
+
 	{timestamps: true}
 );
 
 //TODO: To add later for user interaction
-// comments: [{type: ObjectId, ref: 'Comment'}],
 // likes: Number,
 
 export const supermarketModel = mongoose.model('supermarket', supermarketSchema);

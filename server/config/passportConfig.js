@@ -1,7 +1,7 @@
 import passport from 'passport';
 import {Strategy as JwtStrategy, ExtractJwt} from 'passport-jwt';
 import * as dotenv from 'dotenv';
-import {UserModel} from '../models/userModel.js';
+import {userModel} from '../models/userModel.js';
 dotenv.config();
 
 const options = {
@@ -11,7 +11,7 @@ const options = {
 
 const callback = async (jwt_payload, done) => {
 	try {
-		const foundUser = await UserModel.findById(jwt_payload.sub);
+		const foundUser = await userModel.findById(jwt_payload.sub);
 		if (!foundUser) return done(null, false);
 		else return done(null, foundUser);
 	} catch (err) {

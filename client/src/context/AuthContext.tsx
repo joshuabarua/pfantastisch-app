@@ -2,6 +2,7 @@ import {createContext, useState, ReactNode, useEffect} from 'react';
 import {NotOk, User} from '../@types';
 import {toast} from 'react-toastify';
 import {useNavigate} from 'react-router-dom';
+import getToken from '../utils/getToken';
 
 interface DefaultValue {
 	user: null | User;
@@ -71,7 +72,7 @@ export const AuthContextProvider = ({children}: {children: ReactNode}) => {
 				toast.error(`Something went wrong - ${result.error}`);
 			}
 		} catch (e) {
-			toast.error(`Something went wrong - ${e as Error}`);
+			toast.error(` ${e as Error}`);
 		}
 	};
 
@@ -102,7 +103,7 @@ export const AuthContextProvider = ({children}: {children: ReactNode}) => {
 				setTimeout(() => redirect('/'), 2000);
 			}
 		} catch (error) {
-			toast.error(`Something went wrong - ${error as Error}`);
+			toast.error(`${error as Error}`);
 		}
 	};
 
@@ -113,7 +114,8 @@ export const AuthContextProvider = ({children}: {children: ReactNode}) => {
 	};
 
 	const getActiveUser = async () => {
-		const token = localStorage.getItem('token');
+		const token = getToken();
+		console.log(token);
 		if (token) {
 			try {
 				const myHeaders = new Headers({Authorization: `Bearer ${token}`});
@@ -125,7 +127,8 @@ export const AuthContextProvider = ({children}: {children: ReactNode}) => {
 				const result = (await response.json()) as User;
 				setUser(result);
 			} catch (error) {
-				toast.error(`Something went wrong, could not get Active User - ${error as Error}`);
+				toast.error(error as string);
+				console.log(error);
 			}
 		} else {
 			setUser(null);
@@ -134,7 +137,6 @@ export const AuthContextProvider = ({children}: {children: ReactNode}) => {
 
 	useEffect(() => {
 		getActiveUser().catch((e) => console.log(e));
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return <AuthContext.Provider value={{user, signup, login, logout}}>{children}</AuthContext.Provider>;

@@ -29,9 +29,7 @@ const connectMiddlewares = () => {
 const connectDatabase = async () => {
 	await mongoose.connect(process.env.MONGO_URI);
 	app.listen(port, () => {
-		console.log(
-			'Connection to MongoDB established, and server is running on port ' + port
-		);
+		console.log('Connection to MongoDB established, and server is running on port ' + port);
 	});
 };
 

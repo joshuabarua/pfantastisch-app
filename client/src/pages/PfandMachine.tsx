@@ -1,14 +1,59 @@
-import React, {useEffect, useState} from 'react';
+import {useContext, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import {toast} from 'react-toastify';
-import {NotOk, Supermarket} from '../@types';
-
-// type Props = {};
+import usePfandMachineFetch from '../hooks/usePfandMachineFetch';
+import {AuthContext} from '../context/AuthContext';
+import Button from '@mui/material/Button/Button';
+import getToken from '../utils/getToken';
 
 export default function PfandMachine() {
+	const baseURL = import.meta.env.VITE_SERVER_BASE as string;
+	const {user} = useContext(AuthContext);
 	const {id} = useParams();
-	const [pfandMachine, setPfandMachine] = useState<Supermarket | null>(null);
-	const [loading, setLoading] = useState(true);
+	const [commentText, setCommentText] = useState('');
+
+	const {pfandMachine, comments, setComments, loading} = usePfandMachineFetch(id as string);
+
+	const handleSubmitComment = async (e: {preventDefault: () => void}) => {
+		e.preventDefault();
+		const token = getToken();
+		if (token) {
+			try {
+				const myHeaders = new Headers();
+				myHeaders.append('Authorization', 'Bearer ' + token);
+				myHeaders.append('Content-Type', 'application/json');
+				const body = JSON.stringify({comment: commentText});
+				const reqOptions = {
+					method: 'POST',
+					headers: myHeaders,
+					body: body,
+				};
+				const response = await fetch(baseURL + `api/businesses/add-comment/${pfandMachine?._id}`, reqOptions);
+				const result = await response.json();
+				const newComment = result.comments[result.comments.length - 1];
+				setComments([
+					...comments,
+					{
+						comment: newComment.comment,
+						date: newComment.date,
+						_id: newComment._id,
+						likes: newComment.likes,
+						posted_by: {
+							username: user!.username,
+							_id: user!._id,
+							image_url: user!.image_url,
+						},
+					},
+				]);
+				toast.success('Comment Posted', result);
+				setCommentText('');
+			} catch (error) {
+				toast.error('error!');
+
+				console.log(error);
+			}
+		}
+	};
 
 	function renderStars(rating: number) {
 		const maxStars = 5; // You can change this value to determine the maximum number of stars
@@ -27,29 +72,6 @@ export default function PfandMachine() {
 
 		return stars;
 	}
-
-	useEffect(() => {
-		const fetchPfandMachineData = async (id: string) => {
-			const baseURL = import.meta.env.VITE_SERVER_BASE as string;
-			try {
-				const response = await fetch(`${baseURL}api/businesses/supermarketById/${id}`);
-				if (!response.ok) {
-					const result = (await response.json()) as NotOk;
-					toast.error(`Something went wrong - ${result.error}, ${response.status}`);
-					console.log(result.error, response.status);
-					throw new Error(`Request failed with status: ${response.status}`);
-				}
-				const result = await response.json();
-				setPfandMachine(result);
-				setLoading(false); // Data loading completed
-			} catch (error) {
-				console.error(error);
-				setLoading(false); // Data loading completed with error
-			}
-		};
-
-		if (id) fetchPfandMachineData(id);
-	}, [id]);
 
 	return (
 		<div className='centeredDiv' style={{justifyContent: 'flex-start', flexDirection: 'column', width: '100vw'}}>
@@ -81,7 +103,31 @@ export default function PfandMachine() {
 						<span> {`${pfandMachine.location.address1}, ${pfandMachine.location.city}, ${pfandMachine.location.zip_code}, ${pfandMachine.location.country}`}</span>
 						{pfandMachine.phone && <span>Phone: {pfandMachine.phone}</span>}
 					</div>
-					<p>Comments system go here</p>
+					{user ? (
+						<div className='centeredDiv' style={{flexDirection: 'column'}}>
+							<form onSubmit={handleSubmitComment}>
+								<label>Leave a comment: </label>
+								<input type='textarea' value={commentText} onChange={(e) => setCommentText(e.target.value)} />
+								<Button type='submit'>Post comment</Button>
+							</form>
+						</div>
+					) : (
+						<div>
+							<form>
+								<label>Leave a comment: </label>
+								<input
+									type='textarea'
+									value={commentText}
+									onChange={(e) => setCommentText(e.target.value)}
+									placeholder='Only logged-in users can leave comments.'
+									disabled
+								/>
+								<Button disabled type='submit'>
+									Post comment
+								</Button>
+							</form>
+						</div>
+					)}
 				</div>
 			)}
 		</div>

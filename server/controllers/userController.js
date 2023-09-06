@@ -1,4 +1,4 @@
-import {UserModel} from '../models/userModel.js';
+import {userModel} from '../models/userModel.js';
 import {encryptPassword, verifyPassword} from '../utils/bcrypt.js';
 import imageUpload from '../utils/imageManagement.js';
 import {generateToken} from '../utils/jwt.js';
@@ -14,7 +14,7 @@ import {generateToken} from '../utils/jwt.js';
 // };
 
 const findAllUsers = async (request, response) => {
-	const users = await UserModel.find();
+	const users = await userModel.find();
 
 	try {
 		if (users) {
@@ -41,7 +41,7 @@ const findUserByEmail = async (req, res) => {
 	const {email} = req.params;
 	if (email && email.includes('@')) {
 		try {
-			const foundUser = await UserModel.findOne({email: email});
+			const foundUser = await userModel.findOne({email: email});
 			if (foundUser) {
 				const forFront = {
 					email: foundUser.email,
@@ -64,11 +64,10 @@ const findUserByEmail = async (req, res) => {
 const createUser = async (req, res) => {
 	const {email, password, username} = req.body;
 	console.log(req.body, req.file);
-	if (!email || !password || !username)
-		return res.status(406).json({error: 'Please fill out all fields'});
+	if (!email || !password || !username) return res.status(406).json({error: 'Please fill out all fields'});
 	const imageResult = await imageUpload(req.file, 'profile_pics');
 	const hashedPassword = await encryptPassword(password);
-	const newUser = new UserModel({
+	const newUser = new userModel({
 		email,
 		password: hashedPassword,
 		username,
@@ -89,9 +88,7 @@ const createUser = async (req, res) => {
 		console.log({result, token, user: forFront});
 	} catch (e) {
 		console.log(e);
-		e.code === 11000
-			? res.status(406).json({error: 'That email is already registered'})
-			: res.status(500).json({error: 'Unknown error occured'});
+		e.code === 11000 ? res.status(406).json({error: 'That email is already registered'}) : res.status(500).json({error: 'Unknown error occured'});
 	}
 };
 
@@ -99,7 +96,7 @@ const updateUser = async (req, res) => {
 	try {
 		if (req.file) {
 			const newProfilePicture = await imageUpload(req.file, 'profile_pics');
-			const result = await UserModel.findByIdAndUpdate(
+			const result = await userModel.findByIdAndUpdate(
 				req.body._id,
 				{...req.body, image_url: newProfilePicture},
 				{
@@ -109,7 +106,7 @@ const updateUser = async (req, res) => {
 			res.status(200).json(result);
 			console.log(error);
 		} else {
-			const result = await UserModel.findByIdAndUpdate(req.body._id, req.body, {
+			const result = await userModel.findByIdAndUpdate(req.body._id, req.body, {
 				new: true,
 			});
 			res.status(200).json(result);
@@ -124,11 +121,7 @@ const updatePassword = async (req, res) => {
 	try {
 		const hashedPassword = await encryptPassword(stringPassword);
 		console.log(stringPassword, _id, hashedPassword);
-		const result = await UserModel.findByIdAndUpdate(
-			_id,
-			{password: hashedPassword},
-			{new: true}
-		);
+		const result = await userModel.findByIdAndUpdate(_id, {password: hashedPassword}, {new: true});
 		res.status(200).json({message: 'password updated!'});
 	} catch (error) {
 		res.status(500).json({error: 'Something went wrong...'});
@@ -138,7 +131,7 @@ const updatePassword = async (req, res) => {
 const login = async (req, res) => {
 	const {email, password} = req.body;
 	try {
-		const existingUser = await UserModel.findOne({email});
+		const existingUser = await userModel.findOne({email});
 		if (!existingUser) {
 			return res.status(404).json({error: 'No user with that email.'});
 		}
@@ -150,6 +143,7 @@ const login = async (req, res) => {
 		const forFront = {
 			email: existingUser.email,
 			username: existingUser.username,
+			
 			_id: existingUser._id,
 			createdAt: existingUser.createdAt,
 			image_url: existingUser.image_url,
@@ -169,13 +163,32 @@ const logout = () => {
 	setUser(null);
 };
 
-export {
-	findAllUsers,
-	findUserByEmail,
-	createUser,
-	updateUser,
-	updatePassword,
-	login,
-	getMe,
-	logout,
-};
+async function updateUserFields() {
+	try {
+		const users = await userModel.find();
+
+		if (!users.length) {
+			console.log('No users found in the collection.');
+			return;
+		}
+
+		const bulkOps = users.map((user) => ({
+			updateOne: {
+				filter: {_id: user._id},
+				update: {
+					$set: {
+						comments: [],
+						likes: [],
+					},
+				},
+			},
+		}));
+
+		await userModel.bulkWrite(bulkOps);
+		console.log(`${users.length} documents updated with fields.`);
+	} catch (error) {
+		console.error('Error updating documents:', error);
+	}
+}
+
+export {findAllUsers, findUserByEmail, createUser, updateUser, updatePassword, login, getMe, logout, updateUserFields};

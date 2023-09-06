@@ -66,6 +66,7 @@ const findSupermarketById = async (req, res) => {
 					phone: foundSupermarket.phone,
 					distance: foundSupermarket.distance,
 					pfandtastic: foundSupermarket.pfandtastic,
+					comments: supermarket.comments,
 				};
 				res.status(200).json(forFront);
 			} else {
@@ -113,6 +114,7 @@ const findSupermarketByHasPfandAutomatValue = async (req, res) => {
 				phone: supermarket.phone,
 				distance: supermarket.distance,
 				pfandtastic: supermarket.pfandtastic,
+				comments: supermarket.comments,
 			}));
 			res.status(200).json(forFront);
 		} else {
@@ -176,6 +178,7 @@ const findAllSupermarkets = async (request, response) => {
 					phone: supermarket.phone,
 					distance: supermarket.distance,
 					pfandtastic: supermarket.pfandtastic,
+					comments: supermarket.comments,
 				})
 			);
 			response.status(200).json(forFront);
@@ -188,7 +191,7 @@ const findAllSupermarkets = async (request, response) => {
 };
 
 /* Need to add geoJSON fields in order to correctly use leaflets $near methods for finding lcoations near user */
-async function updateSupermarketsWithGeoJSON() {
+async function updateSupermarketsWithField() {
 	try {
 		const supermarkets = await supermarketModel.find();
 
@@ -202,17 +205,14 @@ async function updateSupermarketsWithGeoJSON() {
 				filter: {_id: supermarket._id},
 				update: {
 					$set: {
-						loc: {
-							type: 'Point',
-							coordinates: [supermarket.coordinates.longitude, supermarket.coordinates.latitude],
-						},
+						comments: [],
 					},
 				},
 			},
 		}));
 
 		await supermarketModel.bulkWrite(bulkOps);
-		console.log(`${supermarkets.length} documents updated with GeoJSON loc field.`);
+		console.log(`${supermarkets.length} documents updated with comments field.`);
 	} catch (error) {
 		console.error('Error updating documents:', error);
 	}
@@ -225,5 +225,5 @@ export {
 	findSupermarketById,
 	updateSupermarketsHasPfandVal,
 	findSupermarketByHasPfandAutomatValue,
-	updateSupermarketsWithGeoJSON,
+	updateSupermarketsWithField,
 };

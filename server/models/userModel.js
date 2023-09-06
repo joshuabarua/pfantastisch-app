@@ -1,19 +1,19 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema(
 	{
 		email: {type: String, required: true, unique: true},
 		username: String,
-		// comments: [{type: ObjectId, ref: "Comment"}],
+		comments: [{type: mongoose.Schema.Types.ObjectId, ref: 'comment'}], // Assuming your comment model is named 'Comment'
+		likes: [{type: mongoose.Schema.Types.ObjectId, ref: 'comment'}],
 		password: {type: String, required: true},
 		image_url: {
 			type: String,
 			required: true,
-			default:
-				"https://res.cloudinary.com/dorvfgwzc/image/upload/v1692352308/profile_pics/placeholder_img.png",
+			default: 'https://res.cloudinary.com/dorvfgwzc/image/upload/v1692352308/profile_pics/placeholder_img.png',
 		},
 	},
 	{timestamps: true}
 );
 
-export const UserModel = mongoose.model("user", userSchema);
+export const userModel = mongoose.model('user', userSchema);

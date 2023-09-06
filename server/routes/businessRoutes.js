@@ -6,10 +6,14 @@ import {
 	findSupermarketById,
 	updateSupermarketsHasPfandVal,
 	findSupermarketByHasPfandAutomatValue,
-	updateSupermarketsWithGeoJSON,
+	updateSupermarketsWithField,
 } from '../controllers/businessController.js';
+import {addComment} from '../controllers/commentController.js';
+import jwtAuth from '../middlewares/jwtAuth.js';
 
 const businessRouter = express.Router();
+
+businessRouter.post('/add-comment/:id', jwtAuth, addComment);
 
 businessRouter.get('/all', findBusinesses);
 businessRouter.get('/findAll', findAllSupermarkets);
@@ -18,6 +22,6 @@ businessRouter.get('/supermarketsWithPfandAutomat', findSupermarketByHasPfandAut
 businessRouter.get('/supermarketById/:_id', findSupermarketById);
 
 businessRouter.put('/updateSupermarketsWithTruthy/', updateSupermarketsHasPfandVal);
-businessRouter.put('/updateSupermarketsWithGeoJSON/', updateSupermarketsWithGeoJSON);
+businessRouter.put('/updateSupermarketsWithField/', updateSupermarketsWithField);
 
 export default businessRouter;

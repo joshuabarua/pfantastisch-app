@@ -1,13 +1,15 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-const commentModel = new mongoose.Schema(
+const {Schema} = mongoose;
+
+const commentSchema = new Schema(
 	{
 		comment: String,
 		likes: [String],
-		owner: [{type: ObjectId, ref: "User"}],
+		posted_by: [{type: Schema.Types.ObjectId, ref: 'user'}],
 		date: String,
 	},
 	{timestamps: true}
 );
 
-export const CommentModel = mongoose.model("comment", commentModel);
+export const commentModel = mongoose.model('comment', commentSchema);

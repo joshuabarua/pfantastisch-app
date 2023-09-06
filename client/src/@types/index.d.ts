@@ -74,3 +74,19 @@ export interface City {
 }
 
 export type Cities = City[];
+
+export interface Comment {
+	_id: string;
+	comment: string;
+	likes: string[];
+	posted_by: UserPostingComment;
+	date: string;
+}
+
+export interface UserPostingComment {
+	username: string;
+	_id: string;
+	image_url: string;
+}
+
+export type Comments = Comment[];
