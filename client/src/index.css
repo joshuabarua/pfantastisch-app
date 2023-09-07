@@ -46,7 +46,8 @@ body {
 	min-height: 100vh;
 	z-index: 1;
 	position: fixed;
-	background-color: #f6d5cb;
+	background-color: #c0d8ce;
+	color: black;
 }
 
 h1 {

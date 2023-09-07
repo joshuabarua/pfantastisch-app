@@ -64,7 +64,7 @@ export default function PfandMachine() {
 		for (let i = 1; i <= maxStars; i++) {
 			if (i <= roundedRating) {
 				stars.push(
-					<span key={i} style={{color: '#ffff00'}}>
+					<span key={i} style={{color: '#e6e628'}}>
 						&#9733;
 					</span>
 				);
@@ -75,71 +75,69 @@ export default function PfandMachine() {
 	}
 
 	return (
-		<div className='centeredDiv' style={{justifyContent: 'flex-start', flexDirection: 'column', width: '100vw'}}>
-			<h1>Pfand Machine Details</h1>
-			{loading || !pfandMachine ? (
-				<p>Loading...</p>
-			) : (
-				<div className='centeredDiv' style={{flexDirection: 'column', width: '50vw', gap: 20}}>
-					<div className='centeredDiv' style={{display: 'flex', flexDirection: 'row', width: '50vw', gap: 10}}>
-						<img
-							src={!pfandMachine.image_url ? '/src/assets/icons/commerce.png' : pfandMachine.image_url}
-							style={{width: '100px', height: '100px', borderRadius: '10%'}}></img>
-						<h3> {pfandMachine.name}</h3>
-					</div>
-					<div className='centeredDiv' style={{flexDirection: 'column', gap: 20}}>
-						{pfandMachine.pfandtastic.isOperational ? (
-							<span className='blink' style={{color: '#81c784'}}>
-								• Pfandautomat Online{' '}
-							</span>
+		<div style={{width: '100vw', padding: '10px', overflow: 'auto'}}>
+			<div className='centeredDiv' style={{justifyContent: 'flex-start', flexDirection: 'column', backgroundColor: 'whitesmoke', borderRadius: '25px'}}>
+				<h1>Pfand Automat</h1>
+				{loading || !pfandMachine ? (
+					<p>Loading...</p>
+				) : (
+					<div className='centeredDiv' style={{flexDirection: 'column', width: '50vw', gap: 20}}>
+						<div className='centeredDiv' style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', width: '40vw', gap: 10}}>
+							<img
+								src={!pfandMachine.image_url ? '/src/assets/icons/commerce.png' : pfandMachine.image_url}
+								style={{width: '200px', height: '200px', borderRadius: '10%'}}
+							/>
+							<div className='centeredDiv' style={{flexDirection: 'column', gap: 5}}>
+								<span>
+									<h3> {pfandMachine.name}</h3>
+									{renderStars(pfandMachine.rating)}
+								</span>
+								{pfandMachine.pfandtastic.isOperational ? (
+									<span className='blink' style={{color: '#81c784'}}>
+										• Pfandautomat Online{' '}
+									</span>
+								) : (
+									<span className='blink' style={{color: '#e57373'}}>
+										• Maintainence Needed{' '}
+									</span>
+								)}
+							</div>
+						</div>
+						<div className='centeredDiv' style={{flexDirection: 'column', gap: 20}}>
+							<span> {`${pfandMachine.location.address1}, ${pfandMachine.location.city}, ${pfandMachine.location.zip_code}, ${pfandMachine.location.country}`}</span>
+							{pfandMachine.phone && <span>Phone: {pfandMachine.phone}</span>}
+							<img
+								src={!pfandMachine.pfandtastic.machine_img_url[0] ? '/src/assets/imgs/bottle-automat.png' : pfandMachine.pfandtastic.machine_img_url[0]}
+								style={{width: '200px', height: '200px', borderRadius: '50%'}}
+							/>
+						</div>
+						<div style={{width: '75%', maxWidth: '400px'}}>
+							<h3>Comments:</h3>
+							{comments.length === 0 && <p style={{textAlign: 'center'}}>No comments</p>}
+							{comments.length > 0 &&
+								comments.map((comment) => {
+									return <CommentCard key={comment._id} comment={comment} comments={comments} setComments={setComments} pfandmachine={pfandMachine} />;
+								})}
+						</div>
+						{user ? (
+							<div style={{flexDirection: 'row'}}>
+								<form style={{display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}} onSubmit={handleSubmitComment}>
+									<label htmlFor='commentArea'>Leave a comment: </label>
+									<input type='textarea' value={commentText} id='commentArea' onChange={(e) => setCommentText(e.target.value)} />
+									<Button type='submit'>Post comment</Button>
+								</form>
+							</div>
 						) : (
-							<span className='blink' style={{color: '#e57373'}}>
-								• Maintainence Needed{' '}
-							</span>
+							<div>
+								<form>
+									<label>Leave a comment: </label>
+									<p>Only logged in users can leave comments...</p>
+								</form>
+							</div>
 						)}
-						<span>{renderStars(pfandMachine.rating)}</span>
-						<span> {`${pfandMachine.location.address1}, ${pfandMachine.location.city}, ${pfandMachine.location.zip_code}, ${pfandMachine.location.country}`}</span>
-						{pfandMachine.phone && <span>Phone: {pfandMachine.phone}</span>}
-						<img
-							src={!pfandMachine.pfandtastic.machine_img_url[0] ? '/src/assets/imgs/bottle-automat.png' : pfandMachine.pfandtastic.machine_img_url[0]}
-							style={{width: '200px', height: '200px', borderRadius: '50%'}}
-						/>
 					</div>
-					<div style={{width: '50%', gap: 20}}>
-						<h3>Comments:</h3>
-						{comments.length === 0 && <p style={{textAlign: 'center'}}>No comments yet :( </p>}
-						{comments.length > 0 &&
-							comments.map((comment) => {
-								return <CommentCard key={comment._id} comment={comment} comments={comments} setComments={setComments} pfandmachine={pfandMachine} />;
-							})}
-					</div>
-					{user ? (
-						<div style={{flexDirection: 'row'}}>
-							<form style={{display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}} onSubmit={handleSubmitComment}>
-								<label htmlFor='commentArea'>Leave a comment: </label>
-								<input type='textarea' value={commentText} id='commentArea' onChange={(e) => setCommentText(e.target.value)} />
-								<Button type='submit'>Post comment</Button>
-							</form>
-						</div>
-					) : (
-						<div>
-							<form>
-								<label>Leave a comment: </label>
-								<input
-									type='textarea'
-									value={commentText}
-									onChange={(e) => setCommentText(e.target.value)}
-									placeholder='Only logged-in users can leave comments.'
-									disabled
-								/>
-								<Button disabled type='submit'>
-									Post comment
-								</Button>
-							</form>
-						</div>
-					)}
-				</div>
-			)}
+				)}
+			</div>
 		</div>
 	);
 }

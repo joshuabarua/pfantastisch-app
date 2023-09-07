@@ -44,12 +44,15 @@ function CommentCard({comment, comments, setComments, pfandmachine}: Props) {
 			}
 		}
 	};
-
+	console.log(user?._id, comment._id);
 	return (
-		<Card sx={{width: '100%', marginBottom: 3}}>
+		<Card sx={{width: '100%', marginBottom: 1}}>
 			<CardContent>
 				<Typography variant='h6' component='div' sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
 					{/* <SeeUserLink user={comment.posted_by} /> */}
+				</Typography>
+				<Typography variant='subtitle2' color='black' gutterBottom>
+					{new Date(comment.createdAt).toDateString().substring(4)}
 					{user && (
 						<>
 							{user._id === comment.posted_by._id && (
@@ -59,9 +62,6 @@ function CommentCard({comment, comments, setComments, pfandmachine}: Props) {
 							)}
 						</>
 					)}
-				</Typography>
-				<Typography variant='subtitle2' color='black' gutterBottom>
-					{new Date(comment.createdAt).toDateString().substring(4)}
 				</Typography>
 				<Typography variant='body2' color='black'>
 					{comment.comment}

@@ -56,8 +56,7 @@ const LeafletMap = (props: Props) => {
 									<span style={supermarket.pfandtastic.isOperational ? {color: '#a5d6a7'} : {color: '#e57373'}}>
 										{supermarket.pfandtastic.isOperational ? 'Pfand Machine Operational' : 'Pfand Machine Not Operational'}
 									</span>
-									<p>{supermarket._id}</p>
-									<Button variant='contained' color={'primary'}>
+									<Button variant='contained' style={{backgroundColor: '#fff', color: '#74f9b9'}}>
 										<NavLink to={`/map/pfandautomat/${supermarket._id}`}>PFAND PAGE </NavLink>
 									</Button>
 								</div>

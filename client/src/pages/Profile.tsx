@@ -1,72 +1,73 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {ChangeEvent, useContext, useEffect, useState} from 'react';
 // import Modal from '@mui/material/Modal'; // Material-UI modal
 import Button from '@mui/material/Button'; // Material-UI button
 import TextField from '@mui/material/TextField'; // Material-UI text field
 import {AuthContext} from '../context/AuthContext.js';
 import Loader from '../components/Loader.js';
-import Password from '../components/Password.js';
+
+import InputAdornment from '@mui/material/InputAdornment/InputAdornment.js';
 // import {emailValidation, passwordValidation} from '../utils/JSFunctions';
 // import {deleteImage, uploadImage} from '../utils/imageMangement';
 // import PasswordInput from './PasswordInput';
 // import {baseURL} from '../utils/getServerURL';
 // import getToken from '../utils/getToken';
 
+interface updateFields {
+	email?: string;
+	password?: string;
+	username?: string;
+	profilePicFile: File | null;
+}
+
 function Profile() {
+	// update << Add to auth context part
+	const {user} = useContext(AuthContext);
 	const [loading, setLoading] = useState(false);
-	const {user, setUser} = useContext(AuthContext);
 	const [editMode, setEditMode] = useState(false);
+	const [passwordVisibility, setPasswordVisibility] = useState(false);
+
 	// const [showModal, setShowModal] = useState(false);
-	const [formData, setFormData] = useState({
-		username: '',
-		email: '',
-		selectedFile: {},
-		newPassword: '',
-		oldPassword: '',
-		newPwInvalid: false,
-		oldPwInvalid: false,
-		desc: '',
-	});
 
-	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-		const {name, value} = e.target;
-		setFormData({
-			...formData,
-			[name]: value,
-		});
+	const [updatedFields, setUpdatedFields] = useState<{
+		email?: string;
+		password?: string;
+		username?: string;
+		profilePicFile?: File | null;
+	}>({});
+	const passwordToggle = () => {
+		setPasswordVisibility(!passwordVisibility);
 	};
 
-	const handleFileAttach = (e: React.ChangeEvent<HTMLInputElement>) => {
-		if (e.target.files) {
-			setFormData({
-				...formData,
-				selectedFile: e.target.files[0],
-			});
-		}
+	// function passwordValidation(password: string) {
+	// 	const passwordRegex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+	// 	return passwordRegex.test(password);
+	// }
+
+	const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
+		setUpdatedFields({...updatedFields, email: e.target.value});
 	};
 
-	const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+	const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
+		setUpdatedFields({...updatedFields, password: e.target.value});
+	};
+
+	const handleUsernameChange = (e: ChangeEvent<HTMLInputElement>) => {
+		setUpdatedFields({...updatedFields, username: e.target.value});
+	};
+
+	const handleProfilePicChange = (e: ChangeEvent<HTMLInputElement>) => {
+		const file = e.target.files && e.target.files[0];
+		setUpdatedFields({...updatedFields, profilePicFile: file});
+	};
+
+	const handleUpdate = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		if (user) {
-			if (formData.username !== user.username) {
-				// Handle username change
-				// ...
-			} else if (formData.email !== user.email) {
-				// Handle email change
-				// ...
-			} else if (formData.selectedFile) {
-				// Handle file upload
-				// ...
-			} else if (formData.newPassword && formData.oldPassword) {
-				// Handle password change
-				// ...
-			}
-		}
-		// Handle form submission based on form data
+		// update(updatedFields as updateFields);
+		// setUser(updatedFields);
 	};
 
 	useEffect(() => {
-		// Handle edit mode toggle
-		// ...
+		// editModeToggle();
 	}, [editMode]);
 
 	return (
@@ -80,7 +81,7 @@ function Profile() {
 						justifyContent: 'space-evenly',
 						width: '70vw',
 						height: '70vh',
-						backgroundColor: 'green',
+						backgroundColor: 'whitesmoke',
 						borderRadius: '25px',
 					}}>
 					{loading && <Loader />}
@@ -126,15 +127,36 @@ function Profile() {
 						Edit Profile
 					</Button>
 
-					<form onSubmit={handleFormSubmit} style={editMode ? {display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 30} : {display: 'none'}}>
-						<TextField label='Username' fullWidth name='username' value={formData.username} onChange={handleInputChange} margin='normal' variant='outlined' />
+					<form onSubmit={handleUpdate} style={editMode ? {display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 30} : {display: 'none'}}>
+						<TextField label='Username' fullWidth name='username' value={updatedFields.username} onChange={handleUsernameChange} margin='normal' variant='outlined' />
 
-						<TextField label='Email' name='email' fullWidth value={formData.email} onChange={handleInputChange} margin='normal' variant='outlined' />
+						<TextField label='Email' name='email' fullWidth value={updatedFields.email} onChange={handleEmailChange} margin='normal' variant='outlined' />
 
-						<Password invalidPassword={!formData.newPwInvalid} handleChanges={handleInputChange} />
+						<TextField
+							type={passwordVisibility ? 'text' : 'password'}
+							name='password'
+							placeholder={'Enter new password'}
+							variant='outlined'
+							onChange={handlePasswordChange}
+							// error={!newPwInvalid}
+							autoComplete='off'
+							required
+							fullWidth
+							value={updatedFields.password}
+							InputProps={{
+								endAdornment: (
+									<InputAdornment position='end'>
+										<Button variant='outlined' onClick={passwordToggle} color='primary' size='small'>
+											{passwordVisibility ? 'Hide' : 'Show'}
+										</Button>
+									</InputAdornment>
+								),
+							}}
+							// helperText={!newPwInvalid ? 'Password must be a minimum of 6 characters and include at least one number, a lowercase and uppercase letter.' : ''}
+						/>
 						<div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 5}}>
 							<label htmlFor='profile_picture'>Profile Picture:</label>
-							<input type='file' name='profile_picture' placeholder='New Profile Image' onChange={handleFileAttach} />
+							<input type='file' name='profile_picture' placeholder='New Profile Image' onChange={handleProfilePicChange} />
 						</div>
 
 						<Button variant='contained' color='warning' type='submit'>

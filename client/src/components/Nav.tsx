@@ -36,7 +36,7 @@ function Nav() {
 
 	return (
 		<nav style={navContainerStyles}>
-			<p>{user ? <img src={`${user.image_url}`} className='navProfilePic' /> : <></>}</p>
+			<p>{user ? <img src={`${user.image_url}`} className='navProfilePic' style={{border: 'solid 1px rgba(0,0,0,0.2)'}} /> : <></>}</p>
 			<div style={linksContainerStyles}>
 				<NavLink to='/' style={({isActive}) => (isActive ? activeLink : {})}>
 					<IconButton color='inherit'>
@@ -49,11 +49,16 @@ function Nav() {
 						<MapIcon />
 					</IconButton>
 				</NavLink>
-				<NavLink to='/myprofile' style={({isActive}) => (isActive ? activeLink : {})}>
-					<IconButton color='inherit'>
-						<SettingsIcon />
-					</IconButton>
-				</NavLink>
+				{user ? (
+					<NavLink to='/myprofile' style={({isActive}) => (isActive ? activeLink : {})}>
+						<IconButton color='inherit'>
+							<SettingsIcon />
+						</IconButton>
+					</NavLink>
+				) : (
+					<></>
+				)}
+
 				{user ? (
 					<></>
 				) : (

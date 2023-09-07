@@ -27,27 +27,27 @@ const addComment = async (req, res) => {
 	}
 };
 
-// const deleteComment = async (req, res) => {
-// 	const pfandMachineId = req.params.id;
-// 	if (!mongoose.Types.ObjectId.isValid(pfandMachineId)) {
-// 		return res.status(406).json({error: 'Invalid ID'});
-// 	}
+const deleteComment = async (req, res) => {
+	const pfandMachineId = req.params.id;
+	if (!mongoose.Types.ObjectId.isValid(pfandMachineId)) {
+		return res.status(406).json({error: 'Invalid ID'});
+	}
 
-// 	try {
-// 		const pfandMachine = await supermarketModel.updateOne(
-// 			{_id: pfandMachineId},
-// 			{
-// 				$pull: {comments: {_id: req.body.comment._id}},
-// 			},
-// 			{new: true}
-// 		);
-// 		if (!pfandMachine) {
-// 			return res.status(404).json({error: 'ID not found.'});
-// 		}
-// 		return res.status(200).json({message: 'Comment deleted'});
-// 	} catch (error) {
-// 		return res.status(500).json({error: error});
-// 	}
-// };
+	try {
+		const pfandMachine = await supermarketModel.updateOne(
+			{_id: pfandMachineId},
+			{
+				$pull: {comments: {_id: req.body.comment._id}},
+			},
+			{new: true}
+		);
+		if (!pfandMachine) {
+			return res.status(404).json({error: 'ID not found.'});
+		}
+		return res.status(200).json({message: 'Comment deleted'});
+	} catch (error) {
+		return res.status(500).json({error: error});
+	}
+};
 
 export {addComment};
