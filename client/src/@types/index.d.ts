@@ -92,3 +92,10 @@ export interface UserPostingComment {
 }
 
 export type Comments = Comment[];
+
+interface updateFields {
+	email?: string;
+	password?: string;
+	username?: string;
+	profilePicFile?: File | null;
+}

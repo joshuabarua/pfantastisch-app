@@ -8,9 +8,8 @@ interface DefaultValue {
 	user: null | User;
 	setUser: React.Dispatch<React.SetStateAction<User | null>>;
 	login: (email: string, password: string) => Promise<void>;
-
 	signup: (email: string, password: string, username: string, profilePicFile: File | null) => Promise<void>;
-	// update: (updateFields: {email?: string; password?: string; username?: string; profilePicFile?: File | null}) => void;
+	update: (updateFields: {email: string; password: string; username: string; profilePicFile: File | null}) => void;
 	logout: () => void;
 }
 
@@ -39,9 +38,9 @@ const initialValue: DefaultValue = {
 	logout: () => {
 		throw new Error('context not implemented.');
 	},
-	// update: () => {
-	// 	throw new Error('context not implemented.');
-	// },
+	update: () => {
+		throw new Error('context not implemented.');
+	},
 };
 
 export const AuthContext = createContext<DefaultValue>(initialValue);
@@ -82,40 +81,40 @@ export const AuthContextProvider = ({children}: {children: ReactNode}) => {
 		}
 	};
 
-	// const update = async (updateFields: {email?: string; password?: string; username?: string; profilePicFile?: File}) => {
-	// 	const formData = new FormData();
-	// 	const {email = '', password = '', username = '', profilePicFile = null} = updateFields;
-	// 	username && formData.append('username', username);
-	// 	email && formData.append('email', email);
-	// 	password && formData.append('password', password);
-	// 	profilePicFile && formData.append('image_url', profilePicFile);
+	const update = async (updateFields: {email: string; password: string; username: string; profilePicFile: File | null}) => {
+		const formData = new FormData();
+		const {email = '', password = '', username = '', profilePicFile = null} = updateFields;
+		username && formData.append('username', username);
+		email && formData.append('email', email);
+		password && formData.append('password', password);
+		profilePicFile && formData.append('image_url', profilePicFile);
 
-	// 	const token = getToken();
+		const token = getToken();
 
-	// 	const requestOptions = {
-	// 		method: 'PATCH',
-	// 		body: formData,
-	// 	};
-	// 	if (token) {
-	// 		try {
-	// 			const response = await fetch(`${baseURL}api/users/update-user`, requestOptions);
-	// 			if (response.ok) {
-	// 				const result = (await response.json()) as SignupResult;
-	// 				toast.success(' Successful, updating user...');
-	// setTimeout(() => redirect('/myprofile'), 2000);
+		const requestOptions = {
+			method: 'PATCH',
+			body: formData,
+		};
+		if (token) {
+			try {
+				const response = await fetch(`${baseURL}api/users/update-user`, requestOptions);
+				if (response.ok) {
+					const result = (await response.json()) as SignupResult;
+					toast.success(' Successful, updating user...');
+					setTimeout(() => redirect('/myprofile'), 2000);
 
-	// 				setUser(result.user);
-	// 			} else {
-	// 				const result = (await response.json()) as NotOk;
-	// 				toast.error(`Something went wrong - ${result.error}`);
-	// 			}
-	// 		} catch (e) {
-	// 			toast.error(` ${e as Error}`);
-	// 		}
-	// 	} else {
-	// 		console.log('no token');
-	// 	}
-	// };
+					setUser(result.user);
+				} else {
+					const result = (await response.json()) as NotOk;
+					toast.error(`Something went wrong - ${result.error}`);
+				}
+			} catch (e) {
+				toast.error(` ${e as Error}`);
+			}
+		} else {
+			console.log('no token');
+		}
+	};
 
 	const login = async (email: string, password: string) => {
 		const myHeaders = new Headers({
@@ -179,5 +178,5 @@ export const AuthContextProvider = ({children}: {children: ReactNode}) => {
 		getActiveUser().catch((e) => console.log(e));
 	}, []);
 
-	return <AuthContext.Provider value={{user, setUser, signup, login, logout}}>{children}</AuthContext.Provider>;
+	return <AuthContext.Provider value={{user, setUser, signup, login, logout, update}}>{children}</AuthContext.Provider>;
 };
