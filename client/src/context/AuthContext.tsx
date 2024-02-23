@@ -69,8 +69,8 @@ export const AuthContextProvider = ({children}: {children: ReactNode}) => {
 				const {token} = result as SignupResult;
 				localStorage.setItem('token', token);
 				localStorage.setItem('user', JSON.stringify(result.user));
-				toast.success('Signup Successful, logging in...');
 				setUser(result.user);
+				toast.success('Signup Successful, logging in...');
 				setTimeout(() => redirect('/'), 2000);
 			} else {
 				const result = (await response.json()) as NotOk;
