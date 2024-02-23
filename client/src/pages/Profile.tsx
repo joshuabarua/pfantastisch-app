@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-unused-vars */
 import React, {ChangeEvent, SetStateAction, useContext, useEffect, useState} from 'react';
 // import Modal from '@mui/material/Modal'; // Material-UI modal
 import Button from '@mui/material/Button'; // Material-UI button
