@@ -16,8 +16,8 @@
 
 		/* Linting */
 		"strict": true,
-		"noUnusedLocals": true,
-		"noUnusedParameters": true,
+		"noUnusedLocals": false, //Changed for deployment
+		"noUnusedParameters": false, //Changed for deployment
 		"noFallthroughCasesInSwitch": true
 	},
 	"include": ["src", "src/vite-env.d.ts"],
