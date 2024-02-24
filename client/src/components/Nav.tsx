@@ -36,23 +36,23 @@ function Nav() {
 
 	return (
 		<nav style={navContainerStyles}>
-			<h1>Logo</h1>
-			<p>{user ? <img src={`${user.image_url}`} className='navProfilePic' style={{border: 'solid 1px rgba(0,0,0,0.2)'}} /> : <></>}</p>
+			<img src={'/assets/imgs/bottle.png'} />
+			<p>{user ? <img src={`${user.image_url}`} className="navProfilePic" style={{border: 'solid 1px rgba(0,0,0,0.2)'}} /> : <></>}</p>
 			<div style={linksContainerStyles}>
-				<NavLink to='/' style={({isActive}) => (isActive ? activeLink : {})}>
-					<IconButton color='inherit'>
+				<NavLink to="/" style={({isActive}) => (isActive ? activeLink : {})}>
+					<IconButton color="inherit">
 						<HomeIcon />
 					</IconButton>
 				</NavLink>
 
-				<NavLink to='/map' style={({isActive}) => (isActive ? activeLink : {})}>
-					<IconButton color='inherit'>
+				<NavLink to="/map" style={({isActive}) => (isActive ? activeLink : {})}>
+					<IconButton color="inherit">
 						<MapIcon />
 					</IconButton>
 				</NavLink>
 				{user ? (
-					<NavLink to='/myprofile' style={({isActive}) => (isActive ? activeLink : {})}>
-						<IconButton color='inherit'>
+					<NavLink to="/myprofile" style={({isActive}) => (isActive ? activeLink : {})}>
+						<IconButton color="inherit">
 							<SettingsIcon />
 						</IconButton>
 					</NavLink>
@@ -63,8 +63,8 @@ function Nav() {
 				{user ? (
 					<></>
 				) : (
-					<NavLink to='/login' style={({isActive}) => (isActive ? activeLink : {})}>
-						<IconButton color='inherit'>
+					<NavLink to="/login" style={({isActive}) => (isActive ? activeLink : {})}>
+						<IconButton color="inherit">
 							<ExitToAppIcon />
 						</IconButton>
 					</NavLink>

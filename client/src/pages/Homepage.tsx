@@ -1,15 +1,15 @@
 const Homepage = () => {
 	return (
-		<div className='centeredDiv' style={{display: 'flex', width: '100vw', height: '100vh', padding: '50px'}}>
-			<div className='centeredDiv' style={{flex: '1', overflow: 'hidden'}}>
+		<div className="centeredDiv" style={{display: 'flex', width: '100vw', height: '100vh', padding: '50px'}}>
+			<div className="centeredDiv" style={{flex: '1', overflow: 'hidden'}}>
 				<img
-					src={'/src/assets/imgs/pexels-anna-tarazevich-7772006.jpg'}
+					src={'/assets/imgs/pexels-anna-tarazevich-7772006.jpg'}
 					style={{minWidth: '200px', width: '100%', height: '100%', objectFit: 'contain'}}
-					alt='Pfantastisch Image'
+					alt="Pfantastisch Image"
 				/>
 			</div>
 			<div
-				className='centeredDiv'
+				className="centeredDiv"
 				style={{
 					display: 'flex',
 					flex: '1',

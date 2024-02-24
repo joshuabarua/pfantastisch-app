@@ -76,38 +76,35 @@ export default function PfandMachine() {
 
 	return (
 		<div style={{width: '100vw', padding: '10px', overflow: 'auto'}}>
-			<div className='centeredDiv' style={{justifyContent: 'flex-start', flexDirection: 'column', backgroundColor: 'whitesmoke', borderRadius: '25px'}}>
+			<div className="centeredDiv" style={{justifyContent: 'flex-start', flexDirection: 'column', backgroundColor: 'whitesmoke', borderRadius: '25px'}}>
 				<h1>Pfand Automat</h1>
 				{loading || !pfandMachine ? (
 					<p>Loading...</p>
 				) : (
-					<div className='centeredDiv' style={{flexDirection: 'column', width: '50vw', gap: 20}}>
-						<div className='centeredDiv' style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', width: '40vw', gap: 10}}>
-							<img
-								src={!pfandMachine.image_url ? '/src/assets/icons/commerce.png' : pfandMachine.image_url}
-								style={{width: '200px', height: '200px', borderRadius: '10%'}}
-							/>
-							<div className='centeredDiv' style={{flexDirection: 'column', gap: 5}}>
+					<div className="centeredDiv" style={{flexDirection: 'column', width: '50vw', gap: 20}}>
+						<div className="centeredDiv" style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', width: '40vw', gap: 10}}>
+							<img src={!pfandMachine.image_url ? '/assets/icons/commerce.png' : pfandMachine.image_url} style={{width: '200px', height: '200px', borderRadius: '10%'}} />
+							<div className="centeredDiv" style={{flexDirection: 'column', gap: 5}}>
 								<span>
 									<h3> {pfandMachine.name}</h3>
 									{renderStars(pfandMachine.rating)}
 								</span>
 								{pfandMachine.pfandtastic.isOperational ? (
-									<span className='blink' style={{color: '#81c784'}}>
+									<span className="blink" style={{color: '#81c784'}}>
 										• Pfandautomat Online{' '}
 									</span>
 								) : (
-									<span className='blink' style={{color: '#e57373'}}>
+									<span className="blink" style={{color: '#e57373'}}>
 										• Maintainence Needed{' '}
 									</span>
 								)}
 							</div>
 						</div>
-						<div className='centeredDiv' style={{flexDirection: 'column', gap: 20}}>
+						<div className="centeredDiv" style={{flexDirection: 'column', gap: 20}}>
 							<span> {`${pfandMachine.location.address1}, ${pfandMachine.location.city}, ${pfandMachine.location.zip_code}, ${pfandMachine.location.country}`}</span>
 							{pfandMachine.phone && <span>Phone: {pfandMachine.phone}</span>}
 							<img
-								src={!pfandMachine.pfandtastic.machine_img_url[0] ? '/src/assets/imgs/bottle-automat.png' : pfandMachine.pfandtastic.machine_img_url[0]}
+								src={!pfandMachine.pfandtastic.machine_img_url[0] ? '/assets/imgs/bottle-automat.png' : pfandMachine.pfandtastic.machine_img_url[0]}
 								style={{width: '200px', height: '200px', borderRadius: '50%'}}
 							/>
 						</div>
@@ -122,9 +119,9 @@ export default function PfandMachine() {
 						{user ? (
 							<div style={{flexDirection: 'row'}}>
 								<form style={{display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}} onSubmit={handleSubmitComment}>
-									<label htmlFor='commentArea'>Leave a comment: </label>
-									<input type='textarea' value={commentText} id='commentArea' onChange={(e) => setCommentText(e.target.value)} />
-									<Button type='submit'>Post comment</Button>
+									<label htmlFor="commentArea">Leave a comment: </label>
+									<input type="textarea" value={commentText} id="commentArea" onChange={(e) => setCommentText(e.target.value)} />
+									<Button type="submit">Post comment</Button>
 								</form>
 							</div>
 						) : (
