@@ -21,11 +21,7 @@ const connectMiddlewares = () => {
 			extended: true,
 		})
 	);
-	app.use(
-		cors({
-			origin: 'https://pfandtastisch-app.vercel.app/map',
-		})
-	);
+	app.use(cors());
 	configureCloudinary();
 	configurePassport();
 };
