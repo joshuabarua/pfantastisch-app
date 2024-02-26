@@ -1,12 +1,12 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import userRouter from '../routes/userRoutes.js';
+import userRouter from './routes/userRoutes.js';
 import businessRouter from '../routes/businessRoutes.js';
 
 import * as dotenv from 'dotenv';
-import configurePassport from '../config/passportConfig.js';
-import configureCloudinary from '../config/cloudinaryConfig.js';
+import configurePassport from './config/passportConfig.js';
+import configureCloudinary from './config/cloudinaryConfig.js';
 dotenv.config();
 
 // console.log("MONGO URI", process.env.MONGO_URI);
