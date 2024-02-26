@@ -6,7 +6,7 @@ import MapIcon from '@mui/icons-material/Map'; // Import Material-UI's Map icon
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import IconButton from '@mui/material/IconButton/IconButton';
 import SettingsIcon from '@mui/icons-material/Settings';
-import bottleLogo from '/assets/imgs/bottle200.png';
+import bottleLogo from '../assets/imgs/bottle200.png';
 
 function Nav() {
 	const {user, logout} = useContext(AuthContext);
