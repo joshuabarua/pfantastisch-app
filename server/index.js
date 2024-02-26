@@ -23,7 +23,7 @@ const connectMiddlewares = () => {
 	);
 	app.use(
 		cors({
-			origin: 'https://pfandtastisch-app.vercel.app/',
+			origin: 'https://pfandtastisch-app.vercel.app/map',
 		})
 	);
 	configureCloudinary();
