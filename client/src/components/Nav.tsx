@@ -37,7 +37,7 @@ function Nav() {
 
 	return (
 		<nav style={navContainerStyles}>
-			<img src={bottleLogo} />
+			<img src={bottleLogo} style={{width: '50px', height: '50px', borderRadius: '50%'}} />
 			<p>{user ? <img src={`${user.image_url}`} className="navProfilePic" style={{border: 'solid 1px rgba(0,0,0,0.2)'}} /> : <></>}</p>
 			<div style={linksContainerStyles}>
 				<NavLink to="/" style={({isActive}) => (isActive ? activeLink : {})}>
