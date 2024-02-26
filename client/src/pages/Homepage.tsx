@@ -1,4 +1,4 @@
-import bottlesImage from '/assets/imgs/bottles.jpg';
+import bottlesImage from '../assets/imgs/bottles.jpg';
 
 const Homepage = () => {
 	return (

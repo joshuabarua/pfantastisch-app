@@ -6,8 +6,8 @@ import {AuthContext} from '../context/AuthContext';
 import Button from '@mui/material/Button/Button';
 import getToken from '../utils/getToken';
 import CommentCard from '../components/CommentCard';
-import bottleAutomat from '/assets/imgs/bottle-automat.png';
-import commerce from '/assets/icons/commerce.png';
+import bottleAutomat from '../assets/imgs/bottle-automat.png';
+import commerce from '../assets/icons/commerce.png';
 
 export default function PfandMachine() {
 	const baseURL = import.meta.env.VITE_SERVER_BASE as string;

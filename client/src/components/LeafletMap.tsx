@@ -4,8 +4,8 @@ import {Supermarket, LatLongLocation} from '../@types';
 import {Icon} from 'leaflet';
 import Button from '@mui/material/Button/Button';
 import {NavLink} from 'react-router-dom';
-import userPin from '/assets/icons/user_pin.png';
-import plasticBottle from '/assets/icons/plastic-bottle.png';
+import userPin from '../assets/icons/user_pin.png';
+import plasticBottle from '../assets/icons/plastic-bottle.png';
 
 const maps = {base: 'https://tile.jawg.io/jawg-sunny/{z}/{x}/{y}{r}.png?'};
 const userIcon = new Icon({
