@@ -6,6 +6,7 @@ import MapIcon from '@mui/icons-material/Map'; // Import Material-UI's Map icon
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import IconButton from '@mui/material/IconButton/IconButton';
 import SettingsIcon from '@mui/icons-material/Settings';
+import bottleLogo from '/assets/imgs/bottle200.png';
 
 function Nav() {
 	const {user, logout} = useContext(AuthContext);
@@ -36,7 +37,7 @@ function Nav() {
 
 	return (
 		<nav style={navContainerStyles}>
-			<img src={'src/assets/imgs/bottle.png'} />
+			<img src={bottleLogo} />
 			<p>{user ? <img src={`${user.image_url}`} className="navProfilePic" style={{border: 'solid 1px rgba(0,0,0,0.2)'}} /> : <></>}</p>
 			<div style={linksContainerStyles}>
 				<NavLink to="/" style={({isActive}) => (isActive ? activeLink : {})}>

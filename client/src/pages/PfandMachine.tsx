@@ -6,6 +6,8 @@ import {AuthContext} from '../context/AuthContext';
 import Button from '@mui/material/Button/Button';
 import getToken from '../utils/getToken';
 import CommentCard from '../components/CommentCard';
+import bottleAutomat from '/assets/imgs/bottle-automat.png';
+import commerce from '/assets/icons/commerce.png';
 
 export default function PfandMachine() {
 	const baseURL = import.meta.env.VITE_SERVER_BASE as string;
@@ -83,7 +85,7 @@ export default function PfandMachine() {
 				) : (
 					<div className="centeredDiv" style={{flexDirection: 'column', width: '50vw', gap: 20}}>
 						<div className="centeredDiv" style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', width: '40vw', gap: 10}}>
-							<img src={!pfandMachine.image_url ? '/assets/icons/commerce.png' : pfandMachine.image_url} style={{width: '200px', height: '200px', borderRadius: '10%'}} />
+							<img src={!pfandMachine.image_url ? commerce : pfandMachine.image_url} style={{width: '200px', height: '200px', borderRadius: '10%'}} />
 							<div className="centeredDiv" style={{flexDirection: 'column', gap: 5}}>
 								<span>
 									<h3> {pfandMachine.name}</h3>
@@ -104,7 +106,7 @@ export default function PfandMachine() {
 							<span> {`${pfandMachine.location.address1}, ${pfandMachine.location.city}, ${pfandMachine.location.zip_code}, ${pfandMachine.location.country}`}</span>
 							{pfandMachine.phone && <span>Phone: {pfandMachine.phone}</span>}
 							<img
-								src={!pfandMachine.pfandtastic.machine_img_url[0] ? '/assets/imgs/bottle-automat.png' : pfandMachine.pfandtastic.machine_img_url[0]}
+								src={!pfandMachine.pfandtastic.machine_img_url[0] ? bottleAutomat : pfandMachine.pfandtastic.machine_img_url[0]}
 								style={{width: '200px', height: '200px', borderRadius: '50%'}}
 							/>
 						</div>
