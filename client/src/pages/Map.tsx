@@ -15,8 +15,9 @@ const Map = () => {
 		latitude: 52.52,
 		longitude: 13.405,
 	});
+
 	const [supermarkets, setSupermarkets] = useState<Supermarket[]>([]);
-	const [loading, setLoading] = useState<boolean>(true); // Add loading state
+	const [loading, setLoading] = useState<boolean>(true);
 
 	useEffect(() => {
 		const fetchSupermarketData = async (coords: Coordinates) => {
@@ -32,10 +33,10 @@ const Map = () => {
 				}
 				const result = await response.json();
 				setSupermarkets(result);
-				setLoading(false); // Data loading completed
+				setLoading(false);
 			} catch (error) {
 				console.error(error);
-				setLoading(false); // Data loading completed with error
+				setLoading(false);
 			}
 		};
 
@@ -46,20 +47,20 @@ const Map = () => {
 			},
 			(error: GeolocationPositionError) => {
 				console.log(error);
-				setLoading(false); // Data loading completed with error
+				setLoading(false);
 			}
 		);
 	}, []);
 
 	return (
-		<div className='centeredDiv' style={{flexDirection: 'column', width: '100%'}}>
+		<div className="centeredDiv" style={{flexDirection: 'column', width: '100%'}}>
 			<h1> Map</h1>
 			{loading ? (
-				<p>Loading...</p> // Display loading indicator
+				<p>Loading...</p>
 			) : (
 				<>
 					<LeafletMap userLocation={userCoords} supermarkets={supermarkets} />
-					<p>{`${userCoords.latitude.toFixed(3)} ${userCoords.longitude.toFixed(3)} `}</p>
+					{/* <p>{`${userCoords.latitude.toFixed(3)} ${userCoords.longitude.toFixed(3)} `}</p> */}
 				</>
 			)}
 		</div>

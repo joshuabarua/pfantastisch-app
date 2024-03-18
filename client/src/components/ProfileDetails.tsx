@@ -14,15 +14,15 @@ function ProfileDetails({user, editMode, setEditMode}: Props) {
 			<h3>Account Details</h3>
 			<Button
 				style={!editMode ? {display: 'none', padding: '0 0.3em', paddingBottom: '0.2em'} : {}}
-				variant='contained'
-				color='warning'
-				title='Edit Account Details'
+				variant="contained"
+				color="warning"
+				title="Edit Account Details"
 				onClick={() => setEditMode(!editMode)}>
 				X
 			</Button>
 
 			<div style={editMode ? {display: 'none'} : {}}>
-				<div className='centeredDiv' style={{alignItems: 'center', justifyContent: 'space-evenly', gap: 100}}>
+				<div className="centeredDiv" style={{alignItems: 'center', justifyContent: 'space-evenly', gap: 100}}>
 					<img
 						style={{
 							border: 'solid 1px rgba(0,0,0,0.3)',
@@ -44,7 +44,7 @@ function ProfileDetails({user, editMode, setEditMode}: Props) {
 				</div>
 			</div>
 
-			<Button variant='contained' color='warning' onClick={() => setEditMode(!editMode)} style={editMode ? {display: 'none'} : {}}>
+			<Button variant="contained" color="warning" onClick={() => setEditMode(!editMode)} style={editMode ? {display: 'none'} : {}}>
 				Edit Profile
 			</Button>
 		</div>
