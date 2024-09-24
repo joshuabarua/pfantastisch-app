@@ -1,5 +1,4 @@
 import bottlesImage from '../assets/imgs/btls.jpeg';
-import {lazy} from 'react';
 const Homepage = () => {
 	return (
 		<div>

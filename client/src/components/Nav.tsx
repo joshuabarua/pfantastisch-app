@@ -34,7 +34,7 @@ const activeLink: React.CSSProperties = {
 };
 
 const normalLink: React.CSSProperties = {
-	color: ' #2f8fcf',
+	color: '#929dff',
 	fontWeight: 'bold',
 };
 function Nav() {
