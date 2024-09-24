@@ -13,7 +13,7 @@ import {useAuthStore} from '../context/AuthState';
 const navContainerStyles: React.CSSProperties = {
 	position: 'sticky',
 	width: '100vw',
-	height: '60px',
+	height: '70px',
 	display: 'flex',
 	justifyContent: 'space-between',
 	alignItems: 'center',
@@ -29,12 +29,13 @@ const linksContainerStyles: React.CSSProperties = {
 	overflow: 'hidden',
 };
 const activeLink: React.CSSProperties = {
-	color: '#ffffff',
+	color: '#fff',
 	fontWeight: 'bold',
+	borderBottom: '1px solid #fff',
 };
 
 const normalLink: React.CSSProperties = {
-	color: '#929dff',
+	color: '#bcc3fa',
 	fontWeight: 'bold',
 };
 function Nav() {
@@ -51,18 +52,18 @@ function Nav() {
 			<p>{user ? <img src={`${user.image_url}`} className="navProfilePic" style={{border: 'solid 1px rgba(0,0,0,0.2)'}} /> : <></>}</p>
 			<div style={linksContainerStyles}>
 				<NavLink to="/" style={({isActive}) => (isActive ? activeLink : normalLink)}>
-					<IconButton color="inherit">
+					<IconButton color="inherit" size={'large'}>
 						<HomeIcon />
 					</IconButton>
 				</NavLink>
 				<NavLink to="/map" style={({isActive}) => (isActive ? activeLink : normalLink)}>
-					<IconButton color="inherit">
+					<IconButton color="inherit" size={'large'}>
 						<MapIcon />
 					</IconButton>
 				</NavLink>
 				{user ? (
 					<NavLink to="/myprofile" style={({isActive}) => (isActive ? activeLink : normalLink)}>
-						<IconButton color="inherit">
+						<IconButton color="inherit" size={'large'}>
 							<SettingsIcon />
 						</IconButton>
 					</NavLink>

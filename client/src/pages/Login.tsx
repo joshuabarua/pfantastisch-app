@@ -37,7 +37,6 @@ const Login = () => {
 						flexDirection: 'column',
 						width: '100%',
 						height: '120%',
-						zIndex: -1,
 						backgroundImage: `url(${bottlesImage})`,
 						backgroundSize: 'cover',
 						backgroundRepeat: 'no-repeat',
@@ -45,7 +44,7 @@ const Login = () => {
 						backgroundBlendMode: 'overlay',
 						backgroundColor: 'rgba(0, 0, 0, 0.5)',
 						position: 'absolute',
-						top: -0,
+						top: 0,
 						left: 0,
 					}}></div>
 

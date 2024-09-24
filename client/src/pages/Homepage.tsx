@@ -8,7 +8,7 @@ const Homepage = () => {
 					height: '100vh',
 					width: '100vw',
 					gap: '20px',
-					marginTop: -60,
+					marginTop: -70,
 					padding: '20px',
 					justifyContent: 'space-evenly',
 					alignItems: 'center',
