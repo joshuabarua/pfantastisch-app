@@ -4,6 +4,8 @@ import LeafletMap from '../components/LeafletMap';
 import {getUserLocation} from '../utils/getLocationUtils';
 import {NotOk, Supermarket} from '../@types';
 import {toast} from 'react-toastify';
+import _ from 'lodash';
+import Loader from '../components/Loader';
 
 interface Coordinates {
 	latitude: number;
@@ -31,8 +33,9 @@ const Map = () => {
 					console.log(result.error, response.status);
 					throw new Error(`Request failed with status: ${response.status}`);
 				}
-				const result = await response.json();
-				setSupermarkets(result);
+				const result = (await response.json()) as Supermarket[];
+				const uniqueSupermarkets: Supermarket[] = _.uniqBy(result, 'alias');
+				setSupermarkets(uniqueSupermarkets);
 				setLoading(false);
 			} catch (error) {
 				console.error(error);
@@ -55,7 +58,7 @@ const Map = () => {
 	return (
 		<div style={{width: '100vw', height: '100vh', backgroundColor: 'whitesmoke'}}>
 			{loading ? (
-				<p>Loading...</p>
+				<Loader />
 			) : (
 				<>
 					<LeafletMap userLocation={userCoords} supermarkets={supermarkets} />

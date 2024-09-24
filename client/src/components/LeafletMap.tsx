@@ -34,17 +34,44 @@ const LeafletMap = (props: Props) => {
 		}
 	};
 	return (
-		<div className="centeredDiv" style={{padding: 50, alignItems: 'flex-start', justifyContent: 'center', height: '100%', gap: 10}}>
-			<div className="" style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '50%', height: '100%', flex: 1, gap: 5}}>
-				<h1>Supermarkets</h1>
-				<div style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', maxHeight: '100%', overflow: 'scroll', width: '100%'}}>
+		<div
+			style={{
+				padding: '30px 30px',
+				display: 'grid',
+				alignItems: 'flex-start',
+				justifyContent: 'center',
+				gridTemplateColumns: 'minmax(200px, 400px), minmax(400px, 100%))',
+				height: '70vh',
+				gap: 20,
+				overflowY: 'auto',
+			}}>
+			<div
+				style={{
+					display: 'flex',
+					flexDirection: 'column',
+					justifyContent: 'flex-start',
+					alignItems: 'center',
+					minWidth: '250px',
+					height: '90vh',
+					borderRight: '1px solid grey',
+					flex: 1,
+					gap: 10,
+				}}>
+				<h1>Pfandautomats</h1>
+				<div
+					style={{
+						display: 'grid',
+						gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
+						gridGap: '1px 1px',
+						overflow: 'auto',
+						width: '100%',
+						justifyItems: 'center',
+						height: '100%',
+						padding: 10,
+					}}>
 					{supermarkets &&
 						supermarkets.map((supermarket, index) => (
-							<Button
-								key={supermarket._id}
-								variant="outlined"
-								onClick={() => handleMarkerClick(index)}
-								style={{marginTop: 10, width: '200px', height: '100px', lineHeight: '1.2'}}>
+							<Button key={supermarket._id} variant="outlined" onClick={() => handleMarkerClick(index)} style={{width: '170px', height: '100px', lineHeight: '1.2'}}>
 								<div className="centeredDiv" style={{flexDirection: 'column'}}>
 									<strong>{supermarket.name}</strong> {supermarket.display_address}
 								</div>
@@ -52,9 +79,9 @@ const LeafletMap = (props: Props) => {
 						))}
 				</div>
 			</div>
-			<div className="centeredDiv" style={{flexDirection: 'column'}}>
+			<div className="centeredDiv" style={{flexDirection: 'column', width: '100%'}}>
 				<h1> Map</h1>
-				<MapContainer center={[userLocation.latitude, userLocation.longitude]} zoom={16} style={{width: '60vw', height: '70vh', minWidth: '300px'}}>
+				<MapContainer center={[userLocation.latitude, userLocation.longitude]} zoom={16} style={{width: '100% !important', height: '80vh', minWidth: '280px'}}>
 					<TileLayer
 						url={`${maps.base}access-token=${import.meta.env.VITE_JAWG_MAP_ACCESS_TOKEN}`}
 						attribution={
@@ -85,13 +112,13 @@ const LeafletMap = (props: Props) => {
 											Address: {supermarket.location.address1}, {supermarket.location.city}, {supermarket.location.zip_code}, {'  '}
 											{supermarket.location.country}
 										</span>
-										<span>Rating: {supermarket.rating}</span>
 										<span>Phone: {supermarket.phone}</span>
+										<span>Rating: {supermarket.rating}</span>
 										<span style={supermarket.pfandtastic.isOperational ? {color: '#a5d6a7'} : {color: '#e57373'}}>
 											{supermarket.pfandtastic.isOperational ? 'Pfand Machine Operational' : 'Pfand Machine Not Operational'}
 										</span>
 										<Button variant="contained" style={{backgroundColor: '#fff', color: '#74f9b9'}}>
-											<NavLink to={`/map/pfandautomat/${supermarket._id}`}>PFAND PAGE </NavLink>
+											<NavLink to={`/map/pfandautomat/${supermarket._id}`}>PFANDAutomat Details </NavLink>
 										</Button>
 									</div>
 								</Popup>

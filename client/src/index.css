@@ -105,15 +105,10 @@ button:focus-visible {
 }
 
 .navProfilePic {
-	width: 60px;
-	height: 60px;
-	border-radius: 500px;
-	object-fit: cover;
-}
-
-#outlined-basic {
-	background-color: rgb(58, 59, 57, 0.3);
-	padding-bottom: 5px;
+	width: 35px;
+	height: 35px;
+	border-radius: 100%;
+	padding-right: 1;
 }
 
 .container-autocomplete {
@@ -159,6 +154,16 @@ button:focus-visible {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+
+.logoPerson {
+	width: 60px;
+	height: 60px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	left: 8;
+	position: absolute;
 }
 
 .spin-text {

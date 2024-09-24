@@ -1,14 +1,14 @@
-import {useContext, useRef} from 'react';
 import {NavLink} from 'react-router-dom';
-import {AuthContext} from '../context/AuthContext';
-import HomeIcon from '@mui/icons-material/Home'; // Import Material-UI's Home icon
-import MapIcon from '@mui/icons-material/Map'; // Import Material-UI's Map icon
+import HomeIcon from '@mui/icons-material/Home';
+import MapIcon from '@mui/icons-material/Map';
 import ExitToAppIcon from '@mui/icons-material/Login';
 import LoginToApp from '@mui/icons-material/Login';
 import IconButton from '@mui/material/IconButton/IconButton';
 import SettingsIcon from '@mui/icons-material/Settings';
 import useRotatingText from '../hooks/useRotatingText';
 import {useAuthStore} from '../context/AuthState';
+import {useEffect} from 'react';
+import SVGLogo from './SVGLogo';
 
 const navContainerStyles: React.CSSProperties = {
 	position: 'sticky',
@@ -39,17 +39,22 @@ const normalLink: React.CSSProperties = {
 	fontWeight: 'bold',
 };
 function Nav() {
-	const {user, logout} = useAuthStore();
+	const {user, logout, getActiveUser} = useAuthStore();
+
+	useEffect(() => {
+		getActiveUser();
+	}, [getActiveUser, user]);
 
 	const textRef = useRotatingText('Pfantastisch!');
 
 	return (
 		<nav style={navContainerStyles}>
 			<div className="circle">
+				<div className="logoPerson">{user ? <img src={`${user.image_url}`} className="navProfilePic" style={{}} /> : <SVGLogo fillColor={'#bcc3fa'} />}</div>
 				<div className="spin-text" style={{color: 'white', textShadow: '1px 1px 4px rgba(0, 0, 0, 0.5)'}} ref={textRef}></div>
 			</div>
 
-			<p>{user ? <img src={`${user.image_url}`} className="navProfilePic" style={{border: 'solid 1px rgba(0,0,0,0.2)'}} /> : <></>}</p>
+			<p></p>
 			<div style={linksContainerStyles}>
 				<NavLink to="/" style={({isActive}) => (isActive ? activeLink : normalLink)}>
 					<IconButton color="inherit" size={'large'}>
@@ -71,9 +76,9 @@ function Nav() {
 					<></>
 				)}
 
-				{user ? (
-					<IconButton color="inherit">
-						<ExitToAppIcon onClick={() => logout()} />
+				{user !== null ? (
+					<IconButton color="inherit" onClick={() => logout()} sx={normalLink}>
+						<ExitToAppIcon />
 					</IconButton>
 				) : (
 					<NavLink to="/login" style={({isActive}) => (isActive ? activeLink : normalLink)}>
