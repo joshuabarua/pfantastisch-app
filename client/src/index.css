@@ -5,13 +5,13 @@
 	line-height: 1.5;
 	font-weight: 400;
 	font-size: 16px;
-
 	color-scheme: light dark;
+	background-color: #818080;
 
 	/* Toastify */
 	--toastify-color-light: #fff;
 	--toastify-color-dark: #121212;
-	--toastify-color-info: #3498db;
+	--toastify-color-info: #2f8fcf;
 	--toastify-color-success: #07bc0c;
 	--toastify-color-warning: #f1c40f;
 	--toastify-color-error: #e74c3c;

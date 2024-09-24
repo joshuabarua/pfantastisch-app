@@ -1,11 +1,8 @@
 import bottlesImage from '../assets/imgs/btls.jpeg';
-
+import {lazy} from 'react';
 const Homepage = () => {
 	return (
 		<div>
-			{/* <div className="centeredDiv" style={{}}>
-				<img src={bottlesImage} style={{minWidth: '320px', width: '100%', marginTop: '-60px', height: '100%', objectFit: 'contain', zIndex: -1}} alt="Pfantastisch Image" />
-			</div> */}
 			<div
 				className="centeredDiv"
 				style={{
