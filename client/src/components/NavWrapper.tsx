@@ -4,13 +4,7 @@ type Props = {
 	children: React.ReactNode;
 };
 
-const navWrapperStyles: React.CSSProperties = {
-	height: '100vh',
-	width: '100vw',
-	position: 'sticky',
-	display: 'flex',
-	flexDirection: 'row',
-};
+const navWrapperStyles: React.CSSProperties = {};
 
 const NavWrapper = (props: Props) => {
 	return (

@@ -22,7 +22,6 @@ function App() {
 
 		fetchAllUsers().catch((e) => console.log(e));
 	}, []);
-	console.log(users);
 	return (
 		<>
 			<div></div>
