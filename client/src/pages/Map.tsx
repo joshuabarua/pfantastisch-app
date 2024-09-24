@@ -53,8 +53,7 @@ const Map = () => {
 	}, []);
 
 	return (
-		<div className="centeredDiv" style={{flexDirection: 'column', width: '100%'}}>
-			<h1> Map</h1>
+		<div style={{width: '100vw', height: '100vh', backgroundColor: 'whitesmoke'}}>
 			{loading ? (
 				<p>Loading...</p>
 			) : (
