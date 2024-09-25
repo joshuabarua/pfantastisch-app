@@ -3,6 +3,7 @@ import {useAuthStore} from '../context/AuthState.js';
 import Loader from '../components/Loader.js';
 import ProfileDetails from '../components/ProfileDetails.js';
 import ProfileForm from '../components/ProfileForm.js';
+import Button from '@mui/material/Button';
 
 interface UpdateFields {
 	email?: string;
@@ -55,35 +56,49 @@ function Profile() {
 	}
 
 	return (
-		<div className="centeredDiv" style={{flexDirection: 'column', width: '100vw'}}>
+		<div className="centeredDiv" style={{flexDirection: 'column', width: '100vw', height: '100vh'}}>
+			<h1 style={{color: 'whitesmoke'}}>Profile</h1>
+
 			<div
 				className="centeredDiv"
 				style={{
 					flexDirection: 'column',
-					width: '70vw',
-					height: '70vh',
-					backgroundColor: 'whitesmoke',
-					borderRadius: '25px',
-					padding: '20px',
+					justifyContent: 'flex-start',
+					width: '70%',
+					maxWidth: '800px',
+					minHeight: '300px',
+					backgroundColor: '#f5f5f5',
+					borderRadius: '15px',
+					padding: '30px',
+					boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+					margin: '0px 20px',
+					gap: '20px',
 				}}>
 				{loading && <Loader />}
 
-				<ProfileDetails user={user} editMode={editMode} setEditMode={setEditMode} />
+				<div>
+					<ProfileDetails user={user} editMode={editMode} setEditMode={setEditMode} />
+				</div>
 
-				<ProfileForm
-					updatedFields={updatedFields}
-					editMode={editMode}
-					handleEmailChange={handleEmailChange}
-					handlePasswordChange={handlePasswordChange}
-					handleUsernameChange={handleUsernameChange}
-					handleProfilePicChange={handleProfilePicChange}
-					handleUpdate={handleUpdate}
-					validationBool={false}
-				/>
+				<div style={{width: '100%', maxWidth: '500px'}}>
+					<ProfileForm
+						updatedFields={updatedFields}
+						editMode={editMode}
+						handleEmailChange={handleEmailChange}
+						handlePasswordChange={handlePasswordChange}
+						handleUsernameChange={handleUsernameChange}
+						handleProfilePicChange={handleProfilePicChange}
+						handleUpdate={handleUpdate}
+						validationBool={false}
+						onCancel={() => setEditMode(false)}
+					/>
+				</div>
 
-				{/* <Button variant="contained" color="warning" onClick={() => setEditMode(!editMode)} style={editMode ? {display: 'none'} : {}}>
-					Edit Profile
-				</Button> */}
+				{!editMode && (
+					<Button variant="contained" color="primary" onClick={() => setEditMode(true)} style={{marginTop: '20px'}}>
+						Edit Profile
+					</Button>
+				)}
 			</div>
 		</div>
 	);

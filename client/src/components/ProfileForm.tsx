@@ -13,8 +13,19 @@ interface Props {
 	handleUsernameChange: (e: ChangeEvent<HTMLInputElement>) => void;
 	handleProfilePicChange: (e: ChangeEvent<HTMLInputElement>) => void;
 	handleUpdate: (e: React.FormEvent<HTMLFormElement>) => void;
+	onCancel: () => void;
 }
-function ProfileForm({editMode, validationBool, updatedFields, handleEmailChange, handlePasswordChange, handleUsernameChange, handleProfilePicChange, handleUpdate}: Props) {
+function ProfileForm({
+	editMode,
+	validationBool,
+	updatedFields,
+	handleEmailChange,
+	handlePasswordChange,
+	handleUsernameChange,
+	handleProfilePicChange,
+	handleUpdate,
+	onCancel,
+}: Props) {
 	const [passwordVisibility, setPasswordVisibility] = useState(false);
 
 	const passwordToggle = () => {
@@ -70,10 +81,16 @@ function ProfileForm({editMode, validationBool, updatedFields, handleEmailChange
 				<label htmlFor="profile_picture">Profile Picture:</label>
 				<input type="file" name="profile_picture" placeholder="New Profile Image" onChange={handleProfilePicChange} />
 			</div>
-
-			<Button variant="contained" color="warning" type="submit">
-				Save Changes
-			</Button>
+			<div style={{display: 'flex', gap: '10px'}}>
+				{editMode && (
+					<Button variant="contained" color="warning" onClick={onCancel}>
+						Cancel
+					</Button>
+				)}
+				<Button variant="contained" color="primary" type="submit">
+					Save Changes
+				</Button>
+			</div>
 		</form>
 	);
 }
