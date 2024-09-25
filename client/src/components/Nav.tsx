@@ -7,7 +7,6 @@ import IconButton from '@mui/material/IconButton/IconButton';
 import SettingsIcon from '@mui/icons-material/Settings';
 import useRotatingText from '../hooks/useRotatingText';
 import {useAuthStore} from '../context/AuthState';
-import {useEffect} from 'react';
 import SVGLogo from './SVGLogo';
 
 const navContainerStyles: React.CSSProperties = {
@@ -40,7 +39,7 @@ const normalLink: React.CSSProperties = {
 };
 function Nav() {
 	const {user, logout} = useAuthStore();
-	const textRef = useRotatingText('Pfantastisch!');
+	const textRef = useRotatingText('Pfandtastisch!');
 
 	return (
 		<nav style={navContainerStyles}>
