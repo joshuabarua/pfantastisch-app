@@ -31,12 +31,12 @@ const LeafletMap: React.FC<MapProps> = ({userLocation, supermarkets, markerRefs}
 				height: '100%',
 				display: 'flex',
 				flexDirection: 'column',
-				margin: '0px 10px 0px 50px',
+				margin: '0px 10px -200px 50px',
 				zIndex: 0,
 			}}>
 			<h1 style={{padding: '20px', margin: 0, textAlign: 'right', fontSize: '24px'}}> Map</h1>
 			<div style={{flex: 1, position: 'relative'}}>
-				<MapContainer center={[userLocation.latitude, userLocation.longitude]} zoom={16} style={{width: '100%', height: '100%'}}>
+				<MapContainer center={[userLocation.latitude, userLocation.longitude]} zoom={16} style={{width: '100%', height: '90vh'}}>
 					<TileLayer
 						url={`${maps.base}access-token=${import.meta.env.VITE_JAWG_MAP_ACCESS_TOKEN}`}
 						attribution={
