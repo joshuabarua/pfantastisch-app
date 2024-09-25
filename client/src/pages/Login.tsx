@@ -1,8 +1,7 @@
 import {FormEvent, useContext, useState} from 'react';
 import {NavLink} from 'react-router-dom';
 import bottlesImage from '../assets/imgs/stylishbottles.jpeg';
-
-import {AuthContext} from '../context/AuthContext';
+import {useAuthStore} from '../context/AuthState';
 
 const formStyles: React.CSSProperties = {
 	display: 'flex',
@@ -12,7 +11,7 @@ const formStyles: React.CSSProperties = {
 };
 
 const Login = () => {
-	const {login} = useContext(AuthContext);
+	const {login} = useAuthStore();
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 

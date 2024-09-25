@@ -1,11 +1,11 @@
-import React, {SetStateAction, useContext} from 'react';
+import React, {SetStateAction} from 'react';
 import getToken from '../utils/getToken';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {AuthContext} from '../context/AuthContext.js';
+import {useAuthStore} from '../context/AuthState';
 import {Comment, Comments, Supermarket} from '../@types/index.js';
 // import SeeUserLink from './SeeUserLink';
 // import {baseURL} from '../utils/getServerURL';
@@ -18,7 +18,7 @@ interface Props {
 }
 
 function CommentCard({comment, comments, setComments, pfandmachine}: Props) {
-	const {user} = useContext(AuthContext);
+	const {user} = useAuthStore();
 	const baseURL = import.meta.env.VITE_SERVER_BASE as string;
 
 	const deleteComment = async () => {
@@ -48,22 +48,22 @@ function CommentCard({comment, comments, setComments, pfandmachine}: Props) {
 	return (
 		<Card sx={{width: '100%', marginBottom: 1}}>
 			<CardContent>
-				<Typography variant='h6' component='div' sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+				<Typography variant="h6" component="div" sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
 					{/* <SeeUserLink user={comment.posted_by} /> */}
 				</Typography>
-				<Typography variant='subtitle2' color='black' gutterBottom>
+				<Typography variant="subtitle2" color="black" gutterBottom>
 					{new Date(comment.createdAt).toDateString().substring(4)}
 					{user && (
 						<>
 							{user._id === comment.posted_by._id && (
-								<IconButton color='error' size='small' onClick={deleteComment}>
+								<IconButton color="error" size="small" onClick={deleteComment}>
 									<DeleteIcon sx={{fontSize: 'large'}} />
 								</IconButton>
 							)}
 						</>
 					)}
 				</Typography>
-				<Typography variant='body2' color='black'>
+				<Typography variant="body2" color="black">
 					{comment.comment}
 				</Typography>
 			</CardContent>

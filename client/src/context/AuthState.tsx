@@ -65,6 +65,11 @@ export const useAuthStore = create<AuthState>((set) => {
 
 			const token = getToken();
 
+			if (!token) {
+				toast.error('Authentication token not found. Please log in again.');
+				return;
+			}
+
 			const requestOptions = {
 				method: 'PATCH',
 				headers: {
@@ -73,23 +78,20 @@ export const useAuthStore = create<AuthState>((set) => {
 				body: formData,
 			};
 
-			if (token) {
-				try {
-					const response = await fetch(`${baseURL}api/users/update-user`, requestOptions);
-					if (response.ok) {
-						const result = (await response.json()) as {user: User};
-						toast.success('User updated successfully');
-						set({user: result.user});
-						setTimeout(() => (window.location.href = '/myprofile'), 2000);
-					} else {
-						const result = (await response.json()) as NotOk;
-						toast.error(`Something went wrong - ${result.error}`);
-					}
-				} catch (e) {
-					toast.error(` ${e as Error}`);
+			try {
+				const response = await fetch(`${baseURL}api/users/update-user`, requestOptions);
+				if (response.ok) {
+					const result = (await response.json()) as {user: User};
+					toast.success('User updated successfully');
+					set({user: result.user});
+					setTimeout(() => (window.location.href = '/myprofile'), 2000);
+				} else {
+					const result = (await response.json()) as NotOk;
+					toast.error(`Update failed: ${result.error}`);
 				}
-			} else {
-				console.log('no token');
+			} catch (e) {
+				toast.error(`Update failed: ${e instanceof Error ? e.message : 'Unknown error'}`);
+				console.error('Error updating user:', e);
 			}
 		},
 
@@ -131,21 +133,33 @@ export const useAuthStore = create<AuthState>((set) => {
 
 		getActiveUser: async () => {
 			const token = getToken();
-			if (token) {
-				try {
-					const myHeaders = new Headers({Authorization: `Bearer ${token}`});
-					const requestOptions = {
-						method: 'GET',
-						headers: myHeaders,
-					};
-					const response = await fetch(`${baseURL}api/users/me`, requestOptions);
-					const result = (await response.json()) as User;
-					set({user: result});
-				} catch (error) {
-					toast.error(error as string);
-					console.log(error);
+			if (!token) {
+				set({user: null});
+				return;
+			}
+
+			try {
+				const myHeaders = new Headers({Authorization: `Bearer ${token}`});
+				const requestOptions = {
+					method: 'GET',
+					headers: myHeaders,
+				};
+				const response = await fetch(`${baseURL}api/users/me`, requestOptions);
+
+				if (!response.ok) {
+					throw new Error(`HTTP error! status: ${response.status}`);
 				}
-			} else {
+
+				const result = (await response.json()) as User;
+				set({user: result});
+			} catch (error) {
+				if (error instanceof Error) {
+					toast.error(`Failed to get user: ${error.message}`);
+					console.error('Error fetching user:', error);
+				} else {
+					toast.error('An unexpected error occurred');
+					console.error('Unexpected error:', error);
+				}
 				set({user: null});
 			}
 		},

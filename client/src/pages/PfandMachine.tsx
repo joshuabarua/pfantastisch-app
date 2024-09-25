@@ -1,8 +1,8 @@
-import {useContext, useState} from 'react';
+import {useState} from 'react';
 import {useParams} from 'react-router-dom';
 import {toast} from 'react-toastify';
 import usePfandMachineFetch from '../hooks/usePfandMachineFetch';
-import {AuthContext} from '../context/AuthContext';
+import {useAuthStore} from '../context/AuthState';
 import Button from '@mui/material/Button/Button';
 import getToken from '../utils/getToken';
 import CommentCard from '../components/CommentCard';
@@ -11,7 +11,7 @@ import commerce from '../assets/icons/commerce.png';
 
 export default function PfandMachine() {
 	const baseURL = import.meta.env.VITE_SERVER_BASE as string;
-	const {user} = useContext(AuthContext);
+	const {user} = useAuthStore();
 	const {_id} = useParams();
 	const {pfandMachine, comments, setComments, loading} = usePfandMachineFetch(_id!);
 	const [commentText, setCommentText] = useState('');

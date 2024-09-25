@@ -14,7 +14,6 @@ interface Props {
 	handleProfilePicChange: (e: ChangeEvent<HTMLInputElement>) => void;
 	handleUpdate: (e: React.FormEvent<HTMLFormElement>) => void;
 }
-
 function ProfileForm({editMode, validationBool, updatedFields, handleEmailChange, handlePasswordChange, handleUsernameChange, handleProfilePicChange, handleUpdate}: Props) {
 	const [passwordVisibility, setPasswordVisibility] = useState(false);
 

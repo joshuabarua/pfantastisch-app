@@ -39,12 +39,7 @@ const normalLink: React.CSSProperties = {
 	fontWeight: 'bold',
 };
 function Nav() {
-	const {user, logout, getActiveUser} = useAuthStore();
-
-	useEffect(() => {
-		getActiveUser();
-	}, [getActiveUser, user]);
-
+	const {user, logout} = useAuthStore();
 	const textRef = useRotatingText('Pfantastisch!');
 
 	return (

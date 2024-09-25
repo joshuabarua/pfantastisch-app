@@ -1,9 +1,9 @@
-import {FormEvent, useContext, useState} from 'react';
+import {FormEvent, useState} from 'react';
 
 import bottlesImage from '../assets/imgs/artisticbottles.jpeg';
 import {NavLink} from 'react-router-dom';
 // import {Users} from '../@types';
-import {AuthContext} from '../context/AuthContext';
+import {useAuthStore} from '../context/AuthState';
 
 const formStyles: React.CSSProperties = {
 	display: 'flex',
@@ -12,7 +12,7 @@ const formStyles: React.CSSProperties = {
 	flexDirection: 'column',
 };
 const Signup = () => {
-	const {signup} = useContext(AuthContext);
+	const {signup} = useAuthStore();
 	// const [users, setUsers] = useState<Users>([]);
 
 	const [email, setEmail] = useState('');
