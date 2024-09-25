@@ -1,8 +1,8 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import AllUsers from './pages/AllUsers.tsx';
-import {createBrowserRouter, RouterProvider, Outlet, Navigate} from 'react-router-dom';
+import {createBrowserRouter, RouterProvider, Outlet} from 'react-router-dom';
 import Login from './pages/Login.tsx';
 import NavWrapper from './components/NavWrapper.tsx';
 import Homepage from './pages/Homepage.tsx';
