@@ -15,12 +15,10 @@ interface AuthState {
 
 const baseURL = import.meta.env.VITE_SERVER_BASE as string;
 
-
 export const useAuthStore = create<AuthState>((set) => {
 	return {
 		user: null,
 
-		
 		setUser: (user) => set({user}),
 		signup: async (email, password, username, profilePicFile) => {
 			const formData = new FormData();
@@ -117,8 +115,6 @@ export const useAuthStore = create<AuthState>((set) => {
 					localStorage.setItem('user', JSON.stringify(result.user));
 					toast.success('Login Successful');
 					set({user: result.user});
-					console.log(result.user);
-					setTimeout(() => (window.location.href = '/'), 2000);
 				}
 			} catch (error) {
 				toast.error(`${error as Error}`);
@@ -128,7 +124,8 @@ export const useAuthStore = create<AuthState>((set) => {
 		logout: () => {
 			set({user: null});
 			localStorage.removeItem('token');
-			toast.success('Logging out... Cya!');
+			localStorage.removeItem('user');
+			toast.success('Logging out... See you next time!');
 		},
 
 		getActiveUser: async () => {

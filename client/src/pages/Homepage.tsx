@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import  {useRef} from 'react';
 import bottlesImage from '../assets/imgs/btls.jpeg';
 import {gsap} from 'gsap';
 import {useGSAP} from '@gsap/react';
