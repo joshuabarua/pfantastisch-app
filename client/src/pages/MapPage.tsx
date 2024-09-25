@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import 'leaflet/dist/leaflet.css';
-import LeafletMap from '../components/LeafletMap';
+import LeafletMap from '../components/MapContainer';
 import {getUserLocation} from '../utils/getLocationUtils';
 import {NotOk, Supermarket} from '../@types';
 import {toast} from 'react-toastify';
@@ -12,7 +12,7 @@ interface Coordinates {
 	longitude: number;
 }
 
-const Map = () => {
+const MapPage = () => {
 	const [userCoords, setUserCoords] = useState<{latitude: number; longitude: number}>({
 		latitude: 52.52,
 		longitude: 13.405,
@@ -69,4 +69,4 @@ const Map = () => {
 	);
 };
 
-export default Map;
+export default MapPage;
