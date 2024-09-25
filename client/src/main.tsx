@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import AllUsers from './pages/AllUsers.tsx';
-import {createBrowserRouter, RouterProvider, Outlet} from 'react-router-dom';
+import {createBrowserRouter, RouterProvider, Outlet, Navigate} from 'react-router-dom';
 import Login from './pages/Login.tsx';
 import NavWrapper from './components/NavWrapper.tsx';
 import Homepage from './pages/Homepage.tsx';
@@ -14,17 +14,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import PfandMachine from './pages/PfandMachine.tsx';
 import Profile from './pages/Profile.tsx';
 import ProtectedRoute from './components/ProtectedRoute.tsx';
-import {useAuthStore} from './context/AuthState.tsx';
-
-const AuthWrapper = ({children}: {children: React.ReactNode}) => {
-	const {getActiveUser} = useAuthStore();
-
-	React.useEffect(() => {
-		getActiveUser();
-	}, [getActiveUser]);
-
-	return <>{children}</>;
-};
+import AuthWrapper from './components/AuthWrapper.tsx';
+import AuthenticatedRoute from './components/AuthenticatedRoute.tsx';
 
 const router = createBrowserRouter([
 	{
@@ -70,11 +61,19 @@ const router = createBrowserRouter([
 					},
 					{
 						path: '/login',
-						element: <Login />,
+						element: (
+							<AuthenticatedRoute>
+								<Login />
+							</AuthenticatedRoute>
+						),
 					},
 					{
 						path: '/newUser',
-						element: <Signup />,
+						element: (
+							<AuthenticatedRoute>
+								<Signup />
+							</AuthenticatedRoute>
+						),
 					},
 				],
 			},

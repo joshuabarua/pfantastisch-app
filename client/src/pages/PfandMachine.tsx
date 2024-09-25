@@ -1,13 +1,87 @@
-import {useState} from 'react';
+import React, {useState} from 'react';
 import {useParams} from 'react-router-dom';
 import {toast} from 'react-toastify';
+import {styled} from '@mui/material/styles';
+import {Button, TextField, Typography, CircularProgress} from '@mui/material';
 import usePfandMachineFetch from '../hooks/usePfandMachineFetch';
 import {useAuthStore} from '../context/AuthState';
-import Button from '@mui/material/Button/Button';
 import getToken from '../utils/getToken';
 import CommentCard from '../components/CommentCard';
-import bottleAutomat from '../assets/imgs/bottle-automat.png';
 import commerce from '../assets/icons/commerce.png';
+
+const PageContainer = styled('div')(({theme}) => ({
+	width: '100%',
+	padding: theme.spacing(2),
+	overflow: 'auto',
+}));
+
+const ContentContainer = styled('div')(({theme}) => ({
+	display: 'flex',
+	flexDirection: 'column',
+	alignItems: 'center',
+	backgroundColor: theme.palette.background.paper,
+	borderRadius: theme.shape.borderRadius,
+	padding: theme.spacing(3),
+	maxWidth: 800,
+	margin: '0 auto',
+}));
+
+const MachineInfoContainer = styled('div')(({theme}) => ({
+	display: 'flex',
+	flexDirection: 'column',
+	alignItems: 'center',
+	gap: theme.spacing(2),
+	width: '100%',
+}));
+
+const ImageContainer = styled('div')({
+	display: 'flex',
+	justifyContent: 'center',
+	alignItems: 'center',
+	gap: 20,
+});
+
+const MachineImage = styled('img')({
+	width: 200,
+	height: 200,
+	borderRadius: '10%',
+	objectFit: 'cover',
+});
+
+const StatusIndicator = styled('span')<{isOperational: boolean}>(({theme, isOperational}) => ({
+	color: isOperational ? theme.palette.success.main : theme.palette.error.main,
+	animation: 'blink 2s linear infinite',
+	'@keyframes blink': {
+		'0%': {opacity: 0},
+		'50%': {opacity: 1},
+		'100%': {opacity: 0},
+	},
+}));
+
+const CommentSection = styled('div')(({theme}) => ({
+	width: '100%',
+	maxWidth: 600,
+	marginTop: theme.spacing(3),
+}));
+
+const CommentForm = styled('form')(({theme}) => ({
+	display: 'flex',
+	flexDirection: 'column',
+	gap: theme.spacing(2),
+	marginTop: theme.spacing(2),
+}));
+
+const StarRating = ({rating}: {rating: number}) => {
+	return (
+		<div>
+			{[...Array(5)].map((_, index) => (
+				<span key={index} style={{color: index < Math.round(rating) ? '#e6e628' : '#ccc'}}>
+					★
+				</span>
+			))}
+		</div>
+	);
+};
 
 export default function PfandMachine() {
 	const baseURL = import.meta.env.VITE_SERVER_BASE as string;
@@ -15,128 +89,93 @@ export default function PfandMachine() {
 	const {_id} = useParams();
 	const {pfandMachine, comments, setComments, loading} = usePfandMachineFetch(_id!);
 	const [commentText, setCommentText] = useState('');
+
 	const handleSubmitComment = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		const token = getToken();
-		if (token && user && _id) {
-			try {
-				const myHeaders = new Headers();
-				myHeaders.append('Authorization', 'Bearer ' + token);
-				myHeaders.append('Content-Type', 'application/json');
-				const body = JSON.stringify({comment: commentText});
-				const reqOptions = {
-					method: 'POST',
-					headers: myHeaders,
-					body: body,
-				};
+		if (!token || !user || !_id) return;
 
-				const response = await fetch(baseURL + `api/businesses/add-comment/` + _id, reqOptions);
-				const result = await response.json();
-				const newComment = result.comments[result.comments.length - 1];
+		try {
+			const response = await fetch(`${baseURL}api/businesses/add-comment/${_id}`, {
+				method: 'POST',
+				headers: {
+					Authorization: `Bearer ${token}`,
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({comment: commentText}),
+			});
 
-				setComments([
-					...comments,
-					{
-						comment: newComment.comment,
-						createdAt: newComment.createdAt,
-						_id: newComment._id,
-						likes: newComment.likes,
-						posted_by: {
-							username: user.username,
-							_id: user._id,
-							image_url: user.image_url,
-						},
+			const result = await response.json();
+			const newComment = result.comments[result.comments.length - 1];
+
+			setComments([
+				...comments,
+				{
+					comment: newComment.comment,
+					createdAt: newComment.createdAt,
+					_id: newComment._id,
+					likes: newComment.likes,
+					posted_by: {
+						username: user.username,
+						_id: user._id,
+						image_url: user.image_url,
 					},
-				]);
+				},
+			]);
 
-				toast.success('Comment Posted', result);
-				setCommentText('');
-			} catch (error) {
-				toast.error('error!');
-				console.log(error);
-			}
+			toast.success('Comment Posted');
+			setCommentText('');
+		} catch (error) {
+			toast.error('Error posting comment');
+			console.error(error);
 		}
 	};
 
-	function renderStars(rating: number) {
-		const maxStars = 5; // You can change this value to determine the maximum number of stars
-		const roundedRating = Math.round(rating); // Round the rating to the nearest whole number
-		const stars = [];
-
-		for (let i = 1; i <= maxStars; i++) {
-			if (i <= roundedRating) {
-				stars.push(
-					<span key={i} style={{color: '#e6e628'}}>
-						&#9733;
-					</span>
-				);
-			}
-		}
-
-		return stars;
+	if (loading || !pfandMachine) {
+		return (
+			<PageContainer>
+				<CircularProgress />
+			</PageContainer>
+		);
 	}
 
 	return (
-		<div style={{width: '100vw', padding: '10px', overflow: 'auto'}}>
-			<div className="centeredDiv" style={{justifyContent: 'flex-start', flexDirection: 'column', backgroundColor: 'whitesmoke', borderRadius: '25px'}}>
-				<h1>Pfand Automat</h1>
-				{loading || !pfandMachine ? (
-					<p>Loading...</p>
-				) : (
-					<div className="centeredDiv" style={{flexDirection: 'column', width: '50vw', gap: 20}}>
-						<div className="centeredDiv" style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', width: '40vw', gap: 10}}>
-							<img src={!pfandMachine.image_url ? commerce : pfandMachine.image_url} style={{width: '200px', height: '200px', borderRadius: '10%'}} />
-							<div className="centeredDiv" style={{flexDirection: 'column', gap: 5}}>
-								<span>
-									<h3> {pfandMachine.name}</h3>
-									{renderStars(pfandMachine.rating)}
-								</span>
-								{pfandMachine.pfandtastic.isOperational ? (
-									<span className="blink" style={{color: '#81c784'}}>
-										• Pfandautomat Online{' '}
-									</span>
-								) : (
-									<span className="blink" style={{color: '#e57373'}}>
-										• Maintainence Needed{' '}
-									</span>
-								)}
-							</div>
+		<PageContainer>
+			<ContentContainer>
+				<h1 style={{fontSize: '2rem', fontWeight: 'bold', marginBottom: '1rem'}}>Pfand Automat</h1>
+				<MachineInfoContainer>
+					<ImageContainer>
+						<MachineImage src={pfandMachine.image_url || commerce} alt={pfandMachine.name} />
+						<div>
+							<Typography variant="h5">{pfandMachine.name}</Typography>
+							<StarRating rating={pfandMachine.rating} />
+							<StatusIndicator isOperational={pfandMachine.pfandtastic.isOperational}>
+								• {pfandMachine.pfandtastic.isOperational ? 'Pfandautomat Online' : 'Maintenance Needed'}
+							</StatusIndicator>
 						</div>
-						<div className="centeredDiv" style={{flexDirection: 'column', gap: 20}}>
-							<span> {`${pfandMachine.location.address1}, ${pfandMachine.location.city}, ${pfandMachine.location.zip_code}, ${pfandMachine.location.country}`}</span>
-							{pfandMachine.phone && <span>Phone: {pfandMachine.phone}</span>}
-							<img
-								src={!pfandMachine.pfandtastic.machine_img_url[0] ? bottleAutomat : pfandMachine.pfandtastic.machine_img_url[0]}
-								style={{width: '200px', height: '200px', borderRadius: '50%'}}
-							/>
-						</div>
-						<div style={{width: '75%', maxWidth: '400px'}}>
-							<h3>Comments:</h3>
-							{comments.length === 0 && <p style={{textAlign: 'center'}}>No comments</p>}
-							{comments.length > 0 &&
-								comments.map((comment) => {
-									return <CommentCard key={comment._id} comment={comment} comments={comments} setComments={setComments} pfandmachine={pfandMachine} />;
-								})}
-						</div>
-						{user ? (
-							<div style={{flexDirection: 'row'}}>
-								<form style={{display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}} onSubmit={handleSubmitComment}>
-									<label htmlFor="commentArea">Leave a comment: </label>
-									<input type="textarea" value={commentText} id="commentArea" onChange={(e) => setCommentText(e.target.value)} />
-									<Button type="submit">Post comment</Button>
-								</form>
-							</div>
-						) : (
-							<div>
-								<form>
-									<label>Leave a comment: </label>
-									<p>Only logged in users can leave comments...</p>
-								</form>
-							</div>
-						)}
-					</div>
-				)}
-			</div>
-		</div>
+					</ImageContainer>
+					<Typography>{`${pfandMachine.location.address1}, ${pfandMachine.location.city}, ${pfandMachine.location.zip_code}, ${pfandMachine.location.country}`}</Typography>
+					{pfandMachine.phone && <Typography>Phone: {pfandMachine.phone}</Typography>}
+				</MachineInfoContainer>
+				<CommentSection>
+					<Typography variant="h6">Comments:</Typography>
+					{comments.length === 0 ? (
+						<Typography align="center">No comments</Typography>
+					) : (
+						comments.map((comment) => <CommentCard key={comment._id} comment={comment} comments={comments} setComments={setComments} pfandmachine={pfandMachine} />)
+					)}
+					{user ? (
+						<CommentForm onSubmit={handleSubmitComment}>
+							<TextField label="Leave a comment" multiline rows={3} value={commentText} onChange={(e) => setCommentText(e.target.value)} fullWidth />
+							<Button type="submit" variant="contained" color="primary">
+								Post comment
+							</Button>
+						</CommentForm>
+					) : (
+						<Typography>Only logged in users can leave comments...</Typography>
+					)}
+				</CommentSection>
+			</ContentContainer>
+		</PageContainer>
 	);
 }

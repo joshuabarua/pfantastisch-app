@@ -60,20 +60,48 @@ const LeafletMap: React.FC<MapProps> = ({userLocation, supermarkets, markerRefs}
 								icon={customIcon(bottle)}
 								ref={(el) => (markerRefs.current[index] = el)}>
 								<Popup>
-									<div className="centeredDiv" style={{flexDirection: 'column', gap: 5, wordWrap: 'break-word'}}>
-										<h3>{supermarket.name}</h3>
-										<img src={supermarket.image_url} style={{width: '120px', height: '120px', borderRadius: '25px'}} />
-										<span>
-											Address: {supermarket.location.address1}, {supermarket.location.city}, {supermarket.location.zip_code}, {'  '}
-											{supermarket.location.country}
-										</span>
-										<span>Phone: {supermarket.phone}</span>
-										<span>Rating: {supermarket.rating}</span>
-										<span style={supermarket.pfandtastic.isOperational ? {color: '#a5d6a7'} : {color: '#e57373'}}>
+									<div
+										style={{
+											display: 'flex',
+											flexDirection: 'column',
+											alignItems: 'center',
+											gap: '10px',
+											padding: '10px',
+											maxWidth: '250px',
+											fontFamily: 'Arial, sans-serif',
+										}}>
+										<h3 style={{margin: '0', color: '#333'}}>{supermarket.name}</h3>
+										<img src={supermarket.image_url} style={{width: '150px', height: '150px', borderRadius: '10px', objectFit: 'cover'}} alt={supermarket.name} />
+										<div style={{fontSize: '14px', textAlign: 'center'}}>
+											<p style={{margin: '5px 0'}}>
+												{supermarket.location.address1}, {supermarket.location.city},<br />
+												{supermarket.location.zip_code}, {supermarket.location.country}
+											</p>
+											<p style={{margin: '5px 0'}}>Phone: {supermarket.phone}</p>
+											<p style={{margin: '5px 0'}}>Rating: {supermarket.rating} ⭐</p>
+										</div>
+										<div
+											style={{
+												padding: '5px 10px',
+												borderRadius: '5px',
+												color: supermarket.pfandtastic.isOperational ? '#a5d6a7' : '#e57373',
+												fontWeight: 'bold',
+												fontSize: '14px',
+											}}>
 											{supermarket.pfandtastic.isOperational ? 'Pfand Machine Operational' : 'Pfand Machine Not Operational'}
-										</span>
-										<Button variant="contained" style={{backgroundColor: '#fff', color: '#74f9b9'}}>
-											<NavLink to={`/map/pfandautomat/${supermarket._id}`}>PFANDAutomat Details </NavLink>
+										</div>
+										<Button
+											variant="contained"
+											style={{
+												backgroundColor: '#4e1d21',
+												color: '#fff',
+												textTransform: 'none',
+												fontWeight: 'bold',
+												marginTop: '10px',
+											}}>
+											<NavLink to={`/map/pfandautomat/${supermarket._id}`} style={{color: 'whitesmoke', textDecoration: 'none'}}>
+												PFANDAutomat Details
+											</NavLink>
 										</Button>
 									</div>
 								</Popup>
