@@ -8,7 +8,7 @@ import {useAuthStore} from '../context/AuthState';
 import CommentCard from '../components/CommentCard';
 import {Comment, Pfandtastic} from '../@types';
 import {api, errorMessage} from '../utils/api';
-import commerce from '../assets/icons/commerce.png';
+import StoreImage from '../components/StoreImage';
 
 const PageContainer = styled('div')(({theme}) => ({
 	width: '100%',
@@ -40,13 +40,6 @@ const ImageContainer = styled('div')({
 	justifyContent: 'center',
 	alignItems: 'center',
 	gap: 20,
-});
-
-const MachineImage = styled('img')({
-	width: 200,
-	height: 200,
-	borderRadius: '10%',
-	objectFit: 'cover',
 });
 
 const StatusIndicator = styled('span', {shouldForwardProp: (prop) => prop !== 'isOperational'})<{isOperational: boolean}>(({theme, isOperational}) => ({
@@ -157,7 +150,7 @@ export default function PfandMachine() {
 				<h1 style={{fontSize: '2rem', fontWeight: 'bold', marginBottom: '1rem'}}>Pfand Automat</h1>
 				<MachineInfoContainer>
 					<ImageContainer>
-						<MachineImage src={pfandMachine.image_url || commerce} alt={pfandMachine.name} />
+						<StoreImage src={pfandMachine.image_url} alt={pfandMachine.name} size={200} borderRadius="10%" />
 						<div>
 							<Typography variant="h5">{pfandMachine.name}</Typography>
 							<StarRating rating={pfandMachine.rating} />

@@ -6,6 +6,7 @@ import {Supermarket, LatLongLocation} from '../@types';
 import {Icon, latLngBounds} from 'leaflet';
 import userPin from '../assets/icons/user-pin.png';
 import bottle from '../assets/icons/plastic-bottle.png';
+import StoreImage from './StoreImage';
 
 const maps = {base: 'https://tile.jawg.io/jawg-sunny/{z}/{x}/{y}{r}.png?'};
 
@@ -85,7 +86,7 @@ const LeafletMap: React.FC<MapProps> = ({userLocation, supermarkets, markerRefs}
 											fontFamily: 'Arial, sans-serif',
 										}}>
 										<h3 style={{margin: '0', color: '#333'}}>{supermarket.name}</h3>
-										<img src={supermarket.image_url} style={{width: '150px', height: '150px', borderRadius: '10px', objectFit: 'cover'}} alt={supermarket.name} />
+										<StoreImage src={supermarket.image_url} alt={supermarket.name} size={150} />
 										<div style={{fontSize: '14px', textAlign: 'center'}}>
 											<p style={{margin: '5px 0'}}>
 												{supermarket.location.address1}, {supermarket.location.city},<br />
