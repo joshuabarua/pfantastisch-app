@@ -5,8 +5,9 @@ import {styled} from '@mui/material/styles';
 import {Button, TextField, Typography, CircularProgress} from '@mui/material';
 import usePfandMachineFetch from '../hooks/usePfandMachineFetch';
 import {useAuthStore} from '../context/AuthState';
-import getToken from '../utils/getToken';
 import CommentCard from '../components/CommentCard';
+import {Comment, Pfandtastic} from '../@types';
+import {api, errorMessage} from '../utils/api';
 import commerce from '../assets/icons/commerce.png';
 
 const PageContainer = styled('div')(({theme}) => ({
@@ -48,7 +49,7 @@ const MachineImage = styled('img')({
 	objectFit: 'cover',
 });
 
-const StatusIndicator = styled('span')<{isOperational: boolean}>(({theme, isOperational}) => ({
+const StatusIndicator = styled('span', {shouldForwardProp: (prop) => prop !== 'isOperational'})<{isOperational: boolean}>(({theme, isOperational}) => ({
 	color: isOperational ? theme.palette.success.main : theme.palette.error.main,
 	animation: 'blink 2s linear infinite',
 	'@keyframes blink': {
@@ -83,53 +84,64 @@ const StarRating = ({rating}: {rating: number}) => {
 	);
 };
 
+const MAX_COMMENT_LENGTH = 1000;
+
 export default function PfandMachine() {
-	const baseURL = import.meta.env.VITE_SERVER_BASE as string;
-	const {user} = useAuthStore();
+	const user = useAuthStore((s) => s.user);
 	const {_id} = useParams();
-	const {pfandMachine, comments, setComments, loading} = usePfandMachineFetch(_id!);
+	const {pfandMachine, setPfandMachine, comments, setComments, loading, error} = usePfandMachineFetch(_id);
 	const [commentText, setCommentText] = useState('');
+	const [posting, setPosting] = useState(false);
+	const [reporting, setReporting] = useState(false);
 
 	const handleSubmitComment = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		const token = getToken();
-		if (!token || !user || !_id) return;
-
+		if (!_id || !commentText.trim()) return;
+		setPosting(true);
 		try {
-			const response = await fetch(`${baseURL}api/businesses/add-comment/${_id}`, {
+			const result = await api<{comment: Comment}>(`/api/businesses/supermarkets/${_id}/comments`, {
 				method: 'POST',
-				headers: {
-					Authorization: `Bearer ${token}`,
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({comment: commentText}),
+				body: {comment: commentText},
+				auth: true,
 			});
-
-			const result = await response.json();
-			const newComment = result.comments[result.comments.length - 1];
-
-			setComments([
-				...comments,
-				{
-					comment: newComment.comment,
-					createdAt: newComment.createdAt,
-					_id: newComment._id,
-					likes: newComment.likes,
-					posted_by: {
-						username: user.username,
-						_id: user._id,
-						image_url: user.image_url,
-					},
-				},
-			]);
-
-			toast.success('Comment Posted');
+			setComments((prev) => [...prev, result.comment]);
 			setCommentText('');
+			toast.success('Comment posted');
 		} catch (error) {
-			toast.error('Error posting comment');
-			console.error(error);
+			toast.error(`Error posting comment - ${errorMessage(error)}`);
+		} finally {
+			setPosting(false);
 		}
 	};
+
+	const reportStatus = async (isOperational: boolean) => {
+		if (!_id || !pfandMachine) return;
+		setReporting(true);
+		try {
+			const result = await api<{pfandtastic: Pfandtastic}>(`/api/businesses/supermarkets/${_id}/status`, {
+				method: 'PATCH',
+				body: {isOperational},
+				auth: true,
+			});
+			setPfandMachine({...pfandMachine, pfandtastic: result.pfandtastic});
+			toast.success('Thanks for the update!');
+		} catch (error) {
+			toast.error(`Couldn't report status - ${errorMessage(error)}`);
+		} finally {
+			setReporting(false);
+		}
+	};
+
+	if (error) {
+		return (
+			<PageContainer>
+				<ContentContainer>
+					<Typography variant="h6">Couldn't load this pfand machine</Typography>
+					<Typography>{error}</Typography>
+				</ContentContainer>
+			</PageContainer>
+		);
+	}
 
 	if (loading || !pfandMachine) {
 		return (
@@ -156,19 +168,46 @@ export default function PfandMachine() {
 					</ImageContainer>
 					<Typography>{`${pfandMachine.location.address1}, ${pfandMachine.location.city}, ${pfandMachine.location.zip_code}, ${pfandMachine.location.country}`}</Typography>
 					{pfandMachine.phone && <Typography>Phone: {pfandMachine.phone}</Typography>}
+					{pfandMachine.pfandtastic.status_updated_at && (
+						<Typography variant="caption" color="text.secondary">
+							Status last reported {new Date(pfandMachine.pfandtastic.status_updated_at).toLocaleString()}
+						</Typography>
+					)}
+					{user && (
+						<div style={{display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center'}}>
+							<Typography sx={{width: '100%', textAlign: 'center'}}>Were you just there? Let others know:</Typography>
+							<Button variant="outlined" color="success" disabled={reporting} onClick={() => reportStatus(true)}>
+								It's working
+							</Button>
+							<Button variant="outlined" color="error" disabled={reporting} onClick={() => reportStatus(false)}>
+								It's broken
+							</Button>
+						</div>
+					)}
 				</MachineInfoContainer>
 				<CommentSection>
 					<Typography variant="h6">Comments:</Typography>
 					{comments.length === 0 ? (
 						<Typography align="center">No comments</Typography>
 					) : (
-						comments.map((comment) => <CommentCard key={comment._id} comment={comment} comments={comments} setComments={setComments} pfandmachine={pfandMachine} />)
+						comments.map((comment) => (
+							<CommentCard key={comment._id} comment={comment} onDeleted={(id) => setComments((prev) => prev.filter((c) => c._id !== id))} />
+						))
 					)}
 					{user ? (
 						<CommentForm onSubmit={handleSubmitComment}>
-							<TextField label="Leave a comment" multiline rows={3} value={commentText} onChange={(e) => setCommentText(e.target.value)} fullWidth />
-							<Button type="submit" variant="contained" color="primary">
-								Post comment
+							<TextField
+								label="Leave a comment"
+								multiline
+								rows={3}
+								value={commentText}
+								onChange={(e) => setCommentText(e.target.value)}
+								inputProps={{maxLength: MAX_COMMENT_LENGTH}}
+								helperText={`${commentText.length}/${MAX_COMMENT_LENGTH}`}
+								fullWidth
+							/>
+							<Button type="submit" variant="contained" color="primary" disabled={posting || !commentText.trim()}>
+								{posting ? 'Posting...' : 'Post comment'}
 							</Button>
 						</CommentForm>
 					) : (

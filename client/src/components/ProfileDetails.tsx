@@ -1,14 +1,8 @@
-import React from 'react';
-import Button from '@mui/material/Button';
-import EditIcon from '@mui/icons-material/Edit';
-import CloseIcon from '@mui/icons-material/Close';
 import {User} from '../@types';
 import {styled} from '@mui/material/styles';
 
 interface Props {
 	user: User;
-	editMode: boolean;
-	setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ProfileContainer = styled('div')(({theme}) => ({
@@ -18,12 +12,6 @@ const ProfileContainer = styled('div')(({theme}) => ({
 	margin: '0 auto',
 	gap: '1rem',
 }));
-
-const ProfileHeader = styled('div')({
-	display: 'flex',
-	justifyContent: 'flex-end',
-	alignItems: 'flex-end',
-});
 
 const ProfileContent = styled('div')({
 	display: 'flex',
@@ -49,21 +37,17 @@ const InfoItem = styled('p')(({theme}) => ({
 	color: theme.palette.text.secondary,
 }));
 
-function ProfileDetails({user, editMode, setEditMode}: Props) {
+function ProfileDetails({user}: Props) {
 	return (
 		<ProfileContainer>
-			<ProfileHeader></ProfileHeader>
-
-			{!editMode && (
-				<ProfileContent>
-					<ProfileImage src={user.image_url} alt={`${user.username}'s profile`} />
-					<ProfileInfo>
-						<h3>{user.username}</h3>
-						{user.email && <InfoItem>Email: {user.email}</InfoItem>}
-						{user.createdAt && <InfoItem>Member since: {new Date(user.createdAt).toLocaleDateString()}</InfoItem>}
-					</ProfileInfo>
-				</ProfileContent>
-			)}
+			<ProfileContent>
+				<ProfileImage src={user.image_url} alt={`${user.username}'s profile`} />
+				<ProfileInfo>
+					<h3>{user.username}</h3>
+					{user.email && <InfoItem>Email: {user.email}</InfoItem>}
+					{user.createdAt && <InfoItem>Member since: {new Date(user.createdAt).toLocaleDateString()}</InfoItem>}
+				</ProfileInfo>
+			</ProfileContent>
 		</ProfileContainer>
 	);
 }

@@ -1,93 +1,74 @@
-import {ChangeEvent, useState} from 'react';
+import {ChangeEvent, FormEvent, useState} from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import InputAdornment from '@mui/material/InputAdornment';
-import {updateFields} from '../@types';
+import {UpdateFields} from '../context/AuthState';
+import {PASSWORD_RULE} from '../utils/validation';
 
 interface Props {
-	editMode: boolean;
-	validationBool: boolean;
-	updatedFields: updateFields | undefined;
-	handleEmailChange: (e: ChangeEvent<HTMLInputElement>) => void;
-	handlePasswordChange: (e: ChangeEvent<HTMLInputElement>) => void;
-	handleUsernameChange: (e: ChangeEvent<HTMLInputElement>) => void;
-	handleProfilePicChange: (e: ChangeEvent<HTMLInputElement>) => void;
-	handleUpdate: (e: React.FormEvent<HTMLFormElement>) => void;
+	fields: UpdateFields;
+	passwordValid: boolean;
+	onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+	onSubmit: (e: FormEvent<HTMLFormElement>) => void;
 	onCancel: () => void;
 }
-function ProfileForm({
-	editMode,
-	validationBool,
-	updatedFields,
-	handleEmailChange,
-	handlePasswordChange,
-	handleUsernameChange,
-	handleProfilePicChange,
-	handleUpdate,
-	onCancel,
-}: Props) {
-	const [passwordVisibility, setPasswordVisibility] = useState(false);
 
-	const passwordToggle = () => {
-		setPasswordVisibility(!passwordVisibility);
-	};
+function ProfileForm({fields, passwordValid, onChange, onSubmit, onCancel}: Props) {
+	const [passwordVisible, setPasswordVisible] = useState(false);
+	const changingPassword = Boolean(fields.password);
+
 	return (
-		<form
-			onSubmit={handleUpdate}
-			style={
-				editMode
-					? {
-							display: 'flex',
-							flexDirection: 'column',
-							alignItems: 'center',
-							gap: 30,
-							// eslint-disable-next-line no-mixed-spaces-and-tabs
-					  }
-					: {display: 'none'}
-			}>
-			<TextField label="Username" fullWidth name="username" value={updatedFields?.username} onChange={handleUsernameChange} margin="normal" variant="outlined" />
+		<form onSubmit={onSubmit} style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20}}>
+			<TextField label="Username" name="username" fullWidth value={fields.username ?? ''} onChange={onChange} variant="outlined" required />
 
-			<TextField label="Email" name="email" fullWidth value={updatedFields?.email} onChange={handleEmailChange} margin="normal" variant="outlined" />
+			<TextField label="Email" name="email" type="email" fullWidth value={fields.email ?? ''} onChange={onChange} variant="outlined" required />
 
 			<TextField
-				type={passwordVisibility ? 'text' : 'password'}
+				label="New password (optional)"
+				type={passwordVisible ? 'text' : 'password'}
 				name="password"
-				placeholder={'Enter new password'}
 				variant="outlined"
-				onChange={handlePasswordChange}
-				error={!validationBool}
-				autoComplete="off"
-				required
+				autoComplete="new-password"
 				fullWidth
-				value={updatedFields?.password}
+				value={fields.password ?? ''}
+				onChange={onChange}
+				error={!passwordValid}
+				helperText={changingPassword ? PASSWORD_RULE : 'Leave empty to keep your current password'}
 				InputProps={{
 					endAdornment: (
 						<InputAdornment position="end">
-							<Button variant="outlined" onClick={passwordToggle} color="primary" size="small">
-								{passwordVisibility ? 'Hide' : 'Show'}
+							<Button variant="outlined" onClick={() => setPasswordVisible((v) => !v)} size="small">
+								{passwordVisible ? 'Hide' : 'Show'}
 							</Button>
 						</InputAdornment>
 					),
 				}}
-				helperText={!validationBool ? 'Password must be a minimum of 6 characters and include at least one number, a lowercase and uppercase letter.' : ''}
 			/>
-			<div
-				style={{
-					display: 'flex',
-					flexDirection: 'row',
-					alignItems: 'center',
-					gap: 5,
-				}}>
-				<label htmlFor="profile_picture">Profile Picture:</label>
-				<input type="file" name="profile_picture" placeholder="New Profile Image" onChange={handleProfilePicChange} />
+
+			{changingPassword && (
+				<TextField
+					label="Current password"
+					type="password"
+					name="currentPassword"
+					variant="outlined"
+					autoComplete="current-password"
+					fullWidth
+					required
+					value={fields.currentPassword ?? ''}
+					onChange={onChange}
+				/>
+			)}
+
+			<div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 5}}>
+				<label htmlFor="profilePicFile">Profile Picture:</label>
+				<input id="profilePicFile" type="file" name="profilePicFile" accept="image/png, image/jpeg" onChange={onChange} />
 			</div>
+
 			<div style={{display: 'flex', gap: '10px'}}>
-				{editMode && (
-					<Button variant="contained" color="warning" onClick={onCancel}>
-						Cancel
-					</Button>
-				)}
-				<Button variant="contained" color="primary" type="submit">
+				<Button variant="contained" color="warning" onClick={onCancel}>
+					Cancel
+				</Button>
+				<Button variant="contained" color="primary" type="submit" disabled={!passwordValid}>
 					Save Changes
 				</Button>
 			</div>

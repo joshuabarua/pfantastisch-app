@@ -1,69 +1,57 @@
-import React, {SetStateAction} from 'react';
-import getToken from '../utils/getToken';
+import {useState} from 'react';
+import {toast} from 'react-toastify';
+import Avatar from '@mui/material/Avatar';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {useAuthStore} from '../context/AuthState';
-import {Comment, Comments, Supermarket} from '../@types/index.js';
-// import SeeUserLink from './SeeUserLink';
-// import {baseURL} from '../utils/getServerURL';
+import {Comment} from '../@types';
+import {api, errorMessage} from '../utils/api';
 
 interface Props {
 	comment: Comment;
-	comments: Comments;
-	setComments: React.Dispatch<SetStateAction<Comments>>;
-	pfandmachine: Supermarket;
+	onDeleted: (commentId: string) => void;
 }
 
-function CommentCard({comment, comments, setComments, pfandmachine}: Props) {
-	const {user} = useAuthStore();
-	const baseURL = import.meta.env.VITE_SERVER_BASE as string;
+function CommentCard({comment, onDeleted}: Props) {
+	const user = useAuthStore((s) => s.user);
+	const [deleting, setDeleting] = useState(false);
+	const author = comment.posted_by;
+	const isOwnComment = Boolean(user && author && user._id === author._id);
 
 	const deleteComment = async () => {
-		const token = getToken();
-		if (token) {
-			try {
-				const myHeaders = new Headers();
-				myHeaders.append('Authorization', 'Bearer ' + token);
-				myHeaders.append('Content-Type', 'application/json');
-				const body = JSON.stringify({comment: comment.comment, posted_by: comment.posted_by});
-				const reqOptions = {
-					method: 'PATCH',
-					headers: myHeaders,
-					body: body,
-				};
-				const response = await fetch(baseURL + '/api/recipes/delete-comment/' + pfandmachine._id, reqOptions);
-				const result = await response.json();
-				console.log(result);
-				setComments(comments.filter((item) => item._id !== comment._id));
-			} catch (error) {
-				console.error(error);
-				alert('It clings to existence. Try again?');
-			}
+		if (!window.confirm('Delete this comment?')) return;
+		setDeleting(true);
+		try {
+			await api(`/api/businesses/comments/${comment._id}`, {method: 'DELETE', auth: true});
+			onDeleted(comment._id);
+			toast.success('Comment deleted');
+		} catch (e) {
+			toast.error(`Couldn't delete comment - ${errorMessage(e)}`);
+			setDeleting(false);
 		}
 	};
-	console.log(user?._id, comment._id);
+
 	return (
 		<Card sx={{width: '100%', marginBottom: 1}}>
 			<CardContent>
-				<Typography variant="h6" component="div" sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-					{/* <SeeUserLink user={comment.posted_by} /> */}
-				</Typography>
-				<Typography variant="subtitle2" color="black" gutterBottom>
-					{new Date(comment.createdAt).toDateString().substring(4)}
-					{user && (
-						<>
-							{user._id === comment.posted_by._id && (
-								<IconButton color="error" size="small" onClick={deleteComment}>
-									<DeleteIcon sx={{fontSize: 'large'}} />
-								</IconButton>
-							)}
-						</>
+				<div style={{display: 'flex', alignItems: 'center', gap: 10}}>
+					<Avatar src={author?.image_url} alt={author?.username} sx={{width: 32, height: 32}} />
+					<Typography variant="subtitle1" sx={{fontWeight: 'bold', flex: 1}}>
+						{author?.username ?? 'Deleted user'}
+					</Typography>
+					<Typography variant="caption" color="text.secondary">
+						{new Date(comment.createdAt).toLocaleDateString()}
+					</Typography>
+					{isOwnComment && (
+						<IconButton color="error" size="small" onClick={deleteComment} disabled={deleting} aria-label="Delete comment">
+							<DeleteIcon fontSize="small" />
+						</IconButton>
 					)}
-				</Typography>
-				<Typography variant="body2" color="black">
+				</div>
+				<Typography variant="body2" sx={{marginTop: 1, whiteSpace: 'pre-wrap'}}>
 					{comment.comment}
 				</Typography>
 			</CardContent>

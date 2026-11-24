@@ -6,7 +6,8 @@ import {styled} from '@mui/material/styles';
 
 const PageContainer = styled('div')({
 	height: '100vh',
-	width: '100vw',
+	width: '100%',
+	boxSizing: 'border-box',
 	marginTop: -70,
 	zIndex: -1,
 	padding: '20px',

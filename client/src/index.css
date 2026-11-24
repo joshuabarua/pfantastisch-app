@@ -1,7 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 :root {
 	font-family: Helvetica, Arial, sans-serif;
@@ -50,8 +47,9 @@ body {
 	display: flex;
 	min-width: 320px;
 	min-height: 100vh;
-	z-index: 1;
-	position: fixed;
+	overflow-x: hidden;
+	/* Own stacking context so page backgrounds using z-index: -1 still render above the body colour. */
+	isolation: isolate;
 	background-color: #4e1d21;
 	color: black;
 }

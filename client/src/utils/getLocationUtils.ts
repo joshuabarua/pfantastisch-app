@@ -1,26 +1,18 @@
 import {toast} from 'react-toastify';
+import {LatLongLocation} from '../@types';
 
-interface UserCoords {
-	latitude: number;
-	longitude: number;
-}
-
-export const getUserLocation = (onSuccess: (coords: UserCoords) => void, onError: (error: GeolocationPositionError) => void) => {
-	if ('geolocation' in navigator) {
-		navigator.geolocation.getCurrentPosition(
-			(position) => {
-				onSuccess({
-					latitude: position.coords.latitude,
-					longitude: position.coords.longitude,
-				});
-			},
-			(error) => {
-				toast.error(`Error getting user location: ${error.message}`);
-				onError(error);
-			}
-		);
-	} else {
-		toast.error(`Geolocation is not available`);
-		// Handle the case where geolocation is not supported
+export const getUserLocation = (onSuccess: (coords: LatLongLocation) => void, onError: () => void) => {
+	if (!('geolocation' in navigator)) {
+		toast.error('Geolocation is not available in this browser');
+		onError();
+		return;
 	}
+	navigator.geolocation.getCurrentPosition(
+		(position) => onSuccess({latitude: position.coords.latitude, longitude: position.coords.longitude}),
+		(error) => {
+			toast.error(`Couldn't get your location: ${error.message}`);
+			onError();
+		},
+		{timeout: 10000}
+	);
 };

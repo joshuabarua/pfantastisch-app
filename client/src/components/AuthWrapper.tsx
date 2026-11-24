@@ -1,28 +1,23 @@
-import {useEffect, useRef, useState} from 'react';
-import {useAuthStore} from '../context/AuthState';
+import {useEffect, useRef} from 'react';
 import {toast} from 'react-toastify';
-
-const useToastOnce = (condition: boolean, message: string) => {
-	const hasShown = useRef(false);
-	if (!hasShown.current && condition) {
-		toast.info(message);
-		hasShown.current = true;
-	}
-};
+import {useAuthStore} from '../context/AuthState';
 
 const AuthWrapper = ({children}: {children: React.ReactNode}) => {
-	const {getActiveUser, user} = useAuthStore();
-	const [hasCheckedUser, setHasCheckedUser] = useState(false);
+	const getActiveUser = useAuthStore((s) => s.getActiveUser);
+	const user = useAuthStore((s) => s.user);
+	const isAuthChecked = useAuthStore((s) => s.isAuthChecked);
+	const hasShownToast = useRef(false);
 
 	useEffect(() => {
-		const fetchUser = async () => {
-			await getActiveUser();
-			setHasCheckedUser(true);
-		};
-		fetchUser();
+		void getActiveUser();
 	}, [getActiveUser]);
 
-	useToastOnce(hasCheckedUser && !user, `You're not logged in`);
+	useEffect(() => {
+		if (isAuthChecked && !user && !hasShownToast.current) {
+			hasShownToast.current = true;
+			toast.info(`You're not logged in`);
+		}
+	}, [isAuthChecked, user]);
 
 	return <>{children}</>;
 };

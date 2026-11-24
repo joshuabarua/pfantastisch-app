@@ -27,7 +27,7 @@ const MapComponent = (props: Props) => {
 				display: 'flex',
 				alignItems: 'flex-start',
 				justifyContent: 'center',
-				height: '100vh',
+				height: '100%',
 				width: '100%',
 				position: 'relative',
 				overflow: 'hidden',

@@ -1,4 +1,4 @@
-import {FormEvent, useContext, useState} from 'react';
+import {FormEvent, useState} from 'react';
 import {NavLink} from 'react-router-dom';
 import bottlesImage from '../assets/imgs/stylishbottles.jpeg';
 import {useAuthStore} from '../context/AuthState';
@@ -11,13 +11,16 @@ const formStyles: React.CSSProperties = {
 };
 
 const Login = () => {
-	const {login} = useAuthStore();
+	const login = useAuthStore((s) => s.login);
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const [submitting, setSubmitting] = useState(false);
 
-	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		login(email, password).catch((e) => console.log(e));
+		setSubmitting(true);
+		await login(email.trim(), password);
+		setSubmitting(false);
 	};
 
 	return (
@@ -25,8 +28,9 @@ const Login = () => {
 			<div
 				className="centeredDiv"
 				style={{
-					width: '100vw',
-					height: '100vh',
+					width: '100%',
+					height: 'calc(100vh - 70px)',
+					minHeight: 560,
 					position: 'relative',
 					overflow: 'hidden',
 				}}>
@@ -74,13 +78,15 @@ const Login = () => {
 						}}>
 						<div style={formStyles}>
 							<label htmlFor="email">Email</label>
-							<input value={email} name="email" onChange={(e) => setEmail(e.target.value)} />
+							<input id="email" type="email" autoComplete="email" required value={email} name="email" onChange={(e) => setEmail(e.target.value)} />
 						</div>
 						<div style={formStyles}>
 							<label htmlFor="password">Password</label>
-							<input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+							<input id="password" type="password" autoComplete="current-password" required name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
 						</div>
-						<button type="submit">Login</button>
+						<button type="submit" disabled={submitting}>
+							{submitting ? 'Logging in...' : 'Login'}
+						</button>
 					</form>
 
 					<p>

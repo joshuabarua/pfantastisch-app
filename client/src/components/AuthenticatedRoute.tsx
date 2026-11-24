@@ -1,28 +1,11 @@
-import {Navigate} from 'react-router-dom';
+import {Navigate, useLocation} from 'react-router-dom';
 import {useAuthStore} from '../context/AuthState';
-import {useEffect} from 'react';
-import {toast} from 'react-toastify';
 
+/** For pages only logged-out users should see (login, signup). Sends logged-in users back where they came from. */
 const AuthenticatedRoute = ({children}: {children: React.ReactNode}) => {
-	const {user} = useAuthStore();
-
-	useEffect(() => {
-		if (user && localStorage.getItem('hasLoggedIn')) {
-			toast.info("You're already signed in!", {
-				position: 'top-right',
-				autoClose: 3000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-			});
-		}
-		if (user) {
-			localStorage.setItem('hasLoggedIn', 'true');
-		}
-	}, [user]);
-
-	return user ? <Navigate to="/" replace /> : <>{children}</>;
+	const user = useAuthStore((s) => s.user);
+	const from = (useLocation().state as {from?: string} | null)?.from ?? '/';
+	return user ? <Navigate to={from} replace /> : <>{children}</>;
 };
 
 export default AuthenticatedRoute;

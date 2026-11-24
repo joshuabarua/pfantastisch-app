@@ -1,35 +1,35 @@
 import {useEffect, useState} from 'react';
-import {toast} from 'react-toastify';
-import {Comments, NotOk, Supermarket} from '../@types';
+import {Comments, Supermarket} from '../@types';
+import {api, errorMessage} from '../utils/api';
 
-function usePfandMachineFetch(id: string) {
+function usePfandMachineFetch(id: string | undefined) {
 	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState<string | null>(null);
 	const [pfandMachine, setPfandMachine] = useState<Supermarket>();
 	const [comments, setComments] = useState<Comments>([]);
 
-	const getPfandMachineData = async () => {
-		const baseURL = import.meta.env.VITE_SERVER_BASE as string;
-		try {
-			const response = await fetch(`${baseURL}api/businesses/supermarketById/${id}`);
-			if (!response.ok) {
-				const result = (await response.json()) as NotOk;
-				toast.error(`getPfandError - ${result.error}, code: ${response.status}`);
-				throw new Error(`Request failed with status: ${response.status}`);
-			}
-			const result = await response.json();
-			setPfandMachine(result);
-			setComments(result.comments);
-			setLoading(false);
-		} catch (error) {
-			console.error(error);
-			setLoading(false);
-		}
-	};
-
 	useEffect(() => {
-		getPfandMachineData();
+		if (!id) return;
+		const controller = new AbortController();
+		setLoading(true);
+		setError(null);
+
+		api<Supermarket>(`/api/businesses/supermarketById/${id}`, {signal: controller.signal})
+			.then((result) => {
+				setPfandMachine(result);
+				setComments(result.comments);
+			})
+			.catch((e: unknown) => {
+				if (!controller.signal.aborted) setError(errorMessage(e));
+			})
+			.finally(() => {
+				if (!controller.signal.aborted) setLoading(false);
+			});
+
+		return () => controller.abort();
 	}, [id]);
-	return {pfandMachine, comments, setComments, loading, setLoading};
+
+	return {pfandMachine, setPfandMachine, comments, setComments, loading, error};
 }
 
 export default usePfandMachineFetch;

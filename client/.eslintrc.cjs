@@ -6,7 +6,8 @@ module.exports = {
 	parser: '@typescript-eslint/parser',
 	plugins: ['react-refresh'],
 	rules: {
-		'no-unused-vars': 'warn',
+		// The base rule misreports TypeScript parameter names in types; the TS-aware rule below replaces it.
+		'no-unused-vars': 'off',
 		'@typescript-eslint/no-unused-vars': 'warn',
 		'react-refresh/only-export-components': ['warn', {allowConstantExport: true}],
 	},

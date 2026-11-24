@@ -11,7 +11,8 @@ import SVGLogo from './SVGLogo';
 
 const navContainerStyles: React.CSSProperties = {
 	position: 'sticky',
-	width: '100vw',
+	width: '100%',
+	boxSizing: 'border-box',
 	height: '70px',
 	display: 'flex',
 	justifyContent: 'space-between',

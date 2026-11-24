@@ -2,8 +2,8 @@ import {FormEvent, useState} from 'react';
 
 import bottlesImage from '../assets/imgs/artisticbottles.jpeg';
 import {NavLink} from 'react-router-dom';
-// import {Users} from '../@types';
 import {useAuthStore} from '../context/AuthState';
+import {PASSWORD_REGEX, PASSWORD_RULE} from '../utils/validation';
 
 const formStyles: React.CSSProperties = {
 	display: 'flex',
@@ -12,17 +12,22 @@ const formStyles: React.CSSProperties = {
 	flexDirection: 'column',
 };
 const Signup = () => {
-	const {signup} = useAuthStore();
-	// const [users, setUsers] = useState<Users>([]);
+	const signup = useAuthStore((s) => s.signup);
+	const [submitting, setSubmitting] = useState(false);
 
 	const [email, setEmail] = useState('');
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [profilePicFile, setProfilePicFile] = useState<File | null>(null);
 
-	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+	const passwordValid = PASSWORD_REGEX.test(password);
+
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		signup(email, username, password, profilePicFile).catch((e: Error) => console.log(e));
+		if (!passwordValid) return;
+		setSubmitting(true);
+		await signup({email: email.trim(), password, username: username.trim(), profilePicFile});
+		setSubmitting(false);
 	};
 
 	return (
@@ -30,8 +35,9 @@ const Signup = () => {
 			<div
 				className="centeredDiv"
 				style={{
-					width: '100vw',
-					height: '100vh',
+					width: '100%',
+					height: 'calc(100vh - 70px)',
+					minHeight: 560,
 					position: 'relative',
 					overflow: 'hidden',
 				}}>
@@ -78,20 +84,34 @@ const Signup = () => {
 						}}>
 						<div style={formStyles}>
 							<label htmlFor="username">Username</label>
-							<input value={username} name="username" onChange={(e) => setUsername(e.target.value)} />
+							<input id="username" required autoComplete="username" value={username} name="username" onChange={(e) => setUsername(e.target.value)} />
 						</div>
 						<div style={formStyles}>
 							<label htmlFor="email">Email</label>
-							<input value={email} name="email" onChange={(e) => setEmail(e.target.value)} />
+							<input id="email" type="email" required autoComplete="email" value={email} name="email" onChange={(e) => setEmail(e.target.value)} />
 						</div>
 						<div style={formStyles}>
 							<label htmlFor="password">Password</label>
-							<input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+							<input
+								id="password"
+								type="password"
+								required
+								autoComplete="new-password"
+								name="password"
+								value={password}
+								onChange={(e) => setPassword(e.target.value)}
+								aria-describedby="password-rule"
+							/>
+							<small id="password-rule" style={{maxWidth: 260, textAlign: 'center', color: password && !passwordValid ? '#c62828' : '#555'}}>
+								{PASSWORD_RULE}
+							</small>
 						</div>
 						<div style={formStyles}>
 							<label htmlFor="profilePic">Profile Picture </label>
 							<input
+								id="profilePic"
 								type="file"
+								accept="image/png, image/jpeg"
 								name="profilePic"
 								placeholder="Choose a file..."
 								onChange={(e) => {
@@ -104,11 +124,13 @@ const Signup = () => {
 								}}
 							/>
 						</div>
-						<button type="submit">Signup</button>
+						<button type="submit" disabled={submitting || !passwordValid}>
+							{submitting ? 'Signing up...' : 'Signup'}
+						</button>
 					</form>
 
 					<p>
-						Not a user? <NavLink to="/Login">Login</NavLink>
+						Already a user? <NavLink to="/login">Login</NavLink>
 					</p>
 				</div>
 			</div>

@@ -1,9 +1,9 @@
-import React from 'react';
-import {MapContainer, TileLayer, Marker, Popup} from 'react-leaflet';
+import React, {useEffect} from 'react';
+import {MapContainer, TileLayer, Marker, Popup, useMap} from 'react-leaflet';
 import {NavLink} from 'react-router-dom';
 import Button from '@mui/material/Button';
 import {Supermarket, LatLongLocation} from '../@types';
-import {Icon} from 'leaflet';
+import {Icon, latLngBounds} from 'leaflet';
 import userPin from '../assets/icons/user-pin.png';
 import bottle from '../assets/icons/plastic-bottle.png';
 
@@ -14,6 +14,18 @@ const customIcon = (icon: string) => {
 		iconUrl: icon,
 		iconSize: [60, 60],
 	});
+};
+
+/** Zooms the map out so the user and every result are visible. */
+const FitToResults = ({userLocation, supermarkets}: {userLocation: LatLongLocation; supermarkets?: Supermarket[]}) => {
+	const map = useMap();
+	useEffect(() => {
+		if (!supermarkets?.length) return;
+		const bounds = latLngBounds([[userLocation.latitude, userLocation.longitude]]);
+		supermarkets.forEach((s) => bounds.extend([s.coordinates.latitude, s.coordinates.longitude]));
+		map.fitBounds(bounds, {padding: [60, 60], maxZoom: 16});
+	}, [map, userLocation, supermarkets]);
+	return null;
 };
 
 interface MapProps {
@@ -31,20 +43,22 @@ const LeafletMap: React.FC<MapProps> = ({userLocation, supermarkets, markerRefs}
 				height: '100%',
 				display: 'flex',
 				flexDirection: 'column',
-				margin: '0px 10px -200px 50px',
+				margin: '0px 10px 0px 50px',
 				zIndex: 0,
 			}}>
 			<h1 style={{padding: '20px', margin: 0, textAlign: 'right', fontSize: '24px'}}> Map</h1>
 			<div style={{flex: 1, position: 'relative'}}>
-				<MapContainer center={[userLocation.latitude, userLocation.longitude]} zoom={16} style={{width: '100%', height: '90vh'}}>
+				<MapContainer center={[userLocation.latitude, userLocation.longitude]} zoom={16} style={{width: '100%', height: '100%'}}>
 					<TileLayer
 						url={`${maps.base}access-token=${import.meta.env.VITE_JAWG_MAP_ACCESS_TOKEN}`}
 						attribution={
 							'<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 						}
-						minZoom={15}
+						minZoom={11}
 						maxZoom={16}
 					/>
+
+					<FitToResults userLocation={userLocation} supermarkets={supermarkets} />
 
 					{userLocation && (
 						<Marker position={[userLocation.latitude, userLocation.longitude]} icon={customIcon(userPin)}>
@@ -55,7 +69,7 @@ const LeafletMap: React.FC<MapProps> = ({userLocation, supermarkets, markerRefs}
 					{supermarkets ? (
 						supermarkets.map((supermarket, index) => (
 							<Marker
-								key={index}
+								key={supermarket._id}
 								position={[supermarket.coordinates.latitude, supermarket.coordinates.longitude]}
 								icon={customIcon(bottle)}
 								ref={(el) => (markerRefs.current[index] = el)}>
@@ -77,7 +91,7 @@ const LeafletMap: React.FC<MapProps> = ({userLocation, supermarkets, markerRefs}
 												{supermarket.location.address1}, {supermarket.location.city},<br />
 												{supermarket.location.zip_code}, {supermarket.location.country}
 											</p>
-											<p style={{margin: '5px 0'}}>Phone: {supermarket.phone}</p>
+											{supermarket.phone && <p style={{margin: '5px 0'}}>Phone: {supermarket.phone}</p>}
 											<p style={{margin: '5px 0'}}>Rating: {supermarket.rating} ⭐</p>
 										</div>
 										<div
@@ -91,6 +105,8 @@ const LeafletMap: React.FC<MapProps> = ({userLocation, supermarkets, markerRefs}
 											{supermarket.pfandtastic.isOperational ? 'Pfand Machine Operational' : 'Pfand Machine Not Operational'}
 										</div>
 										<Button
+											component={NavLink}
+											to={`/map/pfandautomat/${supermarket._id}`}
 											variant="contained"
 											style={{
 												backgroundColor: '#4e1d21',
@@ -99,9 +115,7 @@ const LeafletMap: React.FC<MapProps> = ({userLocation, supermarkets, markerRefs}
 												fontWeight: 'bold',
 												marginTop: '10px',
 											}}>
-											<NavLink to={`/map/pfandautomat/${supermarket._id}`} style={{color: 'whitesmoke', textDecoration: 'none'}}>
-												PFANDAutomat Details
-											</NavLink>
+											PFANDAutomat Details
 										</Button>
 									</div>
 								</Popup>

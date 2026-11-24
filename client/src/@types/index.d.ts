@@ -1,7 +1,6 @@
 export interface User {
 	_id: string;
 	email: string;
-	password: string;
 	username: string;
 	image_url: string;
 	createdAt: string;
@@ -39,7 +38,6 @@ export interface Location {
 
 export interface Supermarket {
 	_id: string;
-	id: string;
 	alias: string;
 	name: string;
 	image_url: string;
@@ -51,7 +49,6 @@ export interface Supermarket {
 	display_address: string[];
 	location: Location;
 	phone: string;
-	distance: number;
 	pfandtastic: Pfandtastic;
 	comments: Comments;
 }
@@ -59,30 +56,16 @@ export interface Supermarket {
 export interface Pfandtastic {
 	has_pfand_automat: boolean;
 	isOperational: boolean;
-	machine_img_url: string[];
+	machine_img_url?: string[];
+	status_updated_at?: string;
 }
-
-export interface City {
-	city: string;
-	city_ascii: string;
-	lat: string;
-	lng: string;
-	country: string;
-	iso2: string;
-	iso3: string;
-	admin_name: string;
-	population: string;
-	id: string;
-}
-
-export type Cities = City[];
 
 export interface Comment {
 	_id: string;
 	createdAt: string;
 	comment: string;
 	likes: string[];
-	posted_by: UserPostingComment;
+	posted_by: UserPostingComment | null;
 }
 
 export interface UserPostingComment {
@@ -92,10 +75,3 @@ export interface UserPostingComment {
 }
 
 export type Comments = Comment[];
-
-interface updateFields {
-	email?: string;
-	password?: string;
-	username?: string;
-	profilePicFile?: File | null;
-}
