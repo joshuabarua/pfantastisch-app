@@ -7,7 +7,7 @@ Find nearby pfand (bottle deposit) machines in Berlin, see whether they're worki
 
 ## Getting started
 
-Requirements: Node 18+, Yarn, a MongoDB database (the `supermarkets` collection needs a `2dsphere` index on `loc`, which Mongoose creates on startup).
+Requirements: Node 22, Yarn, a MongoDB database (the `supermarkets` collection needs a `2dsphere` index on `loc`, which Mongoose creates on startup).
 
 ```bash
 cd server && yarn install && cp .env.example .env
