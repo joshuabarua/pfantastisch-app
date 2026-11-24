@@ -31,7 +31,7 @@ The client runs on http://localhost:5173 and the API on http://localhost:5000.
 | ------ | ---------------------------- | ----------------------------------------------------------------------- |
 | server | `MONGO_URI`                  | MongoDB connection string (required)                                    |
 | server | `JWT_SECRET`                 | Secret for signing login tokens (required)                              |
-| server | `CLIENT_ORIGIN`              | Comma-separated origins allowed by CORS (default `http://localhost:5173`) |
+| server | `CLIENT_ORIGIN`              | Comma-separated origins allowed by CORS (default: production client and `http://localhost:5173`) |
 | server | `CLOUDINARY_*`               | Cloudinary credentials for profile picture uploads                      |
 | client | `VITE_SERVER_BASE`           | URL of the API server                                                   |
 | client | `VITE_JAWG_MAP_ACCESS_TOKEN` | Jawg map tiles token                                                    |

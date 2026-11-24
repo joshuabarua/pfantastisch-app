@@ -186,3 +186,15 @@ describe('businesses', () => {
 		assert.equal(res.status, 400);
 	});
 });
+
+describe('cors', () => {
+	test('allows the production client by default', async () => {
+		const res = await request(app).get('/api/businesses/supermarketById/bad').set('Origin', 'https://pfandtastisch-app.vercel.app');
+		assert.equal(res.headers['access-control-allow-origin'], 'https://pfandtastisch-app.vercel.app');
+	});
+
+	test('does not allow unknown origins', async () => {
+		const res = await request(app).get('/api/businesses/supermarketById/bad').set('Origin', 'https://evil.example');
+		assert.equal(res.headers['access-control-allow-origin'], undefined);
+	});
+});

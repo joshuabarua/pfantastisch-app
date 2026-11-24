@@ -8,7 +8,8 @@ import errorHandler from './middlewares/errorHandler.js';
 import configurePassport from './config/passportConfig.js';
 import configureCloudinary from './config/cloudinaryConfig.js';
 
-const DEFAULT_ORIGINS = ['http://localhost:5173'];
+// Used when CLIENT_ORIGIN is not set.
+const DEFAULT_ORIGINS = ['https://pfandtastisch-app.vercel.app', 'http://localhost:5173'];
 
 const allowedOrigins = () =>
 	(process.env.CLIENT_ORIGIN || '')
