@@ -1,194 +1,100 @@
 import {userModel} from '../models/userModel.js';
 import {encryptPassword, verifyPassword} from '../utils/bcrypt.js';
-import imageUpload from '../utils/imageManagement.js';
+import {imageUpload, discardUpload} from '../utils/imageManagement.js';
 import {generateToken} from '../utils/jwt.js';
+import {HttpError} from '../utils/httpError.js';
+import {serializeUser} from '../utils/serializers.js';
 
-// const testRoute = (req, res) => {
-// 	console.log(req);
-// 	res.send('testing route....');
-// };
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// Matches the rule shown in the client: min 6 chars, at least one number, one lowercase and one uppercase letter.
+const PASSWORD_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+const PASSWORD_RULE = 'Password must be at least 6 characters and include a number, a lowercase and an uppercase letter.';
 
-// const middleTest = (request, response, next) => {
-// 	console.log(request, response, 'middleware is up');
-// 	next();
-// };
-
-const findAllUsers = async (request, response) => {
-	const users = await userModel.find();
-
-	try {
-		if (users) {
-			const forFront = [];
-			users.forEach((user) =>
-				forFront.push({
-					email: user.email,
-					username: user.username,
-					createdAt: user.createdAt,
-					_id: user._id,
-					image_url: user.image_url,
-				})
-			);
-			response.status(200).json(forFront);
-		} else {
-			response.status(404).json({error: 'nothing in collection'});
-		}
-	} catch (e) {
-		response.status(500).json({error: 'Something went wrong...'});
-	}
-};
-
-const findUserByEmail = async (req, res) => {
-	const {email} = req.params;
-	if (email && email.includes('@')) {
-		try {
-			const foundUser = await userModel.findOne({email: email});
-			if (foundUser) {
-				const forFront = {
-					email: foundUser.email,
-					username: foundUser.username,
-					_id: foundUser._id,
-					createdAt: foundUser.createdAt,
-				};
-				res.status(200).json(forFront);
-			} else {
-				res.status(404).json({error: 'No user found'});
-			}
-		} catch (e) {
-			res.status(500).json({error: 'Something went wrong'});
-		}
-	} else {
-		res.status(400).json({error: 'valid mail must be included'});
-	}
-};
+const asTrimmedString = (value) => (typeof value === 'string' ? value.trim() : '');
 
 const createUser = async (req, res) => {
-	const {email, password, username} = req.body;
-	console.log(req.body, req.file);
-	if (!email || !password || !username) return res.status(406).json({error: 'Please fill out all fields'});
-	const imageResult = await imageUpload(req.file, 'profile_pics');
-	const hashedPassword = await encryptPassword(password);
-	const newUser = new userModel({
+	const email = asTrimmedString(req.body.email);
+	const username = asTrimmedString(req.body.username);
+	const password = typeof req.body.password === 'string' ? req.body.password : '';
+
+	try {
+		if (!email || !password || !username) throw new HttpError(400, 'Please fill out all fields');
+		if (!EMAIL_REGEX.test(email)) throw new HttpError(400, 'Please enter a valid email address');
+		if (!PASSWORD_REGEX.test(password)) throw new HttpError(400, PASSWORD_RULE);
+		if (await userModel.exists({email})) throw new HttpError(409, 'That email is already registered');
+	} catch (err) {
+		await discardUpload(req.file);
+		throw err;
+	}
+
+	const image_url = await imageUpload(req.file, 'profile_pics');
+	const newUser = await userModel.create({
 		email,
-		password: hashedPassword,
 		username,
-		image_url: imageResult,
+		password: await encryptPassword(password),
+		...(image_url && {image_url}),
 	});
-	try {
-		const result = await newUser.save();
-		const token = generateToken(newUser);
 
-		const forFront = {
-			email: result.email,
-			username: result.username,
-			_id: result._id,
-			createdAt: result.createdAt,
-			image_url: result.image_url,
-		};
-		res.status(200).json({result, token, user: forFront});
-		console.log({result, token, user: forFront});
-	} catch (e) {
-		console.log(e);
-		e.code === 11000 ? res.status(406).json({error: 'That email is already registered'}) : res.status(500).json({error: 'Unknown error occured'});
-	}
-};
-
-const updateUser = async (req, res) => {
-	try {
-		if (req.file) {
-			const newProfilePicture = await imageUpload(req.file, 'profile_pics');
-			const result = await userModel.findByIdAndUpdate(
-				req.body._id,
-				{...req.body, image_url: newProfilePicture},
-				{
-					new: true,
-				}
-			);
-			res.status(200).json(result);
-			console.log(error);
-		} else {
-			const result = await userModel.findByIdAndUpdate(req.body._id, req.body, {
-				new: true,
-			});
-			res.status(200).json(result);
-		}
-	} catch (e) {
-		res.status(500).json({error: 'Something went wrong...'});
-	}
-};
-
-const updatePassword = async (req, res) => {
-	const {password: stringPassword, _id} = req.body;
-	try {
-		const hashedPassword = await encryptPassword(stringPassword);
-		console.log(stringPassword, _id, hashedPassword);
-		const result = await userModel.findByIdAndUpdate(_id, {password: hashedPassword}, {new: true});
-		res.status(200).json({message: 'password updated!'});
-	} catch (error) {
-		res.status(500).json({error: 'Something went wrong...'});
-	}
+	res.status(201).json({token: generateToken(newUser), user: serializeUser(newUser)});
 };
 
 const login = async (req, res) => {
-	const {email, password} = req.body;
-	try {
-		const existingUser = await userModel.findOne({email});
-		if (!existingUser) {
-			return res.status(404).json({error: 'No user with that email.'});
-		}
-		const verified = await verifyPassword(password, existingUser.password);
-		if (!verified) {
-			return res.status(401).json({error: "Password doesn't match."});
-		}
-		const token = generateToken(existingUser);
-		const forFront = {
-			email: existingUser.email,
-			username: existingUser.username,
-			
-			_id: existingUser._id,
-			createdAt: existingUser.createdAt,
-			image_url: existingUser.image_url,
-		};
-		res.status(200).json({verified, token, user: forFront});
-	} catch (error) {
-		res.status(500).json({error: 'Something went wrong...'});
-	}
+	const email = asTrimmedString(req.body.email);
+	const password = typeof req.body.password === 'string' ? req.body.password : '';
+	// Same response for unknown email and wrong password, so accounts can't be enumerated.
+	const invalid = new HttpError(401, 'Invalid email or password');
+
+	if (!email || !password) throw invalid;
+	const existingUser = await userModel.findOne({email}).select('+password');
+	if (!existingUser || !(await verifyPassword(password, existingUser.password))) throw invalid;
+
+	res.status(200).json({token: generateToken(existingUser), user: serializeUser(existingUser)});
 };
 
 const getMe = async (req, res) => {
-	res.status(200).json(req.user);
+	res.status(200).json(serializeUser(req.user));
 };
 
-const logout = () => {
-	localStorage.removeItem('token');
-	setUser(null);
-};
-
-async function updateUserFields() {
+/** Updates the logged-in user. Changing the password requires the current password. */
+const updateMe = async (req, res) => {
+	const updates = {};
 	try {
-		const users = await userModel.find();
+		const username = asTrimmedString(req.body.username);
+		const email = asTrimmedString(req.body.email);
+		const password = typeof req.body.password === 'string' ? req.body.password : '';
 
-		if (!users.length) {
-			console.log('No users found in the collection.');
-			return;
+		if (username) updates.username = username;
+
+		if (email && email !== req.user.email) {
+			if (!EMAIL_REGEX.test(email)) throw new HttpError(400, 'Please enter a valid email address');
+			if (await userModel.exists({email, _id: {$ne: req.user._id}})) throw new HttpError(409, 'That email is already registered');
+			updates.email = email;
 		}
 
-		const bulkOps = users.map((user) => ({
-			updateOne: {
-				filter: {_id: user._id},
-				update: {
-					$set: {
-						comments: [],
-						likes: [],
-					},
-				},
-			},
-		}));
-
-		await userModel.bulkWrite(bulkOps);
-		console.log(`${users.length} documents updated with fields.`);
-	} catch (error) {
-		console.error('Error updating documents:', error);
+		if (password) {
+			if (!PASSWORD_REGEX.test(password)) throw new HttpError(400, PASSWORD_RULE);
+			const currentPassword = typeof req.body.currentPassword === 'string' ? req.body.currentPassword : '';
+			const withPassword = await userModel.findById(req.user._id).select('+password');
+			if (!currentPassword || !(await verifyPassword(currentPassword, withPassword.password))) {
+				throw new HttpError(401, 'Current password is incorrect');
+			}
+			updates.password = await encryptPassword(password);
+		}
+	} catch (err) {
+		await discardUpload(req.file);
+		throw err;
 	}
-}
 
-export {findAllUsers, findUserByEmail, createUser, updateUser, updatePassword, login, getMe, logout, updateUserFields};
+	if (req.file) {
+		const image_url = await imageUpload(req.file, 'profile_pics');
+		if (!image_url) throw new HttpError(502, 'Profile picture upload failed, please try again');
+		updates.image_url = image_url;
+	}
+
+	if (Object.keys(updates).length === 0) throw new HttpError(400, 'Nothing to update');
+
+	const updatedUser = await userModel.findByIdAndUpdate(req.user._id, {$set: updates}, {new: true, runValidators: true});
+	res.status(200).json({user: serializeUser(updatedUser)});
+};
+
+export {createUser, login, getMe, updateMe};

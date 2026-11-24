@@ -31,6 +31,8 @@ const supermarketSchema = new mongoose.Schema(
 			has_pfand_automat: Boolean,
 			isOperational: Boolean,
 			machine_img_url: [String],
+			status_updated_at: Date,
+			status_updated_by: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
 		},
 		loc: {
 			type: {
@@ -43,11 +45,10 @@ const supermarketSchema = new mongoose.Schema(
 		},
 		comments: [{type: mongoose.Schema.Types.ObjectId, ref: 'comment'}],
 	},
-
 	{timestamps: true}
 );
 
-//TODO: To add later for user interaction
-// likes: Number,
+// Required for the $near query used by the map.
+supermarketSchema.index({loc: '2dsphere'});
 
 export const supermarketModel = mongoose.model('supermarket', supermarketSchema);

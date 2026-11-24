@@ -1,22 +1,16 @@
 import express from 'express';
-import {findAllUsers, findUserByEmail, createUser, updateUser, login, getMe, updatePassword, updateUserFields} from '../controllers/userController.js';
+import {createUser, login, getMe, updateMe} from '../controllers/userController.js';
 import multerUpload from '../middlewares/multer.js';
 import jwtAuth from '../middlewares/jwtAuth.js';
+import {authLimiter} from '../middlewares/rateLimit.js';
+import {asyncHandler} from '../utils/httpError.js';
 
 const userRouter = express.Router();
 
-// userRouter.get('/test', middleTest, testRoute);
-userRouter.get('/all', findAllUsers);
-userRouter.get('/email/:email', findUserByEmail);
-userRouter.get('/me', jwtAuth, getMe);
+userRouter.post('/new', authLimiter, multerUpload.single('image_url'), asyncHandler(createUser));
+userRouter.post('/login', authLimiter, asyncHandler(login));
 
-userRouter.post('/new', multerUpload.single('image_url'), createUser);
-userRouter.post('/login', login);
-
-userRouter.put('/updateUser', multerUpload.single('image_url'), updateUser);
-userRouter.put('/updatePassword', updatePassword);
-
-//Add  any new fields i need to the collection in bulk
-userRouter.post('/addFieldsToUsers', updateUserFields);
+userRouter.get('/me', jwtAuth, asyncHandler(getMe));
+userRouter.patch('/me', jwtAuth, multerUpload.single('image_url'), asyncHandler(updateMe));
 
 export default userRouter;

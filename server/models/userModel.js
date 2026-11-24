@@ -2,11 +2,11 @@ import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema(
 	{
-		email: {type: String, required: true, unique: true},
+		email: {type: String, required: true, unique: true, trim: true},
 		username: String,
-		comments: [{type: mongoose.Schema.Types.ObjectId, ref: 'comment'}], // Assuming your comment model is named 'Comment'
+		comments: [{type: mongoose.Schema.Types.ObjectId, ref: 'comment'}],
 		likes: [{type: mongoose.Schema.Types.ObjectId, ref: 'comment'}],
-		password: {type: String, required: true},
+		password: {type: String, required: true, select: false},
 		image_url: {
 			type: String,
 			required: true,

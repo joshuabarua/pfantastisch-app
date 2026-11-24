@@ -1,44 +1,29 @@
-import express from 'express';
+import 'dotenv/config';
 import mongoose from 'mongoose';
-import cors from 'cors';
-import userRouter from './routes/userRoutes.js';
-import businessRouter from './routes/businessRoutes.js';
+import {createApp} from './app.js';
 
-import * as dotenv from 'dotenv';
-import configurePassport from './config/passportConfig.js';
-import configureCloudinary from './config/cloudinaryConfig.js';
-dotenv.config();
+const REQUIRED_ENV = ['MONGO_URI', 'JWT_SECRET'];
+const missing = REQUIRED_ENV.filter((name) => !process.env[name]);
+if (missing.length) {
+	console.error(`Missing required environment variables: ${missing.join(', ')}`);
+	process.exit(1);
+}
 
-// console.log("MONGO URI", process.env.MONGO_URI);
-
-const app = express();
+const app = createApp();
 const port = process.env.PORT || 5000;
 
-const connectMiddlewares = () => {
-	app.use(express.json());
-	app.use(
-		express.urlencoded({
-			extended: true,
-		})
-	);
-	app.use(cors());
-	configureCloudinary();
-	configurePassport();
+const start = async () => {
+	try {
+		await mongoose.connect(process.env.MONGO_URI);
+		app.listen(port, () => {
+			console.log(`Connected to MongoDB, server running on port ${port}`);
+		});
+	} catch (error) {
+		console.error('Failed to start server:', error);
+		process.exit(1);
+	}
 };
 
-const connectDatabase = async () => {
-	await mongoose.connect(process.env.MONGO_URI);
-	app.listen(port, () => {
-		console.log('Connection to MongoDB established, and server is running on port ' + port);
-	});
-};
+start();
 
-const defineRoutes = () => {
-	app.use('/api/users', userRouter);
-	app.use('/api/businesses', businessRouter);
-	app.use('*', (req, res) => res.status(404).json({error: 'Endpoint not found.'}));
-};
-
-connectMiddlewares();
-defineRoutes();
-connectDatabase();
+export default app;
